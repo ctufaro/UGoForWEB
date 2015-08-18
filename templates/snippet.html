@@ -1,0 +1,30 @@
+  <script>
+    var data = {
+      posts:[
+	   {  
+		  PostId:0,
+		  ProfilePicURL:'http://placehold.it/112x112',
+		  SmallComment:'Chicken Cutlet on a hero with American, extra mayo, lettuce, S&P',
+		  TimePosted:'5d',
+		  SuggestImages:[{Url:'http://placehold.it/312x112'}],
+		  BigComment:'From the deli on 51st between 6th and 7th avenue, across from UBS.'
+	   }
+      ]
+    };
+    var directive = {
+      'article':{
+        'post<-posts':{ //for each entry in posts name the element 'post'
+          '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
+		  '+.arrow_box': 'post.SmallComment',
+		  '.collection':{
+			  'pimage<-post.SuggestImages':{
+				'.cover@src' : 'pimage.Url'
+			  }
+		  },
+		  '.day': 'post.TimePosted',
+		  '.big-comment p' : 'post.BigComment'
+        }
+      }
+    };
+    $p('.posts').render( data, directive );
+  </script>
