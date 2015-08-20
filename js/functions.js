@@ -92,11 +92,9 @@ function createLoadingSpinner(){
 function wireUpWait(){
 	$(document).ajaxStart(function(){
 		if ($(".ui-ios-overlay").length) { 
-			alert('showing spinner');
 			$(".ui-ios-overlay").css("display", "block");
 		}
 		else {
-			alert('creating spinner');
 			createLoadingSpinner();	
 		}		
 	});
