@@ -91,17 +91,19 @@ function createLoadingSpinner(){
 
 function wireUpWait(){
 	$(document).ajaxStart(function(){
-		if ($(".ios-overlay-show").length) { 
-			$(".ios-overlay-show").css("display", "block");
+		if ($(".ui-ios-overlay").length) { 
+			alert('showing spinner');
+			$(".ui-ios-overlay").css("display", "block");
 		}
 		else {
+			alert('creating spinner');
 			createLoadingSpinner();	
 		}		
 	});
 
 	$(document).ajaxComplete(function(){
 		$(".posts").css("display", "block");
-		$(".ios-overlay-show").css("display", "none");
+		$(".ui-ios-overlay").css("display", "none");
 	});	
 }
 
