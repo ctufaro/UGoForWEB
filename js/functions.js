@@ -87,7 +87,6 @@ function createLoadingSpinner(){
 	return false;
 }
 
-
 function wireUpWait(){
 	$(document).ajaxStart(function(){
 		if ($(".ui-ios-overlay").length) { 
