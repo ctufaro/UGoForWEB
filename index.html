@@ -8,11 +8,14 @@
     <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link href="css/foundation.min.css" rel="stylesheet"/>
     <link href="css/main.css" rel="stylesheet"/>
-	<link href="css/magnific-popup-modal.css" rel="stylesheet"/>		
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+	<link href="css/magnific-popup-modal.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/iosOverlay.css">	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 	<script src="js/pure.js"></script>
-	<script src="js/functions.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/functions.js"></script>	
+	<script src="js/iosOverlay.js"></script>
+	<script src="js/spin.min.js"></script>	
+	<script src="js/jquery.magnific-popup.min.js"></script>	
 </head>
 <body>
 
@@ -28,6 +31,7 @@
     </p>
 </div>
 
+
 <div class="row page">
     <header id="main_header">
         <nav>
@@ -41,7 +45,7 @@
             </div>
         </nav>
     </header>
-    <span class="posts">
+    <span class="posts" style="display:none">
         <article id="post">
             <img class="avatar" src="" style="float: left" />
             <div class="arrow_box">
@@ -59,8 +63,41 @@
     </span>
 </div>
 
+
 <script>
     $(function () {
+		
+		$(document).ajaxStart(function(){
+			var opts = {
+				lines: 13, // The number of lines to draw
+				length: 11, // The length of each line
+				width: 5, // The line thickness
+				radius: 17, // The radius of the inner circle
+				corners: 1, // Corner roundness (0..1)
+				rotate: 0, // The rotation offset
+				color: '#FFF', // #rgb or #rrggbb
+				speed: 1, // Rounds per second
+				trail: 60, // Afterglow percentage
+				shadow: false, // Whether to render a shadow
+				hwaccel: false, // Whether to use hardware acceleration
+				className: 'spinner', // The CSS class to assign to the spinner
+				zIndex: 2e9, // The z-index (defaults to 2000000000)
+				top: 'auto', // Top position relative to parent in px
+				left: 'auto' // Left position relative to parent in px
+			};
+			var target = document.createElement("div");
+			document.body.appendChild(target);
+			var spinner = new Spinner(opts).spin(target);
+			iosOverlay({
+				text: "Loading",
+				spinner: spinner
+			});			
+		});
+
+		$(document).ajaxComplete(function(){
+			$(".posts").css("display", "block");
+			$(".ios-overlay-show").css("display", "none");
+		});		
 
         //pure template engine and ajax call
         ajaxit($('.posts').html());
