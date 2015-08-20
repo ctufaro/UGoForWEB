@@ -58,3 +58,67 @@ function sendPost(smallComment, bigComment) { //
             }
         })
 }
+
+function createLoadingSpinner(){
+		var opts = {
+		lines: 13, // The number of lines to draw
+		length: 11, // The length of each line
+		width: 5, // The line thickness
+		radius: 17, // The radius of the inner circle
+		corners: 1, // Corner roundness (0..1)
+		rotate: 0, // The rotation offset
+		color: '#FFF', // #rgb or #rrggbb
+		speed: 1, // Rounds per second
+		trail: 60, // Afterglow percentage
+		shadow: false, // Whether to render a shadow
+		hwaccel: false, // Whether to use hardware acceleration
+		className: 'spinner', // The CSS class to assign to the spinner
+		zIndex: 2e9, // The z-index (defaults to 2000000000)
+		top: 'auto', // Top position relative to parent in px
+		left: 'auto' // Left position relative to parent in px
+	};
+	var target = document.createElement("div");
+	document.body.appendChild(target);
+	var spinner = new Spinner(opts).spin(target);
+	iosOverlay({
+		text: "Loading",
+		duration: 2e3,
+		spinner: spinner
+	});
+	return false;
+}
+
+
+function wireUpWait(){
+	$(document).ajaxStart(function(){
+		if ($(".ios-overlay-show").length) { 
+			$(".ios-overlay-show").css("display", "block");
+		}
+		else {
+			createLoadingSpinner();	
+		}		
+	});
+
+	$(document).ajaxComplete(function(){
+		$(".posts").css("display", "block");
+		$(".ios-overlay-show").css("display", "none");
+	});	
+}
+
+function wireUpPosting(){
+	$('.popup-modal').magnificPopup({
+		type: 'inline',
+		preloader: false,
+		focus: '#username',
+		modal: true
+	});
+	
+	$(document).on('click', '.popup-modal-dismiss', function (e) {
+		e.preventDefault();
+		$.magnificPopup.close();
+	});
+	
+	$("#btnPost").click(function () {
+		sendPost($("#txtSmallComment").val(),$("#txtBigComment").val());
+	});  	
+}

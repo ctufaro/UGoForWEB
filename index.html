@@ -11,11 +11,12 @@
 	<link href="css/magnific-popup-modal.css" rel="stylesheet"/>
 	<link href="css/iosOverlay.css" rel="stylesheet" >	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-	<script src="js/pure.js"></script>
-	<script src="js/functions.js"></script>	
+	<script src="js/pure.js"></script>	
 	<script src="js/iosOverlay.js"></script>
 	<script src="js/spin.min.js"></script>	
 	<script src="js/jquery.magnific-popup.min.js"></script>	
+	<!------------------------------------>
+	<script src="js/functions.js"></script>		
 </head>
 <body>
 
@@ -67,14 +68,8 @@
 <script>
     $(function () {
 		
-		$(document).ajaxStart(function(){
-		
-		});
-
-		$(document).ajaxComplete(function(){
-			$(".posts").css("display", "block");
-			<!--$(".ios-overlay-show").css("display", "none");-->
-		});		
+		//wire up wait calls
+		wireUpWait();
 
         //pure template engine and ajax call
         ajaxit($('.posts').html());
@@ -82,24 +77,8 @@
         //getting users coordinates
         getLocation();
 
-        //wiring up post pop-up
-        $('.popup-modal').magnificPopup({
-            type: 'inline',
-            preloader: false,
-            focus: '#username',
-            modal: true
-        });
-
-        //wiring up pop-up close button
-        $(document).on('click', '.popup-modal-dismiss', function (e) {
-            e.preventDefault();
-            $.magnificPopup.close();
-        });
-
-        //wiring up pop-up post button
-        $("#btnPost").click(function () {
-            sendPost($("#txtSmallComment").val(),$("#txtBigComment").val());
-        });        
+        //wiring up post pop-up, close button and post button
+		wireUpPosting();      
 
     });
 </script>
