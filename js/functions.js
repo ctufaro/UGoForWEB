@@ -82,7 +82,6 @@ function createLoadingSpinner(){
 	var spinner = new Spinner(opts).spin(target);
 	iosOverlay({
 		text: "Loading",
-		duration: 2e3,
 		spinner: spinner
 	});
 	return false;
