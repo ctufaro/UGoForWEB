@@ -9,9 +9,47 @@
     <link href="css/foundation.min.css" rel="stylesheet"/>
     <link href="css/main.css" rel="stylesheet"/>
 	<link href="css/magnific-popup-modal.css" rel="stylesheet"/>
-	<link href="css/iosOverlay.css" rel="stylesheet" >	
+	<link href="css/iosOverlay.css" rel="stylesheet" >
+    <link href="css/signup.css" rel="stylesheet" />	
 </head>
 <body>
+
+
+<span id="div_signup">
+
+<div class="wrap">
+<!-- contact-form -->	
+<div class="contact-form" id="dialog">
+	<div class="logo">
+		<h1>UGoFor</h1>
+	</div>	
+
+	<div class="clear"></div>
+	<!-- form -->
+	<div class="contact_form" name="contact_form">
+        <ul>
+            <li>
+                <input type="text" class="textbox" placeholder="Email" required />
+            </li>
+            <li>
+                <input type="email" class="textbox1" name="email" placeholder="Username" required />
+                <span class="form_hint">Enter a valid email</span>
+            </li>
+            <li>
+                <input type="url" name="website" class="textbox2" placeholder="Password" required pattern="(http|https)://.+"/>
+                <span class="form_hint1">http://websitename.com</span>
+            </li>
+      </ul>
+      <button style="width:100%;margin-top:6%;" id="btn_signup">Sign Up</button>
+      <div class="clear"></div>	
+    </div>
+</div>
+
+</div>
+
+</span>
+
+<span id="feed" style="visibility:hidden;">
 
 <div id="test-modal" class="white-popup-block mfp-hide">
     <h1>UGoFor?</h1>
@@ -26,6 +64,7 @@
 </div>
 
 <div class="row page">
+
     <header id="main_header">
         <nav>
             <h1><a href="#">UGoFor</a></h1>
@@ -56,6 +95,8 @@
     </span>
 </div>
 
+</span>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 <script src="js/pure.js"></script>	
 <script src="js/iosOverlay.js"></script>
@@ -65,20 +106,28 @@
 <script src="js/functions.js"></script>	
 <script>
     $(function () {
-		
-		//wire up wait calls
-		wireUpWait();
+    
+   
+        $( "#btn_signup" ).click(function() {
+        
+            $('link[rel=stylesheet][href~="css/signup.css"]').remove();
+            $( "#div_signup" ).hide();
+            $( "#feed" ).show();
+            
+            //wire up wait calls
+            wireUpWait();
 
-        //pure template engine and ajax call
-        ajaxit($('.posts').html());
+            //pure template engine and ajax call
+            ajaxit($('.posts').html());
 
-        //getting users coordinates
-        getLocation();
+            //getting users coordinates
+            getLocation();
 
-        //wiring up post pop-up, close button and post button
-		wireUpPosting();      
+            //wiring up post pop-up, close button and post button
+            wireUpPosting();              
+            });    		
 
-    });
+        });
 </script>
 </body>
 </html>
