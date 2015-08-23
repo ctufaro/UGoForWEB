@@ -29,18 +29,17 @@
 	<div class="contact_form" name="contact_form">
         <ul>
             <li>
-                <input type="text" class="textbox" placeholder="Email" required />
+                <input type="email" class="textbox1" name="email" placeholder="Email" />
+            </li>        
+            <li>
+                <input type="email" class="textbox1" name="username" placeholder="Username" />
             </li>
             <li>
-                <input type="email" class="textbox1" name="email" placeholder="Username" required />
-                <span class="form_hint">Enter a valid email</span>
-            </li>
-            <li>
-                <input type="url" name="website" class="textbox2" placeholder="Password" required pattern="(http|https)://.+"/>
-                <span class="form_hint1">http://websitename.com</span>
+                <input type="url" name="website" class="textbox1" placeholder="Password" />
             </li>
       </ul>
-      <button style="width:100%;margin-top:6%;" id="btn_signup">Sign Up</button>
+      <button style="background-color:#322ee6;width:100%;margin-top:6%;font-family: 'Pacifico', sans-serif;font-size:24px;" id="btn_signup">Register</button>
+      <div style="width:100%;margin-top:-6%;font-family: 'Pacifico', sans-serif;font-size:24px; color:White;text-align:center;">Have an account?</div>
       <div class="clear"></div>	
     </div>
 </div>
@@ -105,8 +104,7 @@
 <!------------------------------------>
 <script src="js/functions.js"></script>	
 <script>
-    $(function () {
-    
+    $(function () {    
    
         $( "#btn_signup" ).click(function() {
         
@@ -125,9 +123,9 @@
 
             //wiring up post pop-up, close button and post button
             wireUpPosting();              
-            });    		
+        });   
 
-        });
+    });
 </script>
 </body>
 </html>
