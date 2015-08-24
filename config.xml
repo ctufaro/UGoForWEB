@@ -22,6 +22,9 @@
   <feature name="Notification">
     <param name="ios-package" value="CDVNotification" />
   </feature>
+  <feature name="Camera">
+    <param name="ios-package" value="CDVCamera" />
+  </feature>
   
   <gap:plugin name="org.apache.cordova.battery-status"/>
   <gap:plugin name="org.apache.cordova.camera"/>
