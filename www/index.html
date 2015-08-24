@@ -13,11 +13,41 @@
     <link href="css/signup.css" rel="stylesheet" />	
 </head>
 <body>
+    <script src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
 
+// Wait for device API libraries to load
+//
+document.addEventListener("deviceready", onDeviceReady, false);
+
+// device APIs are available
+//
+function onDeviceReady() {
+    // Empty
+}
+
+// alert dialog dismissed
+    function alertDismissed() {
+        // do something
+    }
+
+// Show a custom alertDismissed
+//
+function showAlert() {
+    navigator.notification.alert(
+        'You are the winner!',  // message
+        alertDismissed,         // callback
+        'Game Over',            // title
+        'Done'                  // buttonName
+    );
+}
+
+    </script>
 
 <span id="div_signup">
 
 <div class="wrap">
+    <p><a href="#" onclick="showAlert(); return false;">Show Alert</a></p>
 <!-- contact-form -->	
 <div class="contact-form" id="dialog">
 	<div class="logo">
@@ -96,36 +126,7 @@
 
 </span>
 
-<script src="cordova.js"></script>
-<script type="text/javascript" charset="utf-8">
 
-// Wait for device API libraries to load
-//
-document.addEventListener("deviceready", onDeviceReady, false);
-
-// device APIs are available
-//
-function onDeviceReady() {
-    // Empty
-}
-
-// alert dialog dismissed
-    function alertDismissed() {
-        // do something
-    }
-
-// Show a custom alertDismissed
-//
-function showAlert() {
-    navigator.notification.alert(
-        'You are the winner!',  // message
-        alertDismissed,         // callback
-        'Game Over',            // title
-        'Done'                  // buttonName
-    );
-}
-
-</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 <script src="js/pure.js"></script>	
