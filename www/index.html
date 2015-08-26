@@ -96,36 +96,12 @@
 
 </span>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-<script src="js/pure.js"></script>	
-<script src="js/iosOverlay.js"></script>
-<script src="js/spin.min.js"></script>	
-<script src="js/jquery.magnific-popup.min.js"></script>	
-<!------------------------------------>
+<script src="js/vendor/jquery.min.js"></script>
+<script src="js/vendor/pure.js"></script>	
+<script src="js/vendor/iosOverlay.js"></script>
+<script src="js/vendor/spin.min.js"></script>	
+<script src="js/vendor/jquery.magnific-popup.min.js"></script>	
 <script src="js/functions.js"></script>	
-<script>
-    $(function () {    
-   
-        $( "#btn_signup" ).click(function() {
-        
-            $('link[rel=stylesheet][href~="css/signup.css"]').remove();
-            $( "#div_signup" ).hide();
-            $( "#feed" ).show();
-            
-            //wire up wait calls
-            wireUpWait();
-
-            //pure template engine and ajax call
-            ajaxit($('.posts').html());
-
-            //getting users coordinates
-            getLocation();
-
-            //wiring up post pop-up, close button and post button
-            wireUpPosting();              
-        });   
-
-    });
-</script>
+<script src="js/main.js"></script>	
 </body>
 </html>
