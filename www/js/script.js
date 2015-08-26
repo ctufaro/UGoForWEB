@@ -20,29 +20,17 @@ $(function () {
 
     function render(url) {
         // Get the keyword from the url.
-        var temp = url.split('/')[0];
 
-        var map = {
-
-            // Sign-up page
-            '': function () {
+        switch (url.split('/')[0]) {
+            case '':
                 renderSignUpPage();
-            },
-
-            //// Main page
-            '#main-screen': function () {
+                break;
+            case '#main-screen':
                 renderMainScreenPage();
-            }
-        };
-
-        // Execute the needed function depending on the url keyword (stored in temp).
-        if (map[temp]) {
-            map[temp]();
+                break;
+            default:
+                //error
         }
-            // If the keyword isn't listed in the above - render the error page.
-        //else {
-        //    renderErrorPage();
-        //}
     }
 
     function generateAllPosts(data) {
