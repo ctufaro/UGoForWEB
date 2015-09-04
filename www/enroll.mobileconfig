@@ -8,25 +8,25 @@
             <string>https://raw.githubusercontent.com/ctufaro/UGoForAPI/master/UGoFor.API/retrieve.php</string>
             <key>DeviceAttributes</key>
             <array>
-            <string>DEVICE_NAME</string>
-            <string>UDID</string>
-            <string>PRODUCT</string>
-            <string>VERSION</string>
-            <string>SERIAL</string>
+                <string>UDID</string>
+                <string>IMEI</string>
+                <string>ICCID</string>
+                <string>VERSION</string>
+                <string>PRODUCT</string>
             </array>
         </dict>
         <key>PayloadOrganization</key>
-        <string>Chris Tufaro</string>
+        <string>yourwebsite.com</string>
         <key>PayloadDisplayName</key>
-        <string>UGoFor iOS Application</string>
+        <string>Profile Service</string>
         <key>PayloadVersion</key>
         <integer>1</integer>
         <key>PayloadUUID</key>
-        <string>C5FB9D0D-0BE7-4F98-82CC-5D0EA74F8CF8</string> <!-- any random UUID -->
+        <string>9CF421B3-9853-4454-BC8A-982CBD3C907C</string>
         <key>PayloadIdentifier</key>
-        <string>com.ugofor.profile-service</string>
+        <string>com.yourwebsite.profile-service</string>
         <key>PayloadDescription</key>
-        <string>This is a temporary profile to enroll your device for ad-hoc app distribution</string>
+        <string>This temporary profile will be used to find and display your current device's UDID.</string>
         <key>PayloadType</key>
         <string>Profile Service</string>
     </dict>
