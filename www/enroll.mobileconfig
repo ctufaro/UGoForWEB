@@ -5,7 +5,7 @@
         <key>PayloadContent</key>
         <dict>
             <key>URL</key>
-            <string>https://raw.githubusercontent.com/ctufaro/UGoForAPI/master/UGoFor.API/retrieve.php</string>
+            <string>http://htmlpreview.github.io/?https://raw.githubusercontent.com/ctufaro/UGoForAPI/master/UGoFor.API/retrieve.php</string>
             <key>DeviceAttributes</key>
             <array>
                 <string>UDID</string>
