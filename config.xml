@@ -47,10 +47,10 @@
   <gap:plugin name="org.apache.cordova.vibration"/>
   
   <!--Chris-->
-  <icon src="icon.png" />
-  <icon src="icon-60@3x.png" gap:platform="ios" width="180" height="180" />
-  <icon src="icon-60.png" gap:platform="ios" width="60" height="60" />
-  <icon src="icon-60@2x.png" gap:platform="ios" width="120" height="120" />  
+  <icon src="content/icon.png" />
+  <icon src="content/icon-60@3x.png" gap:platform="ios" width="180" height="180" />
+  <icon src="content/icon-60.png" gap:platform="ios" width="60" height="60" />
+  <icon src="content/icon-60@2x.png" gap:platform="ios" width="120" height="120" />  
   
   <icon src="www/res/icon/android/icon-36-ldpi.png" gap:platform="android" gap:qualifier="ldpi"/>
   <icon src="www/res/icon/android/icon-48-mdpi.png" gap:platform="android" gap:qualifier="mdpi"/>
@@ -63,9 +63,9 @@
   <icon src="www/res/icon/windows-phone/icon-173-tile.png" gap:platform="winphone" gap:role="background"/>
   
   <!--Chris-->
-  <gap:splash src="splash.png" />
-  <gap:splash src="Default-667h@2x.png" gap:platform="ios" width="750" height="1334" />
-  <gap:splash src="Default-Portrait-736h@3x.png" gap:platform="ios" width="1242" height="2208" />
+  <gap:splash src="content/splash.png" />
+  <gap:splash src="content/Default-667h@2x.png" gap:platform="ios" width="750" height="1334" />
+  <gap:splash src="content/Default-Portrait-736h@3x.png" gap:platform="ios" width="1242" height="2208" />
   
   <gap:splash src="www/res/screen/android/screen-ldpi-portrait.png" gap:platform="android" gap:qualifier="port-ldpi"/>
   <gap:splash src="www/res/screen/android/screen-mdpi-portrait.png" gap:platform="android" gap:qualifier="port-mdpi"/>
