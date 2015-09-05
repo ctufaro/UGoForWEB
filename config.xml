@@ -63,7 +63,7 @@
   <icon src="www/res/icon/windows-phone/icon-173-tile.png" gap:platform="winphone" gap:role="background"/>
   
   <!--Chris-->
-  <gap:splash src="splash.png" />
+  <gap:splash src="splash.jpg" />
   <gap:splash src="Default-667h@2x.png" gap:platform="ios" width="750" height="1334" />
   <gap:splash src="Default-Portrait-736h@3x.png" gap:platform="ios" width="1242" height="2208" />
   
