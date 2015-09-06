@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    $("#btn_signup").click(function () {
+    //$("#btn_signup").click(function () {
 
         $('link[rel=stylesheet][href~="css/signup.css"]').remove();
         $("#div_signup").hide();
@@ -17,6 +17,6 @@
 
         //wiring up post pop-up, close button and post button
         wireUpPosting();
-    });
+    //});
 
 });

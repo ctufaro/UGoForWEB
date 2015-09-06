@@ -1,0 +1,16 @@
+﻿.bottom-bar{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    margin-bottom: -3px;
+    /*background-color:Red;*/
+    z-index:1000;
+}
+
+.icon-bar > * {
+    padding: .25rem;
+}
+
+nav.top-bar {
+    text-align:center;
+} 

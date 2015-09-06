@@ -6,102 +6,124 @@
     <title>UGoFor | What Could U Go For?</title>
     <link href='http://fonts.googleapis.com/css?family=Economica:700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-    <link href="css/foundation.min.css" rel="stylesheet"/>
-    <link href="css/main.css" rel="stylesheet"/>
-	<link href="css/magnific-popup-modal.css" rel="stylesheet"/>
-	<link href="css/iosOverlay.css" rel="stylesheet" >
-    <link href="css/signup.css" rel="stylesheet" />	
+    <!--<link href="css/foundation.min.css" rel="stylesheet" />-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css" rel="stylesheet" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/magnific-popup-modal.css" rel="stylesheet" />
+    <link href="css/iosOverlay.css" rel="stylesheet">
+    <link href="css/signup.css" rel="stylesheet" />
+    <link href="css/nav-bar-hacks.css" rel="stylesheet" />
 </head>
 <body>
 
 
-<span id="div_signup">
+    <span id="div_signup" style="display:none;">
 
-<div class="wrap">
-<!-- contact-form -->	
-<div class="contact-form" id="dialog">
-	<div class="logo">
-		<h1>UGoFor</h1>
-	</div>	
-
-	<div class="clear"></div>
-	<!-- form -->
-	<div class="contact_form" name="contact_form">
-        <ul>
-            <li>
-                <input type="email" class="textbox1" name="email" placeholder="email" />
-            </li>        
-            <li>
-                <input type="email" class="textbox1" name="username" placeholder="username" />
-            </li>
-            <li>
-                <input type="url" name="website" class="textbox1" placeholder="password" />
-            </li>
-      </ul>
-      <button style="background-color:#322ee6;width:100%;margin-top:6%;font-family: 'Pacifico', sans-serif;font-size:24px;" id="btn_signup">Register</button>
-      <div style="width:100%;margin-top:-6%;font-family: 'Pacifico', sans-serif;font-size:24px; color:White;text-align:center;padding-top:4px;">Registered Already?</div>
-      <div class="clear"></div>	
-    </div>
-</div>
-
-</div>
-
-</span>
-
-<span id="feed" style="display:none;">
-
-<div id="test-modal" class="white-popup-block mfp-hide">
-    <h1>UGoFor?</h1>
-    <p>
-        What food could you go for?
-    </p>
-    Food:<br><input type="text" id="txtSmallComment" name="food" style="width:100%;height:40px;font-size:16px;"><br>
-    Place to get it:<br><input type="text" id="txtBigComment" name="description" style="width:100%;height:40px;font-size:16px;"><br><br>    <p>
-        <a href="#" class="button success" id="btnPost">Post</a>&nbsp;&nbsp;
-        <a href="#" class="button popup-modal-dismiss" id="btnCancel">Cancel</a>
-    </p>
-</div>
-
-<div class="row page">
-
-    <header id="main_header">
-        <nav>
-            <h1><a href="#">UGoFor</a></h1>
-            <div class="pull-right">
-                <span class="icon_nav">
-                    <a href="#" class="home-icon"></a>
-                    <a href="#test-modal" class="post-icon popup-modal"></a>
-                    <a href="#" class="genie-icon"></a>
-                </span>
+        <div class=" wrap">
+        <!-- contact-form -->
+        <div class="contact-form" id="dialog">
+            <div class="logo">
+                <h1>UGoFor</h1>
             </div>
-        </nav>
-    </header>
-    <span class="posts" style="display:none">
-        <article id="post">
-            <img class="avatar" src="" style="float: left" />
-            <div class="arrow_box">
-                <span class="day pull-right"></span>
+
+            <div class="clear"></div>
+            <!-- form -->
+            <div class="contact_form" name="contact_form">
+                <ul>
+                    <li>
+                        <input type="email" class="textbox1" name="email" placeholder="email" />
+                    </li>
+                    <li>
+                        <input type="email" class="textbox1" name="username" placeholder="username" />
+                    </li>
+                    <li>
+                        <input type="url" name="website" class="textbox1" placeholder="password" />
+                    </li>
+                </ul>
+                <button style="background-color:#322ee6;width:100%;margin-top:6%;font-family: 'Pacifico', sans-serif;font-size:24px;" id="btn_signup">Register</button>
+                <div style="width:100%;margin-top:-6%;font-family: 'Pacifico', sans-serif;font-size:24px; color:White;text-align:center;padding-top:4px;">Registered Already?</div>
+                <div class="clear"></div>
             </div>
-            <span class="collection"><img class="cover" src=""></span>
-            <div class="big-comment">
-                <p></p>
-                <span class="pull-right">
-                    <a href="#" class="read-more"></a>
-                    <a href="#" class="heart"></a>
-                </span>
-            </div>
-        </article>
+        </div>
+
+        </div>
+
     </span>
-</div>
 
-</span>
+    <span id="feed" style="display:none;">
 
-<script src="js/vendor/jquery.min.js"></script>
-<script src="js/vendor/pure.js"></script>	
-<script src="js/vendor/iosOverlay.js"></script>
-<script src="js/vendor/spin.min.js"></script>	
-<script src="js/vendor/jquery.magnific-popup.min.js"></script>	
-<script src="js/functions.js"></script>	
-<script src="js/main.js"></script>	
+        <div id="test-modal" class="white-popup-block mfp-hide">
+            <h1><img src="img/logo-gray.png" style="height:40px;"/></h1>
+            <p>
+                What food could you go for?
+            </p>
+                Food:<br><input type="text" id="txtSmallComment" name="food" style="width:100%;height:40px;font-size:16px;">
+                Place to get it:<br><input type="text" id="txtBigComment" name="description" style="width:100%;height:40px;font-size:16px;"><p>
+                <a href="#" class="button success" id="btnPost">Post</a>&nbsp;&nbsp;
+                <a href="#" class="button popup-modal-dismiss" id="btnCancel">Cancel</a>
+            </p>
+        </div>
+
+        <div class="row page">
+
+            <div style="padding-bottom:18px; background-color:#333333"></div>
+            <div class="sticky">
+                <nav class="top-bar" data-topbar role="navigation">
+                    <ul class="title-area">
+                        <li class="name">
+                            <a href="#"><img src="img/logo.png" style="height:30px;margin-top:7px;" /></a>
+                        </li>
+                        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                        <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <span class="posts" style="display:none">
+                <article id="post">
+                    <img class="avatar" src="" style="float: left" />
+                    <div class="arrow_box">
+                        <span class="day pull-right"></span>
+                    </div>
+                    <span class="collection"><img class="cover" src=""></span>
+                    <div class="big-comment">
+                        <p></p>
+                        <span class="pull-right">
+                            <a href="#" class="read-more"></a>
+                            <a href="#" class="heart"></a>
+                        </span>
+                    </div>
+                </article>
+            </span>
+            <div style="padding-top:35px;"></div>
+            <div class="icon-bar five-up bottom-bar">
+
+                <a class="item ">
+                    <i class="fi-home"></i>
+                </a>
+                <a class="item">
+                    <i class="fi-bookmark"></i>
+                </a>
+                <a class="item popup-modal" href="#test-modal">
+                    <i class="fi-pencil"></i>
+                </a>
+                <a class="item">
+                    <i class="fi-heart"></i>
+                </a>
+                <a class="item">
+                    <i class="fi-like"></i>
+                </a>
+            </div>
+        </div>
+
+    </span>
+
+    <script src="js/vendor/jquery.min.js"></script>
+    <script src="js/vendor/pure.js"></script>
+    <script src="js/vendor/iosOverlay.js"></script>
+    <script src="js/vendor/spin.min.js"></script>
+    <script src="js/vendor/jquery.magnific-popup.min.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
