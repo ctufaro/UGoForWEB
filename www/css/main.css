@@ -203,6 +203,12 @@ a.icon {
     -moz-box-shadow: 0px 6px 3px 0px rgba(179, 179, 179, 0.81);
     box-shadow: 0px 6px 3px 0px rgba(179, 179, 179, 0.81);
 }
+
+.sign-login {
+    background: #fff;
+    padding: 6px 8px;
+}
+
 .read-more {
     background: url('../img/circle.png');
     background-repeat: no-repeat;
