@@ -16,19 +16,45 @@
 </head>
 <body>
 
-    <span id="div_signup" style="display:block;">
+    <span id="signOrLogin" style="display:none;">
         <div class="row page">
             <img class="avatar" src="" style="float: left" />
             <img src="img/burgersign.jpg" class="cover">
             <div class="sign-login" style="text-align:center;">
                 <div style="padding-top:15px;"></div>
-                <a href="#" id="btn_signup" class="button expand" style="background-color:#f79421;"><img src="img/loginbtn.png" /></a>
-                <a href="#" class="button success expand" style="background-color:#525e6a;"><img src="img/signupbtn.png" /></a>
+                <a href="#main-screen" id="btn_signup" class="button expand" style="background-color:#f79421;"><img src="img/loginbtn.png" /></a>
+                <a href="#signUp" class="button success expand" style="background-color:#525e6a;"><img src="img/signupbtn.png" /></a>
             </div>
-        </div> 
+        </div>
     </span>
 
-    <span id="feed" style="display:none;">
+    <span id="signUp" style="display:none;">
+        <div class="fixed" style="padding-top:18px; background-color:#333333">
+            <nav class="top-bar" data-topbar role="navigation">
+                <ul class="title-area">
+                    <li class="name">
+                        <a href="#"><img src="img/logo-left.png" style="height:30px;margin-top:7px;" /></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </span>
+
+    <span id="login" style="display:none;">
+        <div class="fixed" style="padding-top:18px; background-color:#333333">
+            <nav class="top-bar" data-topbar role="navigation">
+                <ul class="title-area">
+                    <li class="name">
+                        <a href="#"><img src="img/logo.png" style="height:30px;margin-top:7px;" /></a>
+                    </li>
+                    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                    <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </span>
+
+    <span id="main-screen" style="display:none;">
         <div id="test-modal" class="white-popup-block mfp-hide">
             <h1><img src="img/logo-gray.png" style="height:40px;" /></h1>
             <p>
@@ -97,7 +123,7 @@
     <script src="js/vendor/spin.min.js"></script>
     <script src="js/vendor/jquery.magnific-popup.min.js"></script>
     <script src="js/functions.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/script.js"></script>
     <script src="js/jquery.touch-multiselect.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
     <script>

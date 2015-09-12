@@ -1,16 +1,8 @@
 ﻿//http://tutorialzine.com/2015/02/single-page-app-without-a-framework/
 
+var loaded = false;
+
 $(function () {
-
-    $.getJSON("http://ugoforapi.azurewebsites.net/api/posts", function (data) {
-        // Get data about our products from products.json.
-
-        // Call a function that will turn that data into HTML.
-        generateAllPosts(data);
-
-        // Manually trigger a hashchange to start the app.
-        $(window).trigger('hashchange');
-    });
 
     $(window).on('hashchange', function () {
         // On every hash change the render function is called with the new hash.
@@ -18,12 +10,19 @@ $(function () {
         render(window.location.hash);
     });
 
+    $(window).trigger('hashchange');
+
     function render(url) {
         // Get the keyword from the url.
-
         switch (url.split('/')[0]) {
             case '':
+                renderSignOrLogPage();
+                break;
+            case '#signUp':
                 renderSignUpPage();
+                break;
+            case '#login':
+                renderLoginPage();
                 break;
             case '#main-screen':
                 renderMainScreenPage();
@@ -33,47 +32,54 @@ $(function () {
         }
     }
 
-    function generateAllPosts(data) {
-
-        // This function is called only once on page load.
-        // Grab the template script
-        var theTemplateScript = $("#posts-template").html();
-
-        // Compile the template
-        var theTemplate = Handlebars.compile(theTemplateScript);
-
-        // Pass our data to the template
-        var theCompiledHtml = theTemplate(data);
-
-        $('#allposts').html(theCompiledHtml);
-
+    function renderSignOrLogPage() {
+        //if remember me is checked renderMainScreenPage() else
+        renderSelect("#signOrLogin");
     }
 
     function renderSignUpPage() {
-        $(".signup").show();
+        renderSelect("#signUp");
+    }
+
+    function renderLoginPage() {
+        renderSelect("#login");
     }
 
     function renderMainScreenPage() {
-        $(".signup").hide();
-        $('link[rel=stylesheet][href~="css/signup.css"]').remove();
-        $(".main-screen").show();
+        renderSelect("#main-screen");
+
+        if(!loaded){
+            //wire up wait calls
+            wireUpWait();
+
+            //pure template engine and ajax call
+            ajaxit($('.posts').html());
+
+            //getting users coordinates
+            getLocation();
+
+            //wiring up post pop-up, close button and post button
+            wireUpPosting();
+
+            //prevent loading twice
+            loaded = true;
+        }
     }
 
-    function renderSingleProductPage(index, data) {
-        // Shows the Single Product Page with appropriate data.
-    }
-
-    function renderFilterResults(filters, products) {
-        // Crates an object with filtered products and passes it to renderProductsPage.
-        renderProductsPage(results);
+    function renderSelect(page) {
+        var pages = ["#signOrLogin", "#signUp", "#login", "#main-screen"];
+        jQuery.each(pages, function (index, value) {
+            if (page != value) {
+                $(value).hide();
+            }
+            else {
+                $(value).show();
+            }
+        });
     }
 
     function renderErrorPage() {
         // Shows the error page.
-    }
-
-    function createQueryHash(filters) {
-        // Get the filters object, turn it into a string and write it into the hash.
     }
 
 });
