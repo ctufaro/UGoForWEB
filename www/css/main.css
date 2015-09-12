@@ -371,6 +371,10 @@ color: #fff;
 	height: 70px;
 	width: 100%
 }
+.extra-space3 {
+	height: 80px;
+	width: 100%
+}
 option:checked {
 	display: none
 }
