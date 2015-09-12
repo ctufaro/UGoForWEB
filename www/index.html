@@ -41,8 +41,7 @@
             </p>
         </div>
         <div class="row page">
-            <div style="padding-bottom:18px; background-color:#333333"></div>
-            <div class="fixed">
+            <div class="fixed" style="padding-top:18px; background-color:#333333">
                 <nav class="top-bar" data-topbar role="navigation">
                     <ul class="title-area">
                         <li class="name">
@@ -53,6 +52,7 @@
                     </ul>
                 </nav>
             </div>
+            <div class="extra-space2"></div>
             <span class="posts" style="display:none">
                 <article id="post">
                     <img class="avatar" src="" style="float: left" />
@@ -99,17 +99,14 @@
     <script src="js/functions.js"></script>
     <script src="js/main.js"></script>
     <script src="js/jquery.touch-multiselect.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
-<script>
-	$(document).foundation();
-</script>	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
     <script>
         $('.post-icons').touchMultiSelect();
         $('.touchMultiSelect').addClass('pull-right');
         $('.touchMultiSelect li:nth-child(2)').addClass('icon-share');
         $('.touchMultiSelect li:nth-child(3)').addClass('icon-sweet');
         $('.touchMultiSelect li:nth-child(4)').addClass('icon-heart');
+        $(document).foundation();
     </script>
 </body>
 </html>
