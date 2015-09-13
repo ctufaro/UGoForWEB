@@ -386,8 +386,8 @@ option:checked {
 .signup-panel {
   border-radius: 5px;
   border: 1px solid #ccc;
-  padding: 15px;
-  margin-top: 30px;
+  padding: 15px 15px 5px 15px;
+  margin-top: 80px;
 }
 .signup-panel i {
   font-size: 30px;
@@ -396,6 +396,7 @@ option:checked {
 }
 .signup-panel form input, .signup-panel form span {
   height: 50px;
+  font-size: 18px;
 }
 .signup-panel .welcome {
   font-size: 26px;
@@ -403,10 +404,21 @@ option:checked {
   margin-left: 0;
 }
 .signup-panel p {
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 200;
-  margin-left: 25%;
 }
-.signup-panel .button {
-  margin-left: 35%;
+
+.signup-panel a.button img {
+  height: 30px;
 }
+
+.signup-panel a.button.profile {
+  background-color: mediumspringgreen;
+  padding:3px;
+}
+
+.signup-panel .profilelbl {
+  padding-left:5px;
+  margin-bottom:50px;
+}
+
