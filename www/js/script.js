@@ -10,17 +10,17 @@ $(function () {
         render(window.location.hash);
     });
 
-    $(window).trigger('hashchange');
+    renderSignOrLogPage();
 
     function render(url) {
         // Get the keyword from the url.
         switch (url.split('/')[0]) {
-            case '':
+            case '#signOrLogin':
                 renderSignOrLogPage();
                 break;
             case '#signUp':
                 renderSignUpPage();
-                break;
+                break;				
             case '#login':
                 renderLoginPage();
                 break;

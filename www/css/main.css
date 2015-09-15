@@ -384,10 +384,10 @@ option:checked {
 	text-indent: -9999px;
 }
 .signup-panel {
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  /*border-radius: 5px;
+  border: 1px solid #ccc;*/
   padding: 15px 15px 5px 15px;
-  margin-top: 80px;
+  margin-top: 60px;
 }
 .signup-panel i {
   font-size: 30px;
@@ -420,5 +420,10 @@ option:checked {
 .signup-panel .profilelbl {
   padding-left:5px;
   margin-bottom:50px;
+}
+
+.signup-panel .profilephoto {
+  text-align:center;
+  font-size:16px;
 }
 
