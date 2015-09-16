@@ -173,7 +173,7 @@ function wireUpPosting(){
 
 function wireUpControlEvents() {
     $("#profileImage").click(function () {
-        getPhoto(pictureSource.PHOTOLIBRARY);
+        capturePhoto();
     });
 }
 
