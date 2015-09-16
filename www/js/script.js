@@ -10,7 +10,14 @@ $(function () {
         render(window.location.hash);
     });
 
+    // Render default page
     renderSignOrLogPage();
+
+    // Wire up UI Events
+    wireUpControlEvents();
+
+    // Wait for device API libraries to load    
+    document.addEventListener("deviceready", onDeviceReady, false);
 
     function render(url) {
         // Get the keyword from the url.
