@@ -173,7 +173,7 @@ function wireUpPosting(){
 
 function wireUpControlEvents() {
     $("#profileImage").click(function () {
-        capturePhoto();
+        showConfirm();
     });
 }
 
@@ -191,4 +191,19 @@ function generateAllPosts(data) {
 
     $('#allposts').html(theCompiledHtml);
 
+}
+// process the confirmation dialog result
+function onConfirm(buttonIndex) {
+    alert('You selected button ' + buttonIndex);
+}
+
+// Show a custom confirmation dialog
+//
+function showConfirm() {
+    navigator.notification.confirm(
+        'You are the winner!', // message
+         onConfirm,            // callback to invoke with index of button pressed
+        'Game Over',           // title
+        ['Restart','Exit']         // buttonLabels
+    );
 }
