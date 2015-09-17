@@ -172,8 +172,22 @@ function wireUpPosting(){
 }
 
 function wireUpControlEvents() {
-    $("#profileImage").click(function () {
+    
+	$("#profileImage").click(function () {
         testShareSheet();
+    });
+	
+	$("#mainLogomage").click(function () {
+		
+        var success = function(status) {
+            alert('Message: ' + status);
+        }
+
+        var error = function(status) {
+            alert('Error: ' + status);
+        }
+
+        window.cache.clear( success, error );
     });
 }
 
