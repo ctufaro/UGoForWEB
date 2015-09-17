@@ -201,12 +201,11 @@ var callback = function (buttonIndex) {
 };
 function testShareSheet() {
     var options = {
-        'title': 'What do you want with this image?',
-        'buttonLabels': ['Share via Facebook', 'Share via Twitter'],
+        'title': 'Where do you want to take the picture from?',
+        'buttonLabels': ['Camera', 'Photo Library'],
         'addCancelButtonWithLabel': 'Cancel',
         'androidEnableCancelButton': true,
-        'winphoneEnableCancelButton': true,
-        'addDestructiveButtonWithLabel': 'Delete it'
+        'winphoneEnableCancelButton': true
     };
     window.plugins.actionsheet.show(options, callback);
 }
