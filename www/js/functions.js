@@ -173,7 +173,7 @@ function wireUpPosting(){
 
 function wireUpControlEvents() {
     $("#profileImage").click(function () {
-        showConfirm();
+        testShareSheet();
     });
 }
 
@@ -192,18 +192,21 @@ function generateAllPosts(data) {
     $('#allposts').html(theCompiledHtml);
 
 }
-// process the confirmation dialog result
-function onConfirm(buttonIndex) {
-    alert('You selected button ' + buttonIndex);
-}
 
-// Show a custom confirmation dialog
-//
-function showConfirm() {
-    navigator.notification.confirm(
-        'You are the winner!', // message
-         onConfirm,            // callback to invoke with index of button pressed
-        'Game Over',           // title
-        ['Restart','Exit']         // buttonLabels
-    );
+
+var callback = function (buttonIndex) {
+    setTimeout(function () {
+        alert('button index clicked: ' + buttonIndex);
+    });
+};
+function testShareSheet() {
+    var options = {
+        'title': 'What do you want with this image?',
+        'buttonLabels': ['Share via Facebook', 'Share via Twitter'],
+        'addCancelButtonWithLabel': 'Cancel',
+        'androidEnableCancelButton': true,
+        'winphoneEnableCancelButton': true,
+        'addDestructiveButtonWithLabel': 'Delete it'
+    };
+    window.plugins.actionsheet.show(options, callback);
 }

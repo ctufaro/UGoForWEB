@@ -46,6 +46,9 @@
   <gap:plugin name="org.apache.cordova.splashscreen"/>
   <gap:plugin name="org.apache.cordova.vibration"/>
   
+  <!--Third Party Plugins-->
+  <gap:plugin name="nl.x-services.plugins.actionsheet" />
+  
   <!--Chris-->
   <icon src="content/icon.png" />
   <icon src="content/icon-60@3x.png" gap:platform="ios" width="180" height="180" />
