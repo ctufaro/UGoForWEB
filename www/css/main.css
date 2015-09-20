@@ -15,7 +15,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Pacifico', cursive;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 #main_header {
 	margin-top: -15px;
@@ -449,7 +449,7 @@ option:checked {
     position: absolute;
     top: 50%;
     width: 9999px;
-    border-top: 4px double #333;
+    border-top: 4px double #525e6a;
 }
 
 .strike > span:before {
@@ -461,4 +461,6 @@ option:checked {
     left: 100%;
     margin-left: 15px;
 }
+
+
 

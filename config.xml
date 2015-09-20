@@ -47,7 +47,6 @@
   <gap:plugin name="org.apache.cordova.vibration"/>
   
   <!--Third Party Plugins-->
-  <gap:plugin name="nl.x-services.plugins.actionsheet" />
   <gap:plugin name="com.sharinglabs.cordova.plugin.cache" version="1.0.0" />  
   
   <!--Chris-->
