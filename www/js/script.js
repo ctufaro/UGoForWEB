@@ -174,6 +174,7 @@ var Page = (function () {
                     "TimePosted": "xxx", "PostedImage": "xxx", "BigComment": $("#txtBigComment").val(),
                     "Location": coordinates
                 },
+                global: false,
                 error: function (xhr, error) {
                     console.debug(xhr); console.debug(error);
                 },
