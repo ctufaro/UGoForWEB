@@ -125,7 +125,7 @@ var Page = (function () {
 
         //do something with these
         var appendMe = "<article id='post'> <img class='avatar' style='float: left' src='{profileurl}'> <div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div> <img class='cover' src='{foodurl}'> <div class='big-comment'> <p>{bigcomment}</p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
-        var postsNonPure = "<article id='post'> <img class='avatar' style='float: left' src=''> <div class='arrow_box'><span class='day pull-right'>{day}</span> </div> <img class='cover' src=''> <div class='big-comment'> <p></p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
+        var postsNonPure = "<article id='post'> <img class='avatar' style='float: left' src=''> <div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'> <p></p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
 
         $("#profileImage").click(function () {
             navigator.notification.confirm(
@@ -192,6 +192,7 @@ var Page = (function () {
         });
 
         $("#btnRefresh").click(function () {
+            $(".posts").css("display", "none");
             $(".posts").html(postsNonPure);
             loaded = false;
             renderMainScreenPage();
