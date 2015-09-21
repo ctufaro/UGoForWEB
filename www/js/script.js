@@ -138,15 +138,15 @@ var Page = (function () {
 
         $("#mainLogomage").click(function () {
 
-            //var success = function (status) {
-            //    alert('Message: ' + status);
-            //}
+            var success = function (status) {
+                alert('Message: ' + status);
+            }
 
-            //var error = function (status) {
-            //    alert('Error: ' + status);
-            //}
+            var error = function (status) {
+                alert('Error: ' + status);
+            }
 
-            //window.cache.clear(success, error);
+            window.cache.clear(success, error);
         });
 
         $('.popup-modal').magnificPopup({type: 'inline',preloader: false,focus: '#username', modal: true});
