@@ -2,6 +2,7 @@
 var Page = (function () {
 
     var loaded = false;
+    var imageContainer = $('#imagecontainer');
 
     var initHTML = "";
 
@@ -69,8 +70,8 @@ var Page = (function () {
             });
 
             $(document).ajaxComplete(function () {
-                $(".posts").css("display", "block");
-                $(".ui-ios-overlay").css("display", "none");
+                //$(".posts").css("display", "block");
+                //$(".ui-ios-overlay").css("display", "none");
             });
 
             $.ajax({
@@ -89,7 +90,13 @@ var Page = (function () {
                             }
                         }
                     };
-                    $p('.posts').render(data, directive);
+                    $p('.posts').render(data, directive);                   
+                    imageContainer.imagesLoaded().always(function () {
+                        //http://desandro.github.io/imagesloaded/
+                        $(".posts").css("display", "block");
+                        $(".ui-ios-overlay").css("display", "none");
+                    });
+                       
                 }
             });
 
