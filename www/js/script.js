@@ -83,6 +83,7 @@ var Page = (function () {
                         'article': {
                             'post<-': { //for each entry in posts name the element 'post'
                                 '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
+                                '.avatar-profilename': 'post.Username',
                                 '+.arrow_box': 'post.SmallComment',
                                 '.cover@src': 'post.PostedImage',
                                 '.day': 'post.TimePosted',
