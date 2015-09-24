@@ -89,6 +89,20 @@ h6 {
 
 .icon_nav a { margin-right: 15px; }
 .icon_nav a:last-child { margin-right: 0; width: 29px }
+
+
+.back-button{
+    position:absolute;
+    left:0px;
+}
+
+.back-button img{
+    height:25px;
+    width:25px;
+    margin-left:8px;
+    margin-bottom:5px;
+}
+
 #post {
     margin-bottom: 30px;
 }
