@@ -14,3 +14,13 @@
 nav.top-bar {
     text-align:center;
 } 
+
+@media only screen and (min-width: 40.0625em) {
+    .top-bar .title-area {
+        position: relative;
+        left: 50%; 
+    }
+    .top-bar .toggle-topbar {
+        display: none; /*fix this*/
+    }
+}
