@@ -285,6 +285,9 @@ var PGPlugins = (function () {
         var params = new Object();
         options.params = params;
         options.chunkedMode = false;
+        options.headers = {
+            Connection: "close"
+        };
         var ft = new FileTransfer();
         ft.upload(imageURI, "http://ugoforapi.azurewebsites.net/blobs/upload", win, fail, options);
 
