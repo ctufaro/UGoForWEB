@@ -125,7 +125,7 @@ var Page = (function () {
     var renderUIEvents = function () {
 
         //do something with these
-        var appendMe = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'></div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div> <img class='cover' src='{foodurl}'> <div class='big-comment'> <p>{bigcomment}</p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
+        var appendMe = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'>{profilename}</div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div> <img class='cover' src='{foodurl}'> <div class='big-comment'> <p>{bigcomment}</p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
         var postsNonPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'> <p></p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
 
         $("#profileImage").click(function () {
@@ -181,6 +181,7 @@ var Page = (function () {
                 },
                 success: function (data) {
                     appendMe = appendMe.replace("{profileurl}", data.ProfilePicURL);
+                    appendMe = appendMe.replace("{profilename}", data.Username);
                     appendMe = appendMe.replace("{littlecomment}", data.SmallComment);
                     appendMe = appendMe.replace("{day}", data.TimePosted);
                     appendMe = appendMe.replace("{foodurl}", data.PostedImage);
@@ -211,6 +212,7 @@ var PGPlugins = (function () {
     var gpscoordinates = "";
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value
+    var retries = 0;
 
     var init = function () {
 
@@ -235,18 +237,54 @@ var PGPlugins = (function () {
         gpscoordinates = "";
     };
 
+    //capture success
     var onPhotoDataSuccess = function (imageData) {
         var smallImage = document.getElementById('profileImage');
         smallImage.style.display = 'block';
         smallImage.src = "data:image/jpeg;base64," + imageData;
     }
 
+    //gallery success
     var onPhotoURISuccess = function (imageURI) {
         var smallImage = document.getElementById('profileImage');
         smallImage.style.display = 'block';
         smallImage.src = imageURI;
+
+        var win = function (r) {
+            clearCache();
+            retries = 0;
+            alert('Done!');
+        }
+
+        var fail = function (error) {            
+            if (retries == 0) {
+                retries++
+                setTimeout(function () {
+                    onPhotoURISuccess(imageURI)
+                }, 1000)
+            } else {
+                retries = 0;
+                clearCache();
+                alert('Something wrong happened! Error: ' + error.code);
+            }
+        }
+
+        var options = new FileUploadOptions();
+        options.fileKey = "file";
+        options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+        options.mimeType = "image/jpeg";
+        options.chunkedMode = true;
+        options.headers = { Connection: "close" };
+        options.params = {}; // if we need to send parameters to the server request
+        var ft = new FileTransfer();
+        ft.upload(imageURI, encodeURI("http://ugoforapi.azurewebsites.net/api/posts"), win, fail, options);
     }
 
+    var clearCache = function() {
+        navigator.camera.cleanup();
+    }
+
+    //using the camera
     var capturePhoto = function (qual) {
         navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
             quality: 10, allowEdit: true,
@@ -256,6 +294,7 @@ var PGPlugins = (function () {
         });
     }
 
+    //using the gallery
     var getPhoto = function (source, qual) {
         navigator.camera.getPicture(onPhotoURISuccess, onFail, {
             quality: 10, allowEdit: true,
