@@ -242,6 +242,7 @@ var PGPlugins = (function () {
         var smallImage = document.getElementById('profileImage');
         smallImage.style.display = 'block';
         smallImage.src = "data:image/jpeg;base64," + imageData;
+        imageUpload(smallImage.src);
     }
 
     //gallery success
@@ -249,14 +250,20 @@ var PGPlugins = (function () {
         var smallImage = document.getElementById('profileImage');
         smallImage.style.display = 'block';
         smallImage.src = imageURI;
+        imageUpload(imageURI);
+    }
 
+    var imageUpload = function (imageURI) {
         var win = function (r) {
             clearCache();
             retries = 0;
             alert('Done!');
+            console.log("Code = " + r.responseCode);
+            console.log("Response = " + r.response);
+            console.log("Sent = " + r.bytesSent);
         }
 
-        var fail = function (error) {            
+        var fail = function (error) {
             if (retries == 0) {
                 retries++
                 setTimeout(function () {
@@ -265,7 +272,9 @@ var PGPlugins = (function () {
             } else {
                 retries = 0;
                 clearCache();
-                alert('Something wrong happened! Error: ' + error.code);
+                alert("An error has occurred: Code = " + error.code);
+                console.log("upload error source " + error.source);
+                console.log("upload error target " + error.target);
             }
         }
 
@@ -273,11 +282,12 @@ var PGPlugins = (function () {
         options.fileKey = "file";
         options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
         options.mimeType = "image/jpeg";
-        options.chunkedMode = true;
-        options.headers = { Connection: "close" };
-        options.params = {}; // if we need to send parameters to the server request
+        var params = new Object();
+        options.params = params;
+        options.chunkedMode = false;
         var ft = new FileTransfer();
-        ft.upload(imageURI, encodeURI("http://ugoforapi.azurewebsites.net/api/posts"), win, fail, options);
+        ft.upload(imageURI, "http://localhost:26684/api/posts", win, fail, options);
+
     }
 
     var clearCache = function() {
