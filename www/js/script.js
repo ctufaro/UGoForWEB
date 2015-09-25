@@ -286,7 +286,7 @@ var PGPlugins = (function () {
         options.params = params;
         options.chunkedMode = false;
         var ft = new FileTransfer();
-        ft.upload(imageURI, "http://localhost:26684/api/posts", win, fail, options);
+        ft.upload(imageURI, "http://ugoforapi.azurewebsites.net/blobs/upload", win, fail, options);
 
     }
 
