@@ -60,13 +60,7 @@ var Page = (function () {
 
             //wire up wait calls
             $(document).ajaxStart(function () {
-                if ($(".ui-ios-overlay").length) {
-                    $(".ui-ios-overlay").css("display", "block");
-                }
-                else {
-                    //iosOverlay.js
-                    createLoadingSpinner();
-                }
+                renderSpinner("Loading");
             });
 
             $(document).ajaxComplete(function () {
@@ -120,6 +114,18 @@ var Page = (function () {
 
     var renderErrorPage = function () {
         // Shows the error page.
+    }
+
+    var renderSpinner = function (newText) {
+        if ($(".ui-ios-overlay").length) {
+            $(".ui-ios-overlay").css("display", "block");
+        }
+        else {
+            //iosOverlay.js
+            createLoadingSpinner();
+        }
+
+        $('.ui-ios-overlay').parent().find('.title').text(newText);
     }
 
     var renderUIEvents = function () {
@@ -200,9 +206,13 @@ var Page = (function () {
             renderMainScreenPage();
             console.log("loaded");
         });
+
+        $("#signUpNewUser").click(function () {
+            PGPlugins.imageUpload();
+        });
     };
 
-    return { init: init };
+    return { init: init, renderSpinner : renderSpinner };
 
 })();
 
@@ -213,6 +223,7 @@ var PGPlugins = (function () {
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value
     var retries = 0;
+    var mainImageURI = ""
 
     var init = function () {
 
@@ -224,6 +235,7 @@ var PGPlugins = (function () {
         destinationType = navigator.camera.DestinationType;
     };
 
+    //GPS METHODS
     var getGPSCoordinates = function () {
         return gpscoordinates;
     };
@@ -237,30 +249,29 @@ var PGPlugins = (function () {
         gpscoordinates = "";
     };
 
-    //capture success
-    var onPhotoDataSuccess = function (imageData) {
+    //CAMERA METHODS
+    var onPhotoDataSuccess = function (imageURI) {
         var smallImage = document.getElementById('profileImage');
         smallImage.style.display = 'block';
-        smallImage.src = "data:image/jpeg;base64," + imageData;
-        imageUpload(smallImage.src);
+        mainImageURI = imageURI;
+        smallImage.src = imageURI + "?guid=" + guid();
     }
 
-    //gallery success
-    var onPhotoURISuccess = function (imageURI) {
-        var smallImage = document.getElementById('profileImage');
-        smallImage.style.display = 'block';
-        smallImage.src = imageURI;
-        imageUpload(imageURI);
-    }
+    //main upload method
+    var imageUpload = function () {
 
-    var imageUpload = function (imageURI) {
+        Page.renderSpinner("Registering");
+
         var win = function (r) {
-            clearCache();
+            //Getting the new userid from the response
+            navigator.camera.cleanup();
             retries = 0;
-            alert('Done!');
+            $(".ui-ios-overlay").css("display", "none");
             console.log("Code = " + r.responseCode);
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
+            var str = JSON.stringify(eval("(" + r.response.replace(']', '').replace('[', '') + ")"));
+            var userId = $.parseJSON(str).CustomData;
         }
 
         var fail = function (error) {
@@ -271,7 +282,7 @@ var PGPlugins = (function () {
                 }, 1000)
             } else {
                 retries = 0;
-                clearCache();
+                navigator.camera.cleanup();
                 alert("An error has occurred: Code = " + error.code);
                 console.log("upload error source " + error.source);
                 console.log("upload error target " + error.target);
@@ -280,39 +291,30 @@ var PGPlugins = (function () {
 
         var options = new FileUploadOptions();
         options.fileKey = "file";
-        options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+        options.fileName = guid() + "_" + mainImageURI.substr(mainImageURI.lastIndexOf('/') + 1);
+
         options.mimeType = "image/jpeg";
         var params = new Object();
+        params['uname-' + $('#signUsername').val()] = 'value';
+        params['email-' + $('#signEmail').val()] = 'value';
+        params['pass-' + $('#signPassword').val()] = 'value';
         options.params = params;
         options.chunkedMode = false;
         options.headers = {
             Connection: "close"
         };
         var ft = new FileTransfer();
+
+        //ft.upload(mainImageURI, "http://192.168.1.2:26684/blobs/upload", win, fail, options);
         ft.upload(imageURI, "http://ugoforapi.azurewebsites.net/blobs/upload", win, fail, options);
 
     }
 
-    var clearCache = function() {
-        navigator.camera.cleanup();
-    }
-
-    //using the camera
-    var capturePhoto = function (qual) {
-        navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-            quality: 10, allowEdit: true,
-            targetWidth: 175,
-            targetHeight: 175,
-            destinationType: destinationType.DATA_URL
-        });
-    }
-
-    //using the gallery
     var getPhoto = function (source, qual) {
-        navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-            quality: 10, allowEdit: true,
-            targetWidth: 175,
-            targetHeight: 175,
+        navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+            quality: qual, allowEdit: true,
+            //targetWidth: 175,
+            //targetHeight: 175,
             destinationType: destinationType.FILE_URI,
             sourceType: source
         });
@@ -325,17 +327,25 @@ var PGPlugins = (function () {
     var confirmPhoto = function (buttonIndex) {
 
         if (buttonIndex == 1) {
-            getPhoto(pictureSource.PHOTOLIBRARY,10);
+            getPhoto(pictureSource.PHOTOLIBRARY, 50);
         }
         else if (buttonIndex == 2) {
-            capturePhoto(10);
+            getPhoto(pictureSource.CAMERA, 50);
         }
-        else {
-
-        }
+        else {}
     };
 
-    return { onPGDeviceReady: onPGDeviceReady, getGPSCoordinates: getGPSCoordinates, confirmPhoto: confirmPhoto };
+    var guid = function () {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+              .toString(16)
+              .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+          s4() + '-' + s4() + s4() + s4();
+    }
+
+    return { onPGDeviceReady: onPGDeviceReady, getGPSCoordinates: getGPSCoordinates, confirmPhoto: confirmPhoto, imageUpload: imageUpload };
 
 })();
 
