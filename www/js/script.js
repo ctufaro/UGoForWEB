@@ -194,13 +194,14 @@ var Page = (function () {
                     console.debug(xhr); console.debug(error);
                 },
                 success: function (data) {
-                    appendMe = appendMe.replace("{profileurl}", data.ProfilePicURL);
-                    appendMe = appendMe.replace("{profilename}", data.Username);
-                    appendMe = appendMe.replace("{littlecomment}", data.SmallComment);
-                    appendMe = appendMe.replace("{day}", data.TimePosted);
-                    appendMe = appendMe.replace("{foodurl}", data.PostedImage);
-                    appendMe = appendMe.replace("{bigcomment}", data.BigComment);
-                    $('.posts').prepend($(appendMe).hide().fadeIn(1000));
+                    var newAppend = appendMe
+                    newAppend = newAppend.replace("{profileurl}", data.ProfilePicURL);
+                    newAppend = newAppend.replace("{profilename}", data.Username);
+                    newAppend = newAppend.replace("{littlecomment}", data.SmallComment);
+                    newAppend = newAppend.replace("{day}", data.TimePosted);
+                    newAppend = newAppend.replace("{foodurl}", data.PostedImage);
+                    newAppend = newAppend.replace("{bigcomment}", data.BigComment);
+                    $('.posts').prepend($(newAppend).hide().fadeIn(1000));
                     $('#btnCancel').trigger('click');
                     //append the newly saved post
                 }
