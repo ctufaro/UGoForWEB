@@ -24,6 +24,18 @@ var Page = (function () {
         userId = newUserId;
     }
 
+    var clearCache = function () {
+        var success = function (status) {
+            //alert('Cache Cleared!');
+        }
+
+        var error = function (status) {
+            alert('Oh Snap! ' + status);
+        }
+
+        window.cache.clear(success, error);
+    }
+
     var render = function (url) {
         // Get the keyword from the url.
         switch (url.split('/')[0]) {
@@ -149,16 +161,7 @@ var Page = (function () {
         });
 
         $("#mainLogomage").click(function () {
-
-            var success = function (status) {
-                alert('Message: ' + status);
-            }
-
-            var error = function (status) {
-                alert('Error: ' + status);
-            }
-
-            window.cache.clear(success, error);
+            clearCache();
         });
 
         $('.popup-modal').magnificPopup({type: 'inline',preloader: false,focus: '#username', modal: true});
@@ -222,7 +225,7 @@ var Page = (function () {
         });
     };
 
-    return { init: init, renderSpinner: renderSpinner, renderMainScreenPage: renderMainScreenPage, initUser : initUser };
+    return { init: init, renderSpinner: renderSpinner, renderMainScreenPage: renderMainScreenPage, initUser: initUser, clearCache: clearCache };
 
 })();
 
@@ -270,8 +273,11 @@ var PGPlugins = (function () {
     //main upload method
     var imageUpload = function () {
 
+        Page.renderSpinner("Registering");
+
         var win = function (r) {
             //Getting the new userid from the response
+            $(".ui-ios-overlay").css("display", "none");
             navigator.camera.cleanup();
             retries = 0;
             console.log("Code = " + r.responseCode);
@@ -279,6 +285,7 @@ var PGPlugins = (function () {
             console.log("Sent = " + r.bytesSent);
             var str = JSON.stringify(eval("(" + r.response.replace(']', '').replace('[', '') + ")"));
             var userId = $.parseJSON(str).CustomData;
+            Page.clearCache();
             Page.initUser(userId);
             Page.renderMainScreenPage();
         }
