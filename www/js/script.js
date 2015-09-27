@@ -173,7 +173,10 @@ var Page = (function () {
 
         $("#btnPost").click(function () {
 
+            //reset fields
             var coordinates = "NULL";
+            $('#txtBigComment').val('');
+            $('#txtSmallComment').val('');
 
             if (PGPlugins.getGPSCoordinates().length > 0) {
                 coordinates = PGPlugins.getGPSCoordinates();
