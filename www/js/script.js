@@ -3,6 +3,7 @@ var Page = (function () {
 
     var loaded = false;
     var imageContainer = $('#imagecontainer');
+    var userId;
 
     var initHTML = "";
 
@@ -17,6 +18,10 @@ var Page = (function () {
 
         // Redner UI Events
         renderUIEvents();
+    }
+
+    var initUser = function (newUserId) {
+        userId = newUserId;
     }
 
     var render = function (url) {
@@ -60,7 +65,7 @@ var Page = (function () {
 
             //wire up wait calls
             $(document).ajaxStart(function () {
-                renderSpinner("Loading");
+                renderSpinner("Loading Feed");
             });
 
             $(document).ajaxComplete(function () {
@@ -177,7 +182,7 @@ var Page = (function () {
                 url: "http://ugoforapi.azurewebsites.net/api/posts",
                 async: false,
                 data: {
-                    "PostID": 1, "ProfilePicURL": "xxx", "SmallComment": $("#txtSmallComment").val(),
+                    "UserId": userId, "PostID": 1, "ProfilePicURL": "xxx", "SmallComment": $("#txtSmallComment").val(),
                     "TimePosted": "xxx", "PostedImage": "xxx", "BigComment": $("#txtBigComment").val(),
                     "Location": coordinates
                 },
@@ -208,11 +213,16 @@ var Page = (function () {
         });
 
         $("#signUpNewUser").click(function () {
-            PGPlugins.imageUpload();
+            try{
+                PGPlugins.imageUpload();
+            }
+            catch (err) {
+                alert("Oh Snap! " +err.message);
+            }
         });
     };
 
-    return { init: init, renderSpinner : renderSpinner };
+    return { init: init, renderSpinner: renderSpinner, renderMainScreenPage: renderMainScreenPage, initUser : initUser };
 
 })();
 
@@ -260,18 +270,17 @@ var PGPlugins = (function () {
     //main upload method
     var imageUpload = function () {
 
-        Page.renderSpinner("Registering");
-
         var win = function (r) {
             //Getting the new userid from the response
             navigator.camera.cleanup();
             retries = 0;
-            $(".ui-ios-overlay").css("display", "none");
             console.log("Code = " + r.responseCode);
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             var str = JSON.stringify(eval("(" + r.response.replace(']', '').replace('[', '') + ")"));
             var userId = $.parseJSON(str).CustomData;
+            Page.initUser(userId);
+            Page.renderMainScreenPage();
         }
 
         var fail = function (error) {
