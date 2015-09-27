@@ -288,21 +288,31 @@ var PGPlugins = (function () {
                 console.log("upload error target " + error.target);
             }
         }
-
+        alert("291");
         var options = new FileUploadOptions();
+        alert("293");
         options.fileKey = "file";
+        alert("295");
         options.fileName = guid() + "_" + mainImageURI.substr(mainImageURI.lastIndexOf('/') + 1);
-
+        alert("296");
         options.mimeType = "image/jpeg";
+        alert("297");
         var params = new Object();
+        alert("298");
         params['uname-' + $('#signUsername').val()] = 'value';
+        alert("299");
         params['email-' + $('#signEmail').val()] = 'value';
+        alert("300");
         params['pass-' + $('#signPassword').val()] = 'value';
+        alert("301");
         options.params = params;
+        alert("302");
         options.chunkedMode = false;
+        alert("303");
         options.headers = {
             Connection: "close"
         };
+        alert("304");
         var ft = new FileTransfer();
 
         //ft.upload(mainImageURI, "http://192.168.1.2:26684/blobs/upload", win, fail, options);
