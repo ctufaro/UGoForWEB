@@ -260,8 +260,8 @@ var PGPlugins = (function () {
     //main upload method
     var imageUpload = function () {
 
-        Page.renderSpinner("Registering");
-
+        //Page.renderSpinner("Registering");
+        try{
         var win = function (r) {
             //Getting the new userid from the response
             navigator.camera.cleanup();
@@ -303,17 +303,18 @@ var PGPlugins = (function () {
         options.headers = {
             Connection: "close"
         };
-        var ft;
-        try {
-            ft = new FileTransfer();
-        }
-        catch (err) {
-            alert(err.message);
-        }
+     
+        var ft = new FileTransfer();
+      
+        
 
         //ft.upload(mainImageURI, "http://192.168.1.2:26684/blobs/upload", win, fail, options);
 
         ft.upload(imageURI, "http://ugoforapi.azurewebsites.net/blobs/upload", win, fail, options);
+         }
+        catch (err) {
+            alert(err.message);
+        }
 
     }
 
