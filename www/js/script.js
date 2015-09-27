@@ -173,10 +173,7 @@ var Page = (function () {
 
         $("#btnPost").click(function () {
 
-            //reset fields
             var coordinates = "NULL";
-            $('#txtBigComment').val('');
-            $('#txtSmallComment').val('');
 
             if (PGPlugins.getGPSCoordinates().length > 0) {
                 coordinates = PGPlugins.getGPSCoordinates();
@@ -206,7 +203,9 @@ var Page = (function () {
                     newAppend = newAppend.replace("{bigcomment}", data.BigComment);
                     $('.posts').prepend($(newAppend).hide().fadeIn(1000));
                     $('#btnCancel').trigger('click');
-                    //append the newly saved post
+                    $('#txtBigComment').val('');
+                    $('#txtSmallComment').val('');
+                    //append the newly saved post and clear fields
                 }
             })
         });
