@@ -306,6 +306,7 @@ var PGPlugins = (function () {
         var ft = new FileTransfer();
 
         //ft.upload(mainImageURI, "http://192.168.1.2:26684/blobs/upload", win, fail, options);
+        alert("b4 upload: "+imageURI);
         ft.upload(imageURI, "http://ugoforapi.azurewebsites.net/blobs/upload", win, fail, options);
 
     }
