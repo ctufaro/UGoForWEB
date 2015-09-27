@@ -278,7 +278,7 @@ var PGPlugins = (function () {
             if (retries == 0) {
                 retries++
                 setTimeout(function () {
-                    onPhotoURISuccess(imageURI)
+                    onPhotoDataSuccess(imageURI)
                 }, 1000)
             } else {
                 retries = 0;
