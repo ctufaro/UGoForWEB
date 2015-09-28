@@ -1,3 +1,5 @@
+* {-webkit-touch-callout: none;-webkit-user-select: none; /* Disable selection/copy in UIWebView */ }
+
 body,
 p {
     font-family: 'Yanone Kaffeesatz', sans-serif;
