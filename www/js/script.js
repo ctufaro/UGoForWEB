@@ -218,16 +218,27 @@ var Page = (function () {
             console.log("loaded");
         });
 
-        $("#signUpNewUser").click(function () {
+        $("#signUpNewUser").bind('touchstart', function () {
             $('#frmSignUp').on('valid.fndtn.abide', function () {
-                try{
+                try {
                     PGPlugins.imageUpload();
                 }
                 catch (err) {
-                    alert("Oh Snap! " +err.message);
+                    alert("Oh Snap! " + err.message);
                 }
             });
-        });
+        })
+
+        //$("#signUpNewUser").click(function () {
+        //    $('#frmSignUp').on('valid.fndtn.abide', function () {
+        //        try{
+        //            PGPlugins.imageUpload();
+        //        }
+        //        catch (err) {
+        //            alert("Oh Snap! " +err.message);
+        //        }
+        //    });
+        //});
     };
 
     return { init: init, renderSpinner: renderSpinner, renderMainScreenPage: renderMainScreenPage, initUser: initUser, clearCache: clearCache };
