@@ -80,9 +80,9 @@ var Page = (function () {
         if (!loaded) {
 
             //wire up wait calls
-            $(document).ajaxStart(function () {
+            //$(document).ajaxStart(function () {
                 renderSpinner("Loading Feed");
-            });
+            //});
 
             $(document).ajaxComplete(function () {
                 //$(".posts").css("display", "block");
