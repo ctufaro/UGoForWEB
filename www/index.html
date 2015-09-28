@@ -46,7 +46,7 @@
         <div class="row collapse">
             <div class="small-12 columns">
                 <div class="signup-panel">
-                    <form>
+                    <form data-abide="ajax" id="frmSignUp">
 					   <div class="small-3 columns" style="padding-left: 0; padding-right: 5px;">
 							<div class="row collapse">
 								<img id="profileImage" src="img/profilephoto.jpg" style="padding-right:1px;"/>
@@ -57,22 +57,25 @@
 					   <div class="small-9 columns" style="padding-left: 0; padding-right: 0;">					   
 							<div class="row collapse">
 								<div class="small-12 columns">
-									<input type="text" placeholder="username" id="signUsername">
+									<input type="text" placeholder="username" id="signUsername" required>
+                                    <small class="error">Username is required</small>
 								</div>
 							</div>
 							<div class="row collapse">
 								<div class="small-12 columns">
-									<input type="text" placeholder="email" id="signEmail">
+									<input type="email" placeholder="email" id="signEmail" required>
+                                    <small class="error">Email is required</small>
 								</div>
 							</div>
 							<div class="row collapse">
 								<div class="small-12 columns">
-									<input type="password" placeholder="password" id="signPassword">
+									<input type="password" placeholder="password" id="signPassword" required>
+                                    <small class="error">Password is required</small>
 								</div>
 							</div>
                        </div>
 					   <div style="text-align:center;">
-							<a href="#" id="signUpNewUser" class="button radius" style="background-color:#f79421; margin-bottom: .15rem;"><img src="img/signupbtn.png" /></a>
+                            <button id="signUpNewUser" type="submit" class="button radius"></button>
 							<p>Already have an account? <a href="#">Login here &raquo</a></p>
 					   </div>  					   
 					</form> 					

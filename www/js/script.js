@@ -219,12 +219,14 @@ var Page = (function () {
         });
 
         $("#signUpNewUser").click(function () {
-            try{
-                PGPlugins.imageUpload();
-            }
-            catch (err) {
-                alert("Oh Snap! " +err.message);
-            }
+            $('#frmSignUp').on('valid.fndtn.abide', function () {
+                try{
+                    PGPlugins.imageUpload();
+                }
+                catch (err) {
+                    alert("Oh Snap! " +err.message);
+                }
+            });
         });
     };
 

@@ -403,9 +403,11 @@ option:checked {
 	cursor: pointer;
 	text-indent: -9999px;
 }
+
+
+/*SIGNUP SCREEN*/
+
 .signup-panel {
-  /*border-radius: 5px;
-  border: 1px solid #ccc;*/
   padding: 15px 15px 5px 15px;
   margin-top: 60px;
 }
@@ -445,6 +447,26 @@ option:checked {
 .signup-panel .profilephoto {
   text-align:center;
   font-size:16px;
+}
+
+.signup-panel button{
+    height:65px;
+    width:130px; 
+    background-color:#f79421;
+    margin-bottom: .15rem; 
+    background-image:url('../img/signupbtn.png'); 
+    background-repeat:no-repeat; 
+    background-position:center;
+    background-size:50%;
+}
+
+.signup-panel .button:hover, .button:focus {
+  background-color: #F79621;
+}
+
+[data-abide] .error small.error{
+    background-color:#F79621;
+    padding: 0 0 0 5px;
 }
 
 
