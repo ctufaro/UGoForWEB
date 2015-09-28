@@ -241,7 +241,7 @@ var PGPlugins = (function () {
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value
     var retries = 0;
-    var mainImageURI = "http://ugoforweb.azurewebsites.net/www/img/profilephoto.jpg";
+    var mainImageURI = "";
 
     var init = function () {
 
