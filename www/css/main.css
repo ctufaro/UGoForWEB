@@ -102,6 +102,7 @@ h6 {
 .back-button{
     position:absolute;
     left:0px;
+    z-index:1000;
 }
 
 .back-button img{
@@ -114,6 +115,7 @@ h6 {
 .settings-button{
     position:absolute;
     right:0px;
+    z-index:1000;
 }
 
 .settings-button img{

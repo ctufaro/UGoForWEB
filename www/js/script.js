@@ -55,6 +55,9 @@ var Page = (function () {
             case '#main-screen':
                 renderMainScreenPage();
                 break;
+            case '#settings-screen':
+                renderSettingsPage();
+                break;
             default:
                 //error
         }
@@ -121,8 +124,14 @@ var Page = (function () {
         }
     }
 
+    var renderSettingsPage = function () {
+
+        renderSelect("#settings-screen");
+
+    }
+
     var renderSelect = function (page) {
-        var pages = ["#signOrLogin", "#signUp", "#login", "#main-screen"];
+        var pages = ["#signOrLogin", "#signUp", "#login", "#main-screen", "#settings-screen"];
         jQuery.each(pages, function (index, value) {
             if (page != value) {
                 $(value).hide();
