@@ -92,7 +92,7 @@ var Page = (function () {
             $.ajax({
                 type: "GET",
                 url: "http://ugoforapi.azurewebsites.net/api/posts",
-                error: function (xhr, statusText) { alert("Error: " + statusText); },
+                error: function (xhr, statusText) { alert("Oh Snap! " + statusText); },
                 success: function (data) {
                     var directive = {
                         'article': {
@@ -223,14 +223,17 @@ var Page = (function () {
         });
 
         $("#signUpNewUser").click(function () {
-            $('#frmSignUp').on('valid.fndtn.abide', function () {
+            //hack - fix this, I had to manually check this, abide sucks
+            var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            var emailValid = re.test($('#signEmail').val());
+            if ($('#signUsername').val().length > 0 && emailValid && $('#signPassword').val().length > 0) {
                 try{
                     PGPlugins.imageUpload();
                 }
                 catch (err) {
                     alert("Oh Snap! " +err.message);
                 }
-            });
+            }
         });
     };
 
@@ -308,7 +311,7 @@ var PGPlugins = (function () {
             } else {
                 retries = 0;
                 navigator.camera.cleanup();
-                alert("An error has occurred: Code = " + error.code);
+                alert("Oh Snap! Code = " + error.code);
                 console.log("upload error source " + error.source);
                 console.log("upload error target " + error.target);
             }
