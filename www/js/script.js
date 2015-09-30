@@ -125,13 +125,15 @@ var Page = (function () {
     }
 
     var renderSettingsPage = function () {
-
         renderSelect("#settings-screen");
+    }
 
+    var renderYumPage = function () {
+        renderSelect("#yum-screen");
     }
 
     var renderSelect = function (page) {
-        var pages = ["#signOrLogin", "#signUp", "#login", "#main-screen", "#settings-screen"];
+        var pages = ["#signOrLogin", "#signUp", "#login", "#main-screen", "#settings-screen", "#yum-screen"];
         jQuery.each(pages, function (index, value) {
             if (page != value) {
                 $(value).hide();
@@ -219,6 +221,10 @@ var Page = (function () {
             })
         });
 
+        $("#btnYum").click(function () {
+            PGPlugins.takePhoto(40, 'imgYum');
+        });
+
         $("#btnSettingRefresh").click(function () {
             $(".posts").css("display", "none");
             $(".posts").html(postsNonPure);
@@ -246,7 +252,7 @@ var Page = (function () {
         });
     };
 
-    return { init: init, renderSpinner: renderSpinner, renderMainScreenPage: renderMainScreenPage, initUser: initUser, clearCache: clearCache };
+    return { init: init, renderSpinner: renderSpinner, renderMainScreenPage: renderMainScreenPage, renderYumPage: renderYumPage, initUser: initUser, clearCache: clearCache };
 
 })();
 
@@ -357,6 +363,21 @@ var PGPlugins = (function () {
         });
     }
 
+    var takePhoto = function (qual, htmlElem) {
+        $('#imgYum').attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');
+        Page.renderYumPage();
+        navigator.camera.getPicture(function (imageURI) {
+            var smallImage = document.getElementById(htmlElem);
+            smallImage.style.display = 'block';
+            mainImageURI = imageURI;
+            smallImage.src = imageURI + "?guid=" + guid();
+            }, onFail, {
+                quality: qual,
+                destinationType: destinationType.FILE_URI,
+                sourceType: pictureSource.CAMERA
+        });
+    }
+
     var onFail = function (message) {
         console.log(message);
     }
@@ -382,7 +403,7 @@ var PGPlugins = (function () {
           s4() + '-' + s4() + s4() + s4();
     }
 
-    return { onPGDeviceReady: onPGDeviceReady, getGPSCoordinates: getGPSCoordinates, confirmPhoto: confirmPhoto, imageUpload: imageUpload };
+    return { onPGDeviceReady: onPGDeviceReady, getGPSCoordinates: getGPSCoordinates, confirmPhoto: confirmPhoto, imageUpload: imageUpload, takePhoto: takePhoto };
 
 })();
 
