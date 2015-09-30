@@ -367,8 +367,7 @@ var PGPlugins = (function () {
     }
 
     var takePhoto = function (qual, htmlElem) {
-        $('#imgYum').attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');
-        Page.renderYumPage();
+        $('#imgYum').attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');        
         navigator.camera.getPicture(function (imageURI) {
             var smallImage = document.getElementById(htmlElem);
             smallImage.style.display = 'block';
@@ -378,7 +377,8 @@ var PGPlugins = (function () {
                 quality: qual,
                 destinationType: destinationType.FILE_URI,
                 sourceType: pictureSource.CAMERA
-        });
+            });
+        Page.renderYumPage();
     }
 
     var onFail = function (message) {
