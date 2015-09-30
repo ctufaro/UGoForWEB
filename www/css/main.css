@@ -426,6 +426,16 @@ option:checked {
 	text-indent: -9999px;
 }
 
+/*SETTINGS SCREEN*/
+
+.setting-layout{
+    text-align:left;
+    font-size:22px;
+}
+
+.setting-layout a{
+    width:140px;
+}
 
 /*SIGNUP SCREEN*/
 

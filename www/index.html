@@ -36,9 +36,10 @@
     <span id="signUp" style="display:none;">
         <div class="fixed" style="padding-top:18px; background-color:#333333">
             <nav class="top-bar" data-topbar role="navigation">
+                <a href="#signOrLogin" class="back-button"><img src="img/menu/left-arrow.png" /></a>
                 <ul class="title-area">
                     <li class="name">
-                        <a href="#signOrLogin"><img src="img/logo.png" style="height:30px;margin-top:7px;" /></a>
+                        <a><img src="img/logo.png" style="height:30px;margin-top:7px;" /></a>
                     </li>
                 </ul>
             </nav>
@@ -181,11 +182,12 @@
                 </nav>
             </div>
             <div class="extra-space2"></div>
-            <span style="padding:5px 8px 0 8px;">
-                Coming Soon
-            </span>
         </div>
-        <div class="extra-space"></div>
+        <div class="row">
+            <div class="small-5 columns setting-layout">Clear Cache</div>
+            <div class="small-7 columns setting-layout"><a href="#" id="btnSettingCache" class="button radius small">Clear Cache</a></div>
+            <div class="small-5 columns setting-layout">Refresh Feed</div>
+            <div class="small-7 columns setting-layout"><a href="#" id="btnSettingRefresh" class="button radius small">Refresh Feed</a></div>
     </span>
 
     <script src="cordova.js"></script>
