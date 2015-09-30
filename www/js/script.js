@@ -369,6 +369,7 @@ var PGPlugins = (function () {
     var takePhoto = function (qual, htmlElem) {
         $('#imgYum').attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');        
         navigator.camera.getPicture(function (imageURI) {
+            Page.renderYumPage();
             var smallImage = document.getElementById(htmlElem);
             smallImage.style.display = 'block';
             mainImageURI = imageURI;
@@ -378,7 +379,7 @@ var PGPlugins = (function () {
                 destinationType: destinationType.FILE_URI,
                 sourceType: pictureSource.CAMERA
             });
-        Page.renderYumPage();
+       
     }
 
     var onFail = function (message) {
