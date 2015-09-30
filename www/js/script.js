@@ -58,6 +58,9 @@ var Page = (function () {
             case '#settings-screen':
                 renderSettingsPage();
                 break;
+            case '#yum-screen':
+                renderYumPage();
+                break;
             default:
                 //error
         }

@@ -169,18 +169,47 @@
     
     <!--YUM PAGE-->
     <span id="yum-screen" style="display:none;">
-        <div class="row page">
-            <div class="fixed" style="padding-top:18px; background-color:#333333">
-                <nav class="top-bar" data-topbar role="navigation">
-                    <a href="#signOrLogin" class="back-button"><img src="img/menu/left-arrow.png" /></a>
-                    <ul class="title-area">
-                        <li class="name">
-                            <a href="#"><img id="mainLogomage" src="img/logo.png" style="height:30px;margin-top:7px;" /></a>
-                        </li>
-                    </ul>
-                </nav>
+        <div class="fixed" style="padding-top:18px; background-color:#333333">
+            <nav class="top-bar" data-topbar role="navigation">
+                <a href="#main-screen" class="back-button"><img src="img/menu/left-arrow.png" /></a>
+                <ul class="title-area">
+                    <li class="name">
+                        <a><img src="img/logo.png" style="height:30px;margin-top:7px;" /></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row collapse">
+            <div class="small-12 columns">
+                <div class="signup-panel">
+                    <form data-abide="ajax" id="frmSignUp">
+                        <div class="small-3 columns" style="padding-left: 0; padding-right: 5px;">
+                            <div class="row collapse">
+                                <img id="imgYum" src="img/profilephoto.jpg" style="padding-right:1px;" />
+                                <img src="img/change.png" style="padding-right:1px; vertical-align:top;" />
+                                <!--<div class="profilephoto"><a href="#">My Photo</a></div>-->
+                            </div>
+                        </div>
+                        <div class="small-9 columns" style="padding-left: 0; padding-right: 0;">
+                            <div class="row collapse">
+                                <div class="small-12 columns">
+                                    <input type="text" placeholder="Description" id="yumDescription" required>
+                                    <small class="error">Description is required</small>
+                                </div>
+                            </div>
+                            <div class="row collapse">
+                                <div class="small-12 columns">
+                                    <input type="email" placeholder="Location" id="yumLocation" required>
+                                    <small class="error">Location is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align:center;">
+                            <a href="#" class="button alert" style="background-color:#f79421">Yum!</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <img id="imgYum" />
         </div>
     </span>
     
