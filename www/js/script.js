@@ -7,15 +7,10 @@ var Page = (function () {
 
     var initHTML = "";
 
-    var init = function () {
-
-        //fastclick load
-        $(function () { FastClick.attach(document.body); });
+    var init = function () {        
 
         //hashchange event
-        $(window).on('hashchange', function () {
-            render(window.location.hash);
-        });
+        $(window).on('hashchange', function () { render(window.location.hash); });
 
         // Render default page
         renderSignOrLogPage();
@@ -145,10 +140,6 @@ var Page = (function () {
                 $(value).show();
             }
         });
-    }
-
-    var renderErrorPage = function () {
-        // Shows the error page.
     }
 
     var renderSpinner = function (newText) {
@@ -411,13 +402,107 @@ var PGPlugins = (function () {
 
 })();
 
+var SignOrLogin = function () {
+
+}();
+
+var SignUp = function () {
+
+}();
+
+var Login = function () {
+
+}();
+
+var MainScreen = function () {
+
+}();
+
+var UGoFor = function () {
+
+}();
+
+var Settings = function () {
+    
+}();
+
+var Utilities = function () {
+
+    var ClearCache = function () {
+        var success = function (status) {alert('Cache Cleared!');}
+        var error = function (status) {alert('Oh Snap! ' + status);}
+        window.cache.clear(success, error);
+    }
+
+    var Guid = function () {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+              .toString(16)
+              .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+          s4() + '-' + s4() + s4() + s4();
+    }
+
+    var RegEx = function (regex,value) {
+        return regex.test(value);
+    }
+
+    var Spinner = function (toggle, message) {
+        if(toggle==true){
+            if ($(".ui-ios-overlay").length) {
+                $(".ui-ios-overlay").css("display", "block");
+            }
+            else {
+                createLoadingSpinner();
+            }
+            $('.ui-ios-overlay').parent().find('.title').text(newText);
+        }
+        else {
+            $(".ui-ios-overlay").css("display", "none");
+        }
+
+    }
+
+    return {
+        ClearCache: ClearCache,
+        Guid: Guid,
+        RegEx: RegEx,
+        Spinner: Spinner
+    }
+}();
+
+var Constants = function () {
+    var PostHTML = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'>{profilename}</div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div> <img class='cover' src='{foodurl}'> <div class='big-comment'> <p>{bigcomment}</p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
+    var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'> <p></p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
+    var RESTGet = "http://ugoforapi.azurewebsites.net/api/posts";
+    var RESTPost = "http://ugoforapi.azurewebsites.net/blobs/upload";
+    var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main-screen", "#settings-screen", "#yum-screen"];
+    var PartialPages = ["#signOrLogin", "#signUp", "#login", "#main-screen", "#settings-screen", "#yum-screen"];
+    return {
+        PostHTML: PostHTML,
+        PostPure: PostPure,
+        RESTGet: RESTGet,
+        RESTPost: RESTPost,
+        EmailRegEx: EmailRegEx,
+        SrcPixel: SrcPixel,
+        FullPages: FullPages,
+        PartialPages: PartialPages
+    }
+}();
+
 //Main Module - initializes all the modules
 var Main = (function () {
 
-    // Wait for device API libraries to load   
+    //Wait for device API libraries to load   
     $(document).ready(function () { document.addEventListener("deviceready", PGPlugins.onPGDeviceReady, false); });
 
-    ////Main Entry point
+    //Fastclick load
+    $(function () { FastClick.attach(document.body); });
+
+    //Main Entry point
     Page.init();
 
 })();
