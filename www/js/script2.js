@@ -265,45 +265,39 @@ var Login = function () {
 
 var Feed = function () {
 
-    var loaded = false;
-
     var Render = function () {
         Pages.RenderSelect("#feed");
     }
 
     var LoadFeed = function () {
-        if (!loaded) {
 
-            Utilities.Spinner(true, "Loading Feed");
+        Utilities.Spinner(true, "Loading Feed");
 
-            $.ajax({
-                type: "GET",
-                url: Constants.RESTGet,
-                error: function (xhr, statusText) { alert("Oh Snap! " + statusText); },
-                success: function (data) {
-                    var directive = {
-                        'article': {
-                            'post<-': { //for each entry in posts name the element 'post'
-                                '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
-                                '.avatar-profilename': 'post.Username',
-                                '+.arrow_box': 'post.SmallComment',
-                                '.cover@src': 'post.PostedImage',
-                                '.day': 'post.TimePosted',
-                                '.big-comment p': 'post.BigComment'
-                            }
+        $.ajax({
+            type: "GET",
+            url: Constants.RESTGet,
+            error: function (xhr, statusText) { alert("Oh Snap! " + statusText); },
+            success: function (data) {
+                var directive = {
+                    'article': {
+                        'post<-': { //for each entry in posts name the element 'post'
+                            '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
+                            '.avatar-profilename': 'post.Username',
+                            '+.arrow_box': 'post.SmallComment',
+                            '.cover@src': 'post.PostedImage',
+                            '.day': 'post.TimePosted',
+                            '.big-comment p': 'post.BigComment'
                         }
-                    };
-                    $p('.posts').render(data, directive);
-                    $('#imagecontainer').imagesLoaded().always(function () {
-                        $(".posts").css("display", "block");
-                        Utilities.Spinner(false, "Loading Feed");
-                    });
-                }
-            });
-
-            //prevent loading twice
-            loaded = true;
-        }
+                    }
+                };
+                $p('.posts').render(data, directive);
+                $('#imagecontainer').imagesLoaded().always(function () {
+                    $(".posts").css("display", "block");
+                    Utilities.Spinner(false, "Loading Feed");
+                });
+            }
+        });
+        
     }
 
     return { Render: Render, LoadFeed: LoadFeed
@@ -413,6 +407,7 @@ var Settings = function () {
             $(".posts").html(Constants.PostPure);
             loaded = false;
             Feed.Render();
+            Feed.LoadFeed();
         });
 
         $("#btnSettingCache").click(function () {
