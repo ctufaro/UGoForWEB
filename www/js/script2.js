@@ -4,10 +4,10 @@
 var Pages = function () {
     
     var Init = function () {        
-
+        
         //hashchange event
         $(window).on('hashchange', function () { Render(window.location.hash); });
-
+        
         // Render default page
         SignOrLogin.Render();
         
@@ -19,7 +19,7 @@ var Pages = function () {
                 SignOrLogin.Render();
                 break;
             case '#signUp':
-                SignUP.Render();
+                SignUp.Render();
                 break;
             case '#login':
                 Login.Render();
@@ -94,7 +94,8 @@ var PGPlugins = function () {
         var destinationType; // sets the format of returned value
         var retries = 0;
         var mainImageURI = "";
-        var onPhotoDataSuccess = function (imageURI) {
+
+        var OnPhotoDataSuccess = function (imageURI) {
             var smallImage = document.getElementById('profileImage');
             smallImage.style.display = 'block';
             mainImageURI = imageURI;
@@ -102,7 +103,7 @@ var PGPlugins = function () {
         }
 
         //main upload method
-        var imageUpload = function () {
+        var ImageUpload = function () {
 
             Pages.renderSpinner("Registering");
 
@@ -157,8 +158,8 @@ var PGPlugins = function () {
 
         }
 
-        var getPhoto = function (source, qual) {
-            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+        var GetPhoto = function (source, qual) {
+            navigator.camera.getPicture(OnPhotoDataSuccess, OnFail, {
                 quality: qual, allowEdit: true,
                 //targetWidth: 175,
                 //targetHeight: 175,
@@ -167,7 +168,7 @@ var PGPlugins = function () {
             });
         }
 
-        var takePhoto = function (qual, htmlElem) {
+        var TakePhoto = function (qual, htmlElem) {
             $('#imgYum').attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');
             navigator.camera.getPicture(function (imageURI) {
                 Pages.renderYumPage();
@@ -180,28 +181,27 @@ var PGPlugins = function () {
                 destinationType: destinationType.FILE_URI,
                 sourceType: pictureSource.CAMERA
             });
-
         }
 
-        var onFail = function (message) {
+        var OnFail = function (message) {
             console.log(message);
         }
 
-        var confirmPhoto = function (buttonIndex) {
+        var ConfirmPhoto = function (buttonIndex) {
 
             if (buttonIndex == 1) {
-                getPhoto(pictureSource.PHOTOLIBRARY, 50);
+                GetPhoto(pictureSource.PHOTOLIBRARY, 50);
             }
             else if (buttonIndex == 2) {
-                getPhoto(pictureSource.CAMERA, 50);
+                GetPhoto(pictureSource.CAMERA, 50);
             }
             else { }
-        };
+        }
 
         return {
-            confirmPhoto: confirmPhoto, imageUpload: imageUpload, takePhoto: takePhoto
+            ConfirmPhoto: ConfirmPhoto, ImageUpload: ImageUpload, TakePhoto: TakePhoto
         }
-    }
+    }();
 
     return { OnPGDeviceReady: OnPGDeviceReady, GPS: GPS, Camera : Camera}; 
 
@@ -294,7 +294,7 @@ var Feed = function () {
                         }
                     };
                     $p('.posts').render(data, directive);
-                    imageContainer.imagesLoaded().always(function () {
+                    $('#imagecontainer').imagesLoaded().always(function () {
                         $(".posts").css("display", "block");
                         Utilities.Spinner(false, "Loading Feed");
                     });
@@ -319,7 +319,7 @@ var Yum = function () {
 
     var Events = function () {
         $("#btnYum").click(function () {
-            PGPlugins.takePhoto(40, 'imgYum');
+            PGPlugins.Camera.TakePhoto(40, 'imgYum');           
         });
     }();
 
@@ -410,10 +410,9 @@ var Settings = function () {
 
         $("#btnSettingRefresh").click(function () {
             $(".posts").css("display", "none");
-            $(".posts").html(postsNonPure);
+            $(".posts").html(Constants.PostPure);
             loaded = false;
-            renderMainScreenPage();
-            console.log("loaded");
+            Feed.Render();
         });
 
         $("#btnSettingCache").click(function () {
@@ -472,7 +471,7 @@ var Utilities = function () {
             else {
                 createLoadingSpinner();
             }
-            $('.ui-ios-overlay').parent().find('.title').text(newText);
+            $('.ui-ios-overlay').parent().find('.title').text(message);
         }
         else {
             $(".ui-ios-overlay").css("display", "none");
@@ -498,7 +497,7 @@ var Constants = function () {
     var RESTPost = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main-screen", "#settings-screen", "#yum-screen"];
+    var FullPages = ["#signOrLogin", "#signUp", "#login", "#feed", "#yum", "#ugofor", "#follow", "#settings"];
     return {
         PostHTML: PostHTML,
         PostPure: PostPure,
@@ -506,8 +505,7 @@ var Constants = function () {
         RESTPost: RESTPost,
         EmailRegEx: EmailRegEx,
         SrcPixel: SrcPixel,
-        FullPages: FullPages,
-        PartialPages: PartialPages
+        FullPages: FullPages
     }
 }();
 
