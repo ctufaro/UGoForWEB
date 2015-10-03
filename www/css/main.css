@@ -1,7 +1,6 @@
 *:not(input):not(textarea) {
 -webkit-user-select: none; /* disable selection/Copy of UIWebView */
     -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
-
 }
 
 body,
@@ -437,51 +436,51 @@ option:checked {
     width:140px;
 }
 
-/*SIGNUP SCREEN*/
+/*SIGNUP/LOGIN SCREEN*/
 
-.signup-panel {
+.signlogin-panel {
   padding: 15px 15px 5px 15px;
   margin-top: 60px;
 }
-.signup-panel i {
+.signlogin-panel i {
   font-size: 30px;
   line-height: 50px;
   color: #999;
 }
-.signup-panel form input, .signup-panel form span {
+.signlogin-panel form input, .signlogin-panel form span {
   height: 50px;
   font-size: 18px;
 }
-.signup-panel .welcome {
+.signlogin-panel .welcome {
   font-size: 26px;
   text-align: center;
   margin-left: 0;
 }
-.signup-panel p {
+.signlogin-panel p {
   font-size: 18px;
   font-weight: 200;
 }
 
-.signup-panel a.button img {
+.signlogin-panel a.button img {
   height: 30px;
 }
 
-.signup-panel a.button.profile {
+.signlogin-panel a.button.profile {
   background-color: mediumspringgreen;
   padding:3px;
 }
 
-.signup-panel .profilelbl {
+.signlogin-panel .profilelbl {
   padding-left:5px;
   margin-bottom:50px;
 }
 
-.signup-panel .profilephoto {
+.signlogin-panel .profilephoto {
   text-align:center;
   font-size:16px;
 }
 
-.signup-panel button{
+.signlogin-panel button{
     height:65px;
     width:130px; 
     background-color:#f79421;
@@ -492,7 +491,8 @@ option:checked {
     background-size:50%;
 }
 
-.signup-panel .button:hover, .button:focus {
+
+.signlogin-panel .button:hover, .button:focus {
   background-color: #F79621;
 }
 
