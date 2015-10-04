@@ -425,6 +425,28 @@ option:checked {
 	text-indent: -9999px;
 }
 
+/*UGOFOR SCREEN*/
+.raveCrave{
+    height:65px;
+    width:130px; 
+    margin-bottom: .15rem; 
+    background-image:url('../img/raveacrave.png');
+    background-repeat:no-repeat; 
+    background-position:center;
+    background-size:45%;
+}
+.shareYum{
+    height:65px;
+    width:130px; 
+    margin-bottom: .15rem; 
+    background-image:url('../img/shareyum.png');
+    background-repeat:no-repeat; 
+    background-color:#f79421;
+    background-position:center;
+    background-size:50%;
+}
+
+
 /*SETTINGS SCREEN*/
 
 .setting-layout{
