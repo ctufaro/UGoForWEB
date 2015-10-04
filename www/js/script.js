@@ -239,8 +239,10 @@ var SignUp = function () {
 
         $("#signUpNewUser").click(function () {
             //hack - fix this, I had to manually check this, abide sucks
-            var emailValid = Utilities.RegEx(Constants.EmailRegEx, $('#signEmail').val())            
-            if ($('#signUsername').val().length > 0 && emailValid && $('#signPassword').val().length > 0) {
+            var emailValid = Utilities.RegEx(Constants.EmailRegEx, $('#signEmail').val())
+            var profilePicValid = $("#profileImage").attr("src").indexOf("profilephoto.jpg") > -1
+            if (profilePicValid) { $(".picerror").css("display", "block"); } else { $(".picerror").css("display", "none"); }
+            if ($('#signUsername').val().length > 0 && emailValid && $('#signPassword').val().length > 0 && !profilePicValid) {
                 try {
                     PGPlugins.Camera.ImageUpload();
                 }
@@ -468,7 +470,7 @@ var UserSession = function () {
 var Utilities = function () {
 
     var ClearCache = function () {
-        var success = function (status) {alert('Cache Cleared!');}
+        var success = function (status) {}
         var error = function (status) { alert('Oh Snap! ' + status); }
         try{
             window.cache.clear(success, error);

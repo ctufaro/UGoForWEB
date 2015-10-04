@@ -523,6 +523,17 @@ option:checked {
     padding: 0 0 0 5px;
 }
 
+.picerror{
+    background-color:#F79621;
+    padding: 0 0 0 5px;
+    max-width:175px;
+    display:none;
+    color:white;
+    font-size: 0.75rem;
+    font-style: italic;
+    font-weight: normal
+}
+
 
 /*Or text between buttons*/
 
