@@ -126,9 +126,8 @@
     <!--FEED PAGE-->
     <span id="feed" style="display:none;">
         <div id="test-modal" class="mfp-hide">
-            <p><a href="#" class="button large expand radius">Post A Food</a></p>
-            <p><a href="#" class="button large expand radius">Get A Suggestion</a></p> 
-            <p><a href="#" id="btnCancelFeed" class="button alert large expand radius">Cancel</a></p> 
+            <p><a class="button large expand radius">Post A Food</a></p>
+            <p><a class="button large expand radius">Get A Suggestion</a></p> 
         </div>
         <div class="row page">
             <div class="fixed" style="padding-top:18px; background-color:#333333">
@@ -253,7 +252,7 @@
             <div class="small-7 columns setting-layout"><a href="#" id="btnSettingRefresh" class="button radius small">Refresh Feed</a></div>
             <div class="small-5 columns setting-layout">Logout</div>
             <div class="small-7 columns setting-layout"><a href="#" id="btnSettingLogout" class="button radius small">Logout</a></div>
-
+        </div>
     </span>
 
     <script src="cordova.js"></script>
@@ -264,16 +263,8 @@
     <script src="js/vendor/jquery.magnific-popup.min.js"></script>
     <script src="js/vendor/imagesloaded.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
-    <script src="js/script2.js"></script>
-    <script src="js/jquery.touch-multiselect.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
-    <script>
-        $('.post-icons').touchMultiSelect();
-        $('.touchMultiSelect').addClass('pull-right');
-        $('.touchMultiSelect li:nth-child(2)').addClass('icon-share');
-        $('.touchMultiSelect li:nth-child(3)').addClass('icon-sweet');
-        $('.touchMultiSelect li:nth-child(4)').addClass('icon-heart');
-        $(document).foundation({ abide: { focus_on_invalid: false, live_validate: false, timeout: 0 } });
-    </script>
+    <script src="js/script.js"></script>
+    <script src="js/jquery.touch-multiselect.js"></script>
 </body>
 </html>

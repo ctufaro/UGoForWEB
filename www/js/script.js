@@ -335,11 +335,16 @@ var UGoFor = function () {
 
     var Events = function () {
 
-        $('.popup-modal').magnificPopup({ type: 'inline', preloader: false, focus: '#username', modal: true });
-
-        $(".popup-modal-dismiss").click(function (e) {
-            e.preventDefault();
-            $.magnificPopup.close();
+        $('.popup-modal').magnificPopup({
+            type: 'inline', preloader: false, closeOnBgClick: true, showCloseBtn: false,
+            callbacks: {
+                open: function () {
+                    document.ontouchstart = function (e) { e.preventDefault(); }
+                },
+                close: function () {
+                    document.ontouchstart = function (e) { return true; }
+                }
+            }
         });
 
         $("#btnPost").click(function () {
@@ -379,11 +384,6 @@ var UGoFor = function () {
                     //append the newly saved post and clear fields
                 }
             })
-        });
-
-        $("#btnCancelFeed").click(function (e) {
-            e.preventDefault();
-            $.magnificPopup.close();
         });
 
     }();
@@ -543,6 +543,9 @@ var Main = (function () {
 
     //Wait for device API libraries to load   
     $(document).ready(function () { document.addEventListener("deviceready", PGPlugins.OnPGDeviceReady, false); });
+
+    //Zurb Stuff
+    $(document).foundation({ abide: { focus_on_invalid: false, live_validate: false, timeout: 0 } });
 
     //Fastclick load
     $(function () { FastClick.attach(document.body); });
