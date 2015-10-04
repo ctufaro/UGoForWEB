@@ -1,0 +1,203 @@
+﻿<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UGoFor | Rave What U Crave</title>
+    <link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
+    <!--<link href="css/foundation.min.css" rel="stylesheet" />-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css" rel="stylesheet" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/magnific-popup-modal.css" rel="stylesheet" />
+    <link href="css/iosOverlay.css" rel="stylesheet">
+    <link href="css/nav-bar-hacks.css" rel="stylesheet" />    
+</head>
+<body>
+
+    <!--SIGNUP OR LOGIN-->
+    <div id="tmpl-signOrLogin"></div>
+
+    <!--MAIN TEMPLATE-->    
+    <div id="tmpl-ugoforpop"></div>
+    <!--TOB NAV BAR-->
+    <div class="row page">
+        <div id="tmpl-topnavbar"></div>
+        <!--CUSTOM EXTRA SPACE-->
+        <div id="tmpl-extraspace"></div>
+        <!--CONTENT-->
+        <div id="tmpl-content"></div>
+    </div>
+    <!--CUSTOM-->
+    <div id="tmpl-extraspace"></div>
+    <!--BOTTOM NAV BAR-->
+    <div id="tmpl-bottomnav"></div>    
+
+    <!--HANDLEBAR TEMPLATES-->
+    <script id="ugoforpop-template" type="text/x-handlebars-template">
+        <div id="test-modal" class="mfp-hide">
+            <p><a class="button large expand radius shareYum"></a></p>
+            <p><a class="button large expand radius raveCrave"></a></p>
+        </div>
+    </script>
+
+    <script id="topnav-template" type="text/x-handlebars-template">
+        <div class="fixed" style="padding-top:18px; background-color:#333333">
+            <nav class="top-bar" data-topbar role="navigation">
+                <a href="{{leftthref}}" class="back-button"><img src="{{leftsrc}}" /></a>
+                <a href="{{righthref}}" class="settings-button"><img src="{{rightsrc}}" /></a>
+                <ul class="title-area">
+                    <li class="name">
+                        <a href="#"><img id="mainLogomage" src="{{mainsrc}}" style="height:30px;margin-top:7px;" /></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </script>
+
+    <script id="extraspace-template" type="text/x-handlebars-template">
+        <div class="extra-space2"></div>
+    </script>
+
+    <script id="bottomnav-template" type="text/x-handlebars-template">
+        <div class="icon-bar five-up bottom-bar">
+            <a class="item ">
+                <img src="img/menu/taco.png" style="height:25px;width:25px;" /><span style="color:white;">feed</span>
+            </a>
+            <a class="item" id="btnYum">
+                <img src="img/menu/donut.png" style="height:25px;width:25px;" /><span style="color:white;">yum</span>
+            </a>
+            <a class="item popup-modal" href="#test-modal">
+                <img src="img/menu/burger.png" style="height:25px;width:25px;" /><span style="color:white;">ugofor</span>
+            </a>
+            <a class="item">
+                <img src="img/menu/heart.png" style="height:25px;width:25px;" /><span style="color:white;">follow</span>
+            </a>
+            <a class="item">
+                <img src="img/menu/profile.png" style="height:25px;width:25px;" /><span style="color:white;">profile</span>
+            </a>
+        </div>
+    </script>
+
+    <script id="feed-template" type="text/x-handlebars-template">
+        <span id="imagecontainer">
+            <span class="posts" style="display:none">
+                <article id="post">
+                    <img class="avatar" src="" style="float: left" />
+                    <div class="avatar-profilename"></div>
+                    <div class="arrow_box">
+                        <span class="day pull-right"></span>
+                    </div>
+                    <img src="img/burger.jpg" class="cover">
+                    <div class="big-comment">
+                        <p></p>
+                        <select class="post-icons">
+                            <option value="1">Share</option>
+                            <option value="2">Sweet</option>
+                            <option value="3">Heart</option>
+                        </select>
+                    </div>
+                </article>
+            </span>
+        </span>
+    </script>
+
+    <script id="signOrLogin-template" type="text/x-handlebars-template">
+        <div class="row page">
+            <img class="avatar" src="" style="float: left" />
+            <img src="img/burgersign.jpg" class="cover">
+            <div class="sign-login" style="text-align:center;">
+                <div style="padding-top:10px;"></div>
+                <ul class="stack radius button-group ">
+                    <li><a href="#login" id="btn_signup" class="button expand" style="background-color:#f79421;"><img src="img/loginbtn.png" /></a></li>
+                    <li><div class="strike"><span><img src="img/or.png" /></span></div></li>
+                    <li><a href="#signUp" class="button success expand" style="background-color:#525e6a;"><img src="img/signupbtn.png" /></a></li>
+                </ul>
+            </div>
+        </div>
+    </script>
+
+    <script id="login-template" type="text/x-handlebars-template">
+        <div class="row collapse">
+            <div class="small-12 columns">
+                <div class="signlogin-panel">
+                    <form data-abide="ajax" id="frmLogin">
+                        <div class="small-12 columns" style="padding-left: 0; padding-right: 0;">
+                            <div class="row collapse">
+                                <div class="small-12 columns">
+                                    <input type="text" placeholder="username" id="signUsername" required>
+                                    <small class="error">Username is required</small>
+                                </div>
+                            </div>
+                            <div class="row collapse">
+                                <div class="small-12 columns">
+                                    <input type="password" placeholder="password" id="signPassword" required>
+                                    <small class="error">Password is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align:center;">
+                            <button id="loginUser" type="submit" class="button radius" style="background-image:url('img/loginbtn.png');"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="signin-template" type="text/x-handlebars-template">
+        <div class="row collapse">
+            <div class="small-12 columns">
+                <div class="signlogin-panel">
+                    <form data-abide="ajax" id="frmSignUp">
+                        <div class="small-3 columns" style="padding-left: 0; padding-right: 5px;">
+                            <div class="row collapse">
+                                <img id="profileImage" src="img/profilephoto.jpg" style="" />
+                                <small class="picerror">Profile Image</small>
+                            </div>
+                        </div>
+                        <div class="small-9 columns" style="padding-left: 0; padding-right: 0;">
+                            <div class="row collapse">
+                                <div class="small-12 columns">
+                                    <input type="text" placeholder="username" id="signUsername" required>
+                                    <small class="error">Username is required</small>
+                                </div>
+                            </div>
+                            <div class="row collapse">
+                                <div class="small-12 columns">
+                                    <input type="email" placeholder="email" id="signEmail" required>
+                                    <small class="error">Email is required</small>
+                                </div>
+                            </div>
+                            <div class="row collapse">
+                                <div class="small-12 columns">
+                                    <input type="password" placeholder="password" id="signPassword" required>
+                                    <small class="error">Password is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align:center;">
+                            <button id="signUpNewUser" type="submit" class="button radius"></button>
+                            <!--<p>Already have an account? <a href="#">Login here &raquo</a></p>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script src="cordova.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/pure.js"></script>
+    <script src="js/vendor/iosOverlay.js"></script>
+    <script src="js/vendor/spin.min.js"></script>
+    <script src="js/vendor/jquery.magnific-popup.min.js"></script>
+    <script src="js/vendor/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+
+    <script src="js/jquery.touch-multiselect.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
