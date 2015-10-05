@@ -219,7 +219,7 @@ var SignOrLogin = function () {
 var SignUp = function () {
 
     var Render = function () {
-        Pages.RenderSelect("#signUp");
+        Pages.RenderSelect("#signUp", Constants.FullPages);
     }
 
     var Events = function () {
