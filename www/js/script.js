@@ -2,21 +2,21 @@
     Page Routing
 */
 var Pages = function () {
-   
-    var Init = function () {        
-        
+
+    var Init = function () {
+
         //hashchange event
         $(window).on('hashchange', function () { Render(window.location.hash); });
-        
+
         //Check if user is registered
         if (UserSession.IsRegistered()) {
             Feed.LoadFeed();
-            Feed.Render();                       
+            Feed.Render();
         }
         else {
             SignOrLogin.Render();
         }
-        
+
     }
 
     var Render = function (url) {
@@ -30,35 +30,31 @@ var Pages = function () {
             case '#login':
                 Login.Render();
                 break;
-            case '#feed':
-                Feed.Render();
-                break;
-            case '#yum':
-                Yum.Render();
-                break;
-            case '#ugofor':
-                UGoFor.Render();
-                break;
-            case '#follow':
-                Follow.Render();
-                break;
             case '#settings':
                 Settings.Render();
+                break;
+            case '#_feed':
+                Feed.Render();
+                break;
+            case '#_profile':
+                Profile.Render();
                 break;
             default:
                 //error
         }
     }
 
-    var RenderSelect = function (page) {
-        jQuery.each(Constants.FullPages, function (index, value) {
-            if (page != value) {
-                $(value).hide();
-            }
-            else {
-                $(value).show();
-            }
-        });
+    var RenderSelect = function (page, pageArray) {
+        if ($(page).css('display') == "none") {
+            jQuery.each(pageArray, function (index, value) {
+                if (page != value) {
+                    $(value).hide();
+                }
+                else {
+                    $(value).show();
+                }
+            });
+        }
     }
 
     return { Init: Init, RenderSelect: RenderSelect };
@@ -109,7 +105,7 @@ var PGPlugins = function () {
         //main upload method
         var ImageUpload = function () {
 
-            Utilities.Spinner(true,"Registering");
+            Utilities.Spinner(true, "Registering");
 
             var win = function (r) {
                 //Getting/Setting the new userid from the response
@@ -184,7 +180,7 @@ var PGPlugins = function () {
         }
 
         var OnFail = function (message) {
-            console.log(message);
+            alert("Oh Snap! " + message);
         }
 
         var ConfirmPhoto = function (buttonIndex) {
@@ -203,7 +199,7 @@ var PGPlugins = function () {
         }
     }();
 
-    return { OnPGDeviceReady: OnPGDeviceReady, GPS: GPS, Camera : Camera}; 
+    return { OnPGDeviceReady: OnPGDeviceReady, GPS: GPS, Camera: Camera };
 
 }();
 
@@ -213,7 +209,7 @@ var PGPlugins = function () {
 var SignOrLogin = function () {
 
     var Render = function () {
-        Pages.RenderSelect("#signOrLogin");
+        Pages.RenderSelect("#signOrLogin", Constants.FullPages);
     }
 
     return { Render: Render }
@@ -260,7 +256,7 @@ var SignUp = function () {
 
 var Login = function () {
     var Render = function () {
-        Pages.RenderSelect("#login");
+        Pages.RenderSelect("#login", Constants.FullPages);
     }
     return { Render: Render }
 }();
@@ -268,7 +264,8 @@ var Login = function () {
 var Feed = function () {
 
     var Render = function () {
-        Pages.RenderSelect("#feed");
+        Pages.RenderSelect("#main", Constants.FullPages);
+        Pages.RenderSelect("#_feed", Constants.PartialPages)
     }
 
     var LoadFeed = function () {
@@ -299,7 +296,7 @@ var Feed = function () {
                 });
             }
         });
-        
+
     }
 
     var RefreshFeed = function () {
@@ -314,25 +311,10 @@ var Feed = function () {
 
 }();
 
-var Yum = function () {
-
-    var Render = function () {
-        Pages.RenderSelect("#yum");
-    }
-
-    var Events = function () {
-        $("#btnYum").click(function () {
-            PGPlugins.Camera.TakePhoto(40, 'imgYum');           
-        });
-    }();
-
-    return { Render: Render }
-}();
-
 var UGoFor = function () {
 
     var Render = function () {
-        Pages.RenderSelect("#ugofor");
+
     }
 
     var Events = function () {
@@ -394,31 +376,28 @@ var UGoFor = function () {
 
 }();
 
-var Follow = function () {
-    var Render = function () {
-        Pages.RenderSelect("#follow");
-    }
-    return { Render: Render }
-}();
-
 var Profile = function () {
     var Render = function () {
-        Pages.RenderSelect("#profile");
+        Pages.RenderSelect("#main", Constants.FullPages);
+        Pages.RenderSelect("#_profile", Constants.PartialPages);
     }
-    return { Render: Render }
+
+    return {
+        Render: Render
+    }
+
 }();
 
 var Settings = function () {
 
     var Render = function () {
-        Pages.RenderSelect("#settings");
+        Pages.RenderSelect("#settings", Constants.FullPages);
     }
 
     var Events = function () {
 
         $("#btnSettingRefresh").click(function () {
             Feed.RefreshFeed();
-            Feed.Render();            
         });
 
         $("#btnSettingCache").click(function () {
@@ -452,7 +431,7 @@ var UserSession = function () {
         if (window.localStorage.getItem("userid") === null) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     }
@@ -470,12 +449,12 @@ var UserSession = function () {
 var Utilities = function () {
 
     var ClearCache = function () {
-        var success = function (status) {}
+        var success = function (status) { }
         var error = function (status) { alert('Oh Snap! ' + status); }
-        try{
+        try {
             window.cache.clear(success, error);
         }
-        catch(err){}
+        catch (err) { }
     }
 
     var Guid = function () {
@@ -488,12 +467,12 @@ var Utilities = function () {
           s4() + '-' + s4() + s4() + s4();
     }
 
-    var RegEx = function (regex,value) {
+    var RegEx = function (regex, value) {
         return regex.test(value);
     }
 
     var Spinner = function (toggle, message) {
-        if(toggle==true){
+        if (toggle == true) {
             if ($(".ui-ios-overlay").length) {
                 $(".ui-ios-overlay").css("display", "block");
             }
@@ -526,7 +505,8 @@ var Constants = function () {
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-    var FullPages = ["#signOrLogin", "#signUp", "#login", "#feed", "#yum", "#ugofor", "#follow", "#settings"];
+    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#settings"];
+    var PartialPages = ["#_feed", "#_profile"];
     return {
         PostHTML: PostHTML,
         PostPure: PostPure,
@@ -534,7 +514,8 @@ var Constants = function () {
         RESTBlob: RESTBlob,
         EmailRegEx: EmailRegEx,
         SrcPixel: SrcPixel,
-        FullPages: FullPages
+        FullPages: FullPages,
+        PartialPages: PartialPages
     }
 }();
 
