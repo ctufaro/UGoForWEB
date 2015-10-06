@@ -17,6 +17,7 @@ var Pages = function () {
             SignOrLogin.Render();
         }        
 
+        Feed.Render();
     }
 
     var Render = function (url) {
@@ -360,7 +361,9 @@ var UGoFor = function () {
         });
 
         $('#btnUgoForGallery').click(function () {
-            PGPlugins.Camera.GetPhoto(0, 30, false, UGoForPhotoSuccess);
+            $("#imgPhotoPost").attr('src', "https://placeholdit.imgix.net/~text?txtsize=28&txt=Camera&w=100&h=100");
+            $.magnificPopup.close();
+            PhotoEdit.Render();
         });
       
         $("#btnPost").click(function () {
@@ -400,10 +403,6 @@ var UGoFor = function () {
                     //append the newly saved post and clear fields
                 }
             })
-        });
-
-        $("#deleteThis").click(function () {
-            alert($.mobile.activePage[0].baseURI);
         });
 
     }();
@@ -463,7 +462,9 @@ var PhotoEdit = function () {
     }
 
     var Events = function () {
-
+        $('#btnPhotoEditGoBack').click(function(){
+            Feed.Render();
+        });
     }();
 
     return { Render: Render }
