@@ -402,6 +402,10 @@ var UGoFor = function () {
             })
         });
 
+        $("#deleteThis").click(function () {
+            alert($.mobile.activePage[0].baseURI);
+        });
+
     }();
 
     var UGoForPhotoSuccess = function (imageURI) {
