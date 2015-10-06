@@ -323,14 +323,29 @@ var UGoFor = function () {
             type: 'inline', preloader: false, closeOnBgClick: true, showCloseBtn: false,
             callbacks: {
                 open: function () {
-                    document.ontouchstart = function (e) { e.preventDefault(); }
+                    $('.ugofor-slick').slick('setPosition');
+                    document.ontouchstart = function (e) { e.preventDefault(); }                   
                 },
                 close: function () {
+                    $('.ugofor-slick').slick('slickGoTo',0);
                     document.ontouchstart = function (e) { return true; }
                 }
             }
         });
+        
+        //slick carousel
+        $('.ugofor-slick').slick({
+            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 400, infinite: true, swipe:false
+        });
 
+        $('#btnShareYum').click(function () {
+            $('.ugofor-slick').slick('slickGoTo', 1);
+        });
+
+        $('#btnRaveCrave').click(function () {
+            $('.ugofor-slick').slick('slickGoTo', 2);
+        });
+      
         $("#btnPost").click(function () {
 
             var coordinates = "NULL";
@@ -493,6 +508,18 @@ var Utilities = function () {
         RegEx: RegEx,
         Spinner: Spinner
     }
+}();
+
+/*
+    Error Class
+*/
+var Error = function () {
+
+    var Show = function (msg) {
+        navigator.notification.alert(msg, null, 'Sugar Snaps!', 'Done');
+    }
+
+    return {Show:Show}
 }();
 
 /*
