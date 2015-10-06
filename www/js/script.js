@@ -406,6 +406,7 @@ var UGoFor = function () {
 
     var UGoForPhotoSuccess = function (imageURI) {
         $("#imgPhotoPost").attr('src', imageURI + "?guid=" + Utilities.Guid());
+        $.magnificPopup.close();
         PhotoEdit.Render();
     }
 
