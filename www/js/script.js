@@ -17,6 +17,8 @@ var Pages = function () {
             SignOrLogin.Render();
         }
 
+        PhotoEdit.Render();
+
     }
 
     var Render = function (url) {
@@ -356,11 +358,11 @@ var UGoFor = function () {
         //end slick
 
         $('#btnUgoForCamera').click(function () {
-            PGPlugins.Camera.GetPhoto(0, 30, false, UGoForPhotoSuccess);
+            PGPlugins.Camera.GetPhoto(1, 30, false, UGoForPhotoSuccess);
         });
 
         $('#btnUgoForGallery').click(function () {
-            PGPlugins.Camera.GetPhoto(1, 30, false, UGoForPhotoSuccess);
+            PGPlugins.Camera.GetPhoto(0, 30, false, UGoForPhotoSuccess);
         });
       
         $("#btnPost").click(function () {
