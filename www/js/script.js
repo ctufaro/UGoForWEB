@@ -16,8 +16,6 @@ var Pages = function () {
         else {
             SignOrLogin.Render();
         }        
-
-        Feed.Render();
     }
 
     var Render = function (url) {
