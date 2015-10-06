@@ -154,13 +154,12 @@ var PGPlugins = function () {
 
         }
 
-        var GetPhoto = function (source, qual) {
-            navigator.camera.getPicture(OnPhotoDataSuccess, OnFail, {
-                quality: qual, allowEdit: true,
-                //targetWidth: 175,
-                //targetHeight: 175,
+        var GetPhoto = function (source, qual, edit, successMethod) {
+            var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
+            navigator.camera.getPicture(successMethod, OnFail, {
+                quality: qual, allowEdit: edit,
                 destinationType: destinationType.FILE_URI,
-                sourceType: source
+                sourceType: picSource
             });
         }
 
@@ -184,18 +183,19 @@ var PGPlugins = function () {
         }
 
         var ConfirmPhoto = function (buttonIndex) {
-
+            //CAMERA
             if (buttonIndex == 1) {
-                GetPhoto(pictureSource.PHOTOLIBRARY, 50);
+                GetPhoto(0, 50, true, OnPhotoDataSuccess);
             }
+            //PHOTOLIBRARY
             else if (buttonIndex == 2) {
-                GetPhoto(pictureSource.CAMERA, 50);
+                GetPhoto(1, 50, true, OnPhotoDataSuccess);
             }
             else { }
         }
 
         return {
-            ConfirmPhoto: ConfirmPhoto, ImageUpload: ImageUpload, TakePhoto: TakePhoto
+            ConfirmPhoto: ConfirmPhoto, ImageUpload: ImageUpload, TakePhoto: TakePhoto, GetPhoto: GetPhoto
         }
     }();
 
@@ -354,6 +354,14 @@ var UGoFor = function () {
             $('.ugofor-slick').slick('slickNext');
         });
         //end slick
+
+        $('#btnUgoForCamera').click(function () {
+            PGPlugins.Camera.GetPhoto(0, 30, false, UGoForPhotoSuccess);
+        });
+
+        $('#btnUgoForGallery').click(function () {
+            PGPlugins.Camera.GetPhoto(1, 30, false, UGoForPhotoSuccess);
+        });
       
         $("#btnPost").click(function () {
 
@@ -396,6 +404,11 @@ var UGoFor = function () {
 
     }();
 
+    var UGoForPhotoSuccess = function (imageURI) {
+        $("#imgPhotoPost").attr('src', imageURI + "?guid=" + Utilities.Guid());
+        PhotoEdit.Render();
+    }
+
     return { Render: Render }
 
 }();
@@ -431,6 +444,20 @@ var Settings = function () {
         $("#btnSettingLogout").click(function () {
             UserSession.ClearUserID();
         });
+
+    }();
+
+    return { Render: Render }
+
+}();
+
+var PhotoEdit = function () {
+
+    var Render = function () {
+        Pages.RenderSelect("#photoedit", Constants.FullPages);
+    }
+
+    var Events = function () {
 
     }();
 
@@ -541,7 +568,7 @@ var Constants = function () {
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#settings"];
+    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#settings", "#photoedit"];
     var PartialPages = ["#_feed", "#_profile"];
     return {
         PostHTML: PostHTML,
