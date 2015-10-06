@@ -84,7 +84,7 @@ var PGPlugins = function () {
         };
 
         var OnGPSError = function (error) {
-            alert(error);
+            Message.Error(error);
             Coordinates = "";
         };
 
@@ -130,7 +130,7 @@ var PGPlugins = function () {
                 } else {
                     retries = 0;
                     navigator.camera.cleanup();
-                    alert("Oh Snap! Code = " + error.code);
+                    Message.Error(error.code);
                 }
             }
 
@@ -180,7 +180,7 @@ var PGPlugins = function () {
         }
 
         var OnFail = function (message) {
-            alert("Oh Snap! " + message);
+            Message.Error(message);
         }
 
         var ConfirmPhoto = function (buttonIndex) {
@@ -243,7 +243,7 @@ var SignUp = function () {
                     PGPlugins.Camera.ImageUpload();
                 }
                 catch (err) {
-                    alert("Oh Snap! " + err.message);
+                    Message.Error(err.message);
                 }
             }
         });
@@ -275,7 +275,7 @@ var Feed = function () {
         $.ajax({
             type: "GET",
             url: Constants.RESTPosts,
-            error: function (xhr, statusText) { alert("Oh Snap! " + statusText); },
+            error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
                 var directive = {
                     'article': {
@@ -375,7 +375,7 @@ var UGoFor = function () {
                 },
                 global: false,
                 error: function (xhr, error) {
-                    alert("Oh Snap! " + xhr + " error: " + error);
+                    Message.Error(xhr + " - " + error);
                 },
                 success: function (data) {
                     var newAppend = Constants.PostHTML;
@@ -474,7 +474,7 @@ var Utilities = function () {
 
     var ClearCache = function () {
         var success = function (status) { }
-        var error = function (status) { alert('Oh Snap! ' + status); }
+        var error = function (status) { Message.Error(status); }
         try {
             window.cache.clear(success, error);
         }
@@ -520,15 +520,15 @@ var Utilities = function () {
 }();
 
 /*
-    Error Class
+    Message Class
 */
-var Error = function () {
+var Message = function () {
 
-    var Show = function (msg) {
+    var Error = function (msg) {
         navigator.notification.alert(msg, null, 'Sugar Snaps!', 'Done');
     }
 
-    return {Show:Show}
+    return { Error: Error }
 }();
 
 /*
