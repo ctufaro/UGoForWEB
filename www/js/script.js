@@ -15,9 +15,7 @@ var Pages = function () {
         }
         else {
             SignOrLogin.Render();
-        }
-
-        PhotoEdit.Render();
+        }        
 
     }
 
