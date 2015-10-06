@@ -361,9 +361,7 @@ var UGoFor = function () {
         });
 
         $('#btnUgoForGallery').click(function () {
-            $("#imgPhotoPost").attr('src', "https://placeholdit.imgix.net/~text?txtsize=28&txt=Camera&w=100&h=100");
-            $.magnificPopup.close();
-            PhotoEdit.Render();
+            PGPlugins.Camera.GetPhoto(0, 30, false, UGoForPhotoSuccess);
         });
       
         $("#btnPost").click(function () {
@@ -462,6 +460,7 @@ var PhotoEdit = function () {
     }
 
     var Events = function () {
+        //I DONT LIKE THIS, SHOULDVE USED HREF
         $('#btnPhotoEditGoBack').click(function(){
             Feed.Render();
         });
