@@ -327,7 +327,7 @@ var UGoFor = function () {
                     document.ontouchstart = function (e) { e.preventDefault(); }                   
                 },
                 close: function () {
-                    $('.ugofor-slick').slick('slickGoTo',0);
+                    $('.ugofor-slick').slick('slickGoTo',1);
                     document.ontouchstart = function (e) { return true; }
                 }
             }
@@ -335,16 +335,25 @@ var UGoFor = function () {
         
         //slick carousel
         $('.ugofor-slick').slick({
-            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 400, infinite: true, swipe:false
+            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 400, infinite: true, swipe: false, initialSlide:1
         });
 
         $('#btnShareYum').click(function () {
-            $('.ugofor-slick').slick('slickGoTo', 1);
+            $('.ugofor-slick').slick('slickGoTo', 2);
         });
 
         $('#btnRaveCrave').click(function () {
-            $('.ugofor-slick').slick('slickGoTo', 2);
+            $('.ugofor-slick').slick('slickGoTo', 0);
         });
+
+        $('#btnUgoForPrev').click(function () {
+            $('.ugofor-slick').slick('slickPrev');
+        });
+
+        $('#btnUgoForNext').click(function () {
+            $('.ugofor-slick').slick('slickNext');
+        });
+        //end slick
       
         $("#btnPost").click(function () {
 
