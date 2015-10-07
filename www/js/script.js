@@ -156,25 +156,26 @@ var PGPlugins = function () {
         var GetPhoto = function (source, qual, edit, successMethod) {
             var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
             navigator.camera.getPicture(successMethod, OnFail, {
-                quality: qual, allowEdit: edit,
+                quality: qual,
+                allowEdit: edit,
                 destinationType: destinationType.FILE_URI,
                 sourceType: picSource
             });
         }
 
-        var TakePhoto = function (qual, htmlElem) {
-            $('#imgYum').attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');
-            navigator.camera.getPicture(function (imageURI) {
-                Pages.renderYumPage();
-                var smallImage = document.getElementById(htmlElem);
-                smallImage.style.display = 'block';
-                mainImageURI = imageURI;
-                smallImage.src = imageURI + "?guid=" + guid();
-            }, onFail, {
+        var GetPhotoResized = function (htmlelem, source, qual, edit, successMethod, tw, th) {
+            $(htmlelem).attr('src', Constants.SrcPixel);
+            var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
+            navigator.camera.getPicture(successMethod, OnFail, {
                 quality: qual,
+                allowEdit: edit,
+                targetWidth: tw,
+                targetHeight: th,
+                correctOrientation: 1,
                 destinationType: destinationType.FILE_URI,
-                sourceType: pictureSource.CAMERA
+                sourceType: picSource
             });
+            
         }
 
         var OnFail = function (message) {
@@ -194,7 +195,7 @@ var PGPlugins = function () {
         }
 
         return {
-            ConfirmPhoto: ConfirmPhoto, ImageUpload: ImageUpload, TakePhoto: TakePhoto, GetPhoto: GetPhoto
+            ConfirmPhoto: ConfirmPhoto, ImageUpload: ImageUpload, GetPhoto: GetPhoto, GetPhotoResized: GetPhotoResized
         }
     }();
 
@@ -355,11 +356,15 @@ var UGoFor = function () {
         //end slick
 
         $('#btnUgoForCamera').click(function () {
-            PGPlugins.Camera.GetPhoto(1, 30, false, UGoForPhotoSuccess);
+            $.magnificPopup.close();
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost',1, 30, false, UGoForPhotoSuccess, 640, 640);
+            PhotoEdit.Render();
         });
 
         $('#btnUgoForGallery').click(function () {
-            PGPlugins.Camera.GetPhoto(0, 30, false, UGoForPhotoSuccess);
+            $.magnificPopup.close();
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 30, false, UGoForPhotoSuccess, 640, 640);
+            PhotoEdit.Render();
         });
       
         $("#btnPost").click(function () {
@@ -405,8 +410,6 @@ var UGoFor = function () {
 
     var UGoForPhotoSuccess = function (imageURI) {
         $("#imgPhotoPost").attr('src', imageURI + "?guid=" + Utilities.Guid());
-        $.magnificPopup.close();
-        PhotoEdit.Render();
     }
 
     return { Render: Render }
@@ -458,8 +461,11 @@ var PhotoEdit = function () {
     }
 
     var Events = function () {
-        //I DONT LIKE THIS, SHOULDVE USED HREF
-        $('#btnPhotoEditGoBack').click(function(){
+        $('#btnPhotoEditGoBack').click(function () {
+            $('.ugofor-slick').slick('slickGoTo', 2);
+            $('.popup-modal').trigger('click');
+        });
+        $('#btnPhotoEditClose').click(function () {
             Feed.Render();
         });
     }();

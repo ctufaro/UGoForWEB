@@ -153,6 +153,7 @@
             <div class="fixed" style="padding-top:18px; background-color:#333333">
                 <nav class="top-bar" data-topbar role="navigation">
                     <a id="btnPhotoEditGoBack" class="back-button"><img src="img/menu/left-arrow.png" /></a>
+                    <a id="btnPhotoEditClose" class="settings-button"><img src="img/menu/close.png" /></a>
                     <ul class="title-area">
                         <li class="name">
                             <a href="#" style="color:white;font-size:28px;">Photo Edit</a>
@@ -162,7 +163,9 @@
             </div>
         </div>
         <div class="extra-space1"></div>
-        <img id="imgPhotoPost" style="z-index:-100;object-fit: cover; height: 640px; width: 640px;"/>
+        <span id="imagePhotoPostContainer">
+            <img id="imgPhotoPost" />
+        </span>
     </span>
 
     <!--UGOFOR POP UP-->
