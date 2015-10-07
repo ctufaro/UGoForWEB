@@ -190,7 +190,7 @@ var PGPlugins = function () {
             });
         }
 
-        var GetPhotoResized = function (htmlelem, source, qual, edit, successMethod, tw, th) {
+        var GetPhotoResized = function (htmlelem, source, qual, edit, successMethod, failMethod, tw, th) {
             $(htmlelem).attr('src', Constants.SrcPixel);
             var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
             navigator.camera.getPicture(successMethod, OnFail, {
@@ -202,10 +202,6 @@ var PGPlugins = function () {
                 destinationType: destinationType.FILE_URI,
                 sourceType: picSource
             });            
-        }
-
-        var OnFail = function (message) {
-            Message.Error(message);
         }
 
         var ConfirmPhoto = function (buttonIndex) {
@@ -383,16 +379,16 @@ var UGoFor = function () {
 
         $('#btnUgoForCamera').click(function () {
             $.magnificPopup.close();
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 20, false, PhotoEdit.PhotoSuccess, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 20, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
             PhotoEdit.Render();
-            Utilities.Spinner(true, "");
+            Utilities.Spinner(true, "Capturing");
         });
 
         $('#btnUgoForGallery').click(function () {
             $.magnificPopup.close();
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 20, false, PhotoEdit.PhotoSuccess, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 20, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
             PhotoEdit.Render();
-            Utilities.Spinner(true, "");
+            Utilities.Spinner(true, "Capturing");
         });
       
         $("#btnPost").click(function () {
@@ -509,7 +505,12 @@ var PhotoEdit = function () {
         PhotoEdit.SetURI(imageURI);
     }
 
-    return { Render: Render, SetURI: SetURI, PhotoSuccess: PhotoSuccess }
+    var PhotoFail = function (message) {
+        Utilities.Spinner(false, "");
+        Message.Error(message);
+    }
+
+    return { Render: Render, SetURI: SetURI, PhotoSuccess: PhotoSuccess, PhotoFail: PhotoFail }
 
 }();
 
