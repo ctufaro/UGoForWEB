@@ -181,7 +181,7 @@ var PGPlugins = function () {
         };
 
         var GetPhoto = function (source, qual, edit, successMethod) {
-            var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
+            var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.SAVEDPHOTOALBUM;
             navigator.camera.getPicture(successMethod, OnFail, {
                 quality: qual,
                 allowEdit: edit,
@@ -192,7 +192,7 @@ var PGPlugins = function () {
 
         var GetPhotoResized = function (htmlelem, source, qual, edit, successMethod, failMethod, tw, th) {
             $(htmlelem).attr('src', Constants.SrcPixel);
-            var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
+            var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.SAVEDPHOTOALBUM;
             navigator.camera.getPicture(successMethod, OnFail, {
                 quality: qual,
                 allowEdit: edit,
@@ -209,7 +209,7 @@ var PGPlugins = function () {
             if (buttonIndex == 1) {
                 GetPhoto(0, 50, true, OnPhotoDataSuccess);
             }
-            //PHOTOLIBRARY
+            //SAVEDPHOTOALBUM
             else if (buttonIndex == 2) {
                 GetPhoto(1, 50, true, OnPhotoDataSuccess);
             }
