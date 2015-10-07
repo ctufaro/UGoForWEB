@@ -193,7 +193,7 @@ var PGPlugins = function () {
         var GetPhotoResized = function (htmlelem, source, qual, edit, successMethod, failMethod, tw, th) {
             $(htmlelem).attr('src', Constants.SrcPixel);
             var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
-            navigator.camera.getPicture(successMethod, OnFail, {
+            navigator.camera.getPicture(successMethod, failMethod, {
                 quality: qual,
                 allowEdit: edit,
                 targetWidth: tw,
