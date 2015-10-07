@@ -101,7 +101,7 @@ var PGPlugins = function () {
             $("#profileImage").attr('src', imageURI + "?guid=" + Utilities.Guid());
         }
 
-        //main upload method
+        //new user register profile method
         var ImageUpload = function () {
 
             Utilities.Spinner(true, "Registering");
@@ -153,6 +153,35 @@ var PGPlugins = function () {
 
         }
 
+        //new post method
+        var PostUpload = function (imageURI) {
+            Utilities.Spinner(true, "Uploading");
+
+            var win = function (r) {
+                Utilities.Spinner(false, "Uploading");
+                //navigator.camera.cleanup();
+                Feed.LoadFeed();
+                Feed.Render();
+            }
+
+            var fail = function (error) {
+                //navigator.camera.cleanup();
+                Message.Error(error.code);
+            }
+
+            var options = new FileUploadOptions();
+            options.fileKey = "file";
+            options.fileName = Utilities.Guid() + "_" + imageURI.substr(imageURI.lastIndexOf('/') + 1);
+            options.mimeType = "image/jpeg";
+            options.chunkedMode = false;
+            options.headers = {
+                Connection: "close"
+            };
+            var ft = new FileTransfer();
+            alert("here?");
+            ft.upload(imageURI, Constants.RESTBlob, win, fail, options);
+        };
+
         var GetPhoto = function (source, qual, edit, successMethod) {
             var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
             navigator.camera.getPicture(successMethod, OnFail, {
@@ -195,7 +224,7 @@ var PGPlugins = function () {
         }
 
         return {
-            ConfirmPhoto: ConfirmPhoto, ImageUpload: ImageUpload, GetPhoto: GetPhoto, GetPhotoResized: GetPhotoResized
+            ConfirmPhoto: ConfirmPhoto, ImageUpload: ImageUpload, GetPhoto: GetPhoto, GetPhotoResized: GetPhotoResized, PostUpload: PostUpload
         }
     }();
 
@@ -357,13 +386,13 @@ var UGoFor = function () {
 
         $('#btnUgoForCamera').click(function () {
             $.magnificPopup.close();
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost',1, 30, false, UGoForPhotoSuccess, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost',1, 20, false, UGoForPhotoSuccess, 640, 640);
             PhotoEdit.Render();
         });
 
         $('#btnUgoForGallery').click(function () {
             $.magnificPopup.close();
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 30, false, UGoForPhotoSuccess, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 20, false, UGoForPhotoSuccess, 640, 640);
             PhotoEdit.Render();
         });
       
@@ -410,6 +439,7 @@ var UGoFor = function () {
 
     var UGoForPhotoSuccess = function (imageURI) {
         $("#imgPhotoPost").attr('src', imageURI + "?guid=" + Utilities.Guid());
+        PhotoEdit.SetURI(imageURI);
     }
 
     return { Render: Render }
@@ -455,6 +485,7 @@ var Settings = function () {
 }();
 
 var PhotoEdit = function () {
+    var mainURI = '';
 
     var Render = function () {
         Pages.RenderSelect("#photoedit", Constants.FullPages);
@@ -468,9 +499,17 @@ var PhotoEdit = function () {
         $('#btnPhotoEditClose').click(function () {
             Feed.Render();
         });
+        $('#btnUploadPost').click(function () {
+            alert(mainURI);
+            PGPlugins.Camera.PostUpload(mainURI);
+        });
     }();
 
-    return { Render: Render }
+    var SetURI = function (uri) {
+        mainURI = uri;
+    };
+
+    return { Render: Render, SetURI: SetURI }
 
 }();
 
