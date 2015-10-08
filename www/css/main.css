@@ -14,6 +14,7 @@ p {
 p {
     margin-bottom: 0
 }
+
 h1,
 h2,
 h3,
@@ -457,6 +458,14 @@ option:checked {
     background-position:center;
 }
 
+.shareYumBtn .button:hover, .button:focus{
+    background-color: #f79421;
+}
+
+.raveCraveBtn .button:hover, .button:focus{
+    background-color: #008EBD;
+}
+
 /*SETTINGS SCREEN*/
 
 .setting-layout{
@@ -578,6 +587,4 @@ option:checked {
     left: 100%;
     margin-left: 15px;
 }
-
-
 
