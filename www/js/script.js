@@ -16,8 +16,9 @@ var Pages = function () {
         else {
             SignOrLogin.Render();
         }
-        Feed.LoadFeed();
-        Feed.Render();
+
+        //Feed.LoadFeed();
+        //Feed.Render();
     }
 
     var Render = function (url) {
@@ -380,12 +381,11 @@ var UGoFor = function () {
         });
 
         $('#txtCrave').focus(function () {
-            position = $('#divCrave').offset().top;
+            //position = $('#divCrave').offset().top;
         });
 
         $('#txtCrave').focusout(function () {
-            alert(position);
-            $("#divCrave").offset({ top: position })
+            //$("#divCrave").offset({ top: position })
         });
         //end slick
 
