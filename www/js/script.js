@@ -16,7 +16,7 @@ var Pages = function () {
         else {
             SignOrLogin.Render();
         }
-
+        Feed.LoadFeed();
         Feed.Render();
     }
 
@@ -342,6 +342,7 @@ var UGoFor = function () {
     }
 
     var Events = function () {
+        var position;
 
         $('.popup-modal').magnificPopup({
             type: 'inline', preloader: false, closeOnBgClick: true, showCloseBtn: false,
@@ -376,6 +377,15 @@ var UGoFor = function () {
 
         $('#btnUgoForNext').click(function () {
             $('.ugofor-slick').slick('slickNext');
+        });
+
+        $('#txtCrave').focus(function () {
+            position = $('#divCrave').offset().top;
+        });
+
+        $('#txtCrave').focusout(function () {
+            alert(position);
+            $("#divCrave").offset({ top: position })
         });
         //end slick
 
