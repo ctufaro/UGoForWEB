@@ -15,7 +15,9 @@ var Pages = function () {
         }
         else {
             SignOrLogin.Render();
-        }        
+        }
+
+        Feed.Render();
     }
 
     var Render = function (url) {
@@ -346,18 +348,18 @@ var UGoFor = function () {
             callbacks: {
                 open: function () {
                     $('.ugofor-slick').slick('setPosition');
-                    document.ontouchstart = function (e) { e.preventDefault(); }                   
+                    //document.ontouchstart = function (e) { e.preventDefault(); }                   
                 },
                 close: function () {
                     $('.ugofor-slick').slick('slickGoTo',1);
-                    document.ontouchstart = function (e) { return true; }
+                    //document.ontouchstart = function (e) { return true; }
                 }
             }
         });
         
         //slick carousel
         $('.ugofor-slick').slick({
-            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 400, infinite: true, swipe: false, initialSlide:1
+            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: true, initialSlide:1
         });
 
         $('#btnShareYum').click(function () {

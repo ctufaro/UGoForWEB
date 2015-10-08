@@ -429,7 +429,15 @@ option:checked {
 	text-indent: -9999px;
 }
 
-/*UGOFOR SCREEN*/
+/*UGOFOR POPUP SCREEN*/
+.littleCrave{
+    background-image:url('../img/littlecrave.png');
+    background-repeat:no-repeat; 
+    background-position:center;
+    height:60px;
+    width:130px; 
+}
+
 .raveCrave{
     height:65px;
     width:130px; 
@@ -437,7 +445,7 @@ option:checked {
     background-image:url('../img/raveacrave.png');
     background-repeat:no-repeat; 
     background-position:center;
-    background-size:45%;
+    
 }
 .shareYum{
     height:65px;
@@ -447,9 +455,7 @@ option:checked {
     background-repeat:no-repeat; 
     background-color:#f79421;
     background-position:center;
-    background-size:50%;
 }
-
 
 /*SETTINGS SCREEN*/
 
