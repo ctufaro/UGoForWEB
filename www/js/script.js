@@ -359,7 +359,6 @@ var UGoFor = function () {
             }
         });
         
-        //slick carousel
         $('.ugofor-slick').slick({
             dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: true, initialSlide:1
         });
@@ -387,13 +386,10 @@ var UGoFor = function () {
         $('#txtCrave').focusout(function () {
             //$("#divCrave").offset({ top: position })
         });
-        //end slick
 
         $('#btnUgoForCamera').click(function () {
             $.magnificPopup.close();
             PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 20, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
-            PhotoEdit.Render();
-            Utilities.Spinner(true, "Capturing");
         });
 
         $('#btnUgoForGallery').click(function () {
