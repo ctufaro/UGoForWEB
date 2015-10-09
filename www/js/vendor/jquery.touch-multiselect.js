@@ -206,8 +206,8 @@
 
   $('.post-icons').touchMultiSelect();
   $('.touchMultiSelect').addClass('pull-right');
-  $('.touchMultiSelect li:nth-child(2)').addClass('icon-share');
-  $('.touchMultiSelect li:nth-child(3)').addClass('icon-sweet');
+  //$('.touchMultiSelect li:nth-child(2)').addClass('icon-share');
+  //$('.touchMultiSelect li:nth-child(3)').addClass('icon-sweet');
   $('.touchMultiSelect li:nth-child(4)').addClass('icon-heart');
 
 })(jQuery);
