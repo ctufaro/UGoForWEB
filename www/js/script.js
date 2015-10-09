@@ -19,6 +19,7 @@ var Pages = function () {
 
         //Feed.LoadFeed();
         //Feed.Render();
+        //PhotoEdit.Render();
     }
 
     var Render = function (url) {
@@ -379,16 +380,7 @@ var UGoFor = function () {
             $('.ugofor-slick').slick('slickNext');
         });
 
-        $('#txtCrave').focus(function () {
-            //position = $('#divCrave').offset().top;
-        });
-
-        $('#txtCrave').focusout(function () {
-            //$("#divCrave").offset({ top: position })
-        });
-
         $('#btnUgoForCamera').click(function () {
-            $.magnificPopup.close();
             PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 20, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
 
@@ -490,15 +482,43 @@ var PhotoEdit = function () {
     }
 
     var Events = function () {
+        var filterOn = false;
+
         $('#btnPhotoEditGoBack').click(function () {
             $('.ugofor-slick').slick('slickGoTo', 2);
             $('.popup-modal').trigger('click');
         });
+
         $('#btnPhotoEditClose').click(function () {
             Feed.Render();
         });
+
         $('#btnUploadPost').click(function () {
             PGPlugins.Camera.PostUpload(mainURI);
+        });
+
+        $('#btnFilter1').click(function () {            
+
+            if(!filterOn){
+                $('#imgPhotoPost').css('-webkit-filter', 'sepia(100%)');
+                filterOn = true;
+            }
+            else {
+                $('#imgPhotoPost').css('-webkit-filter', '');
+                filterOn = false;
+            }
+        });
+
+        $('#btnFilter2').click(function () {
+
+            if (!filterOn) {
+                $('#imgPhotoPost').css('-webkit-filter', 'grayscale(100%)');
+                filterOn = true;
+            }
+            else {
+                $('#imgPhotoPost').css('-webkit-filter', '');
+                filterOn = false;
+            }
         });
     }();
 
@@ -507,10 +527,12 @@ var PhotoEdit = function () {
     };
 
     var PhotoSuccess = function (imageURI) {
+        $.magnificPopup.close();
         $("#imgPhotoPost").attr('src', imageURI + "?guid=" + Utilities.Guid()).one("load", function () {
             Utilities.Spinner(false, "");
         });        
         PhotoEdit.SetURI(imageURI);
+        PhotoEdit.Render();
     }
 
     var PhotoFail = function (message) {
