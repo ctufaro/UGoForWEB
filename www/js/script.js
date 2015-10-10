@@ -18,7 +18,7 @@ var Pages = function () {
         }
 
         //Feed.LoadFeed();
-        Feed.Render();
+        //Feed.Render();
         //PhotoEdit.Render();
     }
 
