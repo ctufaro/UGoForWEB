@@ -18,7 +18,7 @@ var Pages = function () {
         }
 
         //Feed.LoadFeed();
-        //Feed.Render();
+        Feed.Render();
         //PhotoEdit.Render();
     }
 
@@ -200,8 +200,8 @@ var PGPlugins = function () {
             navigator.camera.getPicture(successMethod, failMethod, {
                 quality: qual,
                 allowEdit: edit,
-                targetWidth: tw,
-                targetHeight: th,
+                //targetWidth: tw,
+                //targetHeight: th,
                 correctOrientation: 1,
                 destinationType: destinationType.FILE_URI,
                 sourceType: picSource
@@ -381,14 +381,11 @@ var UGoFor = function () {
         });
 
         $('#btnUgoForCamera').click(function () {
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 20, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 45, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
 
         $('#btnUgoForGallery').click(function () {
-            $.magnificPopup.close();
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 20, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
-            PhotoEdit.Render();
-            Utilities.Spinner(true, "Capturing");
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 45, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
       
         $("#btnPost").click(function () {
@@ -482,7 +479,6 @@ var PhotoEdit = function () {
     }
 
     var Events = function () {
-        var filterOn = false;
 
         $('#btnPhotoEditGoBack').click(function () {
             $('.ugofor-slick').slick('slickGoTo', 2);
@@ -493,33 +489,22 @@ var PhotoEdit = function () {
             Feed.Render();
         });
 
+        $('#btnPhotoProgess').click(function () {
+        });
+
         $('#btnUploadPost').click(function () {
             PGPlugins.Camera.PostUpload(mainURI);
         });
 
-        $('#btnFilter1').click(function () {            
-
-            if(!filterOn){
-                $('#imgPhotoPost').css('-webkit-filter', 'sepia(100%)');
-                filterOn = true;
-            }
-            else {
-                $('#imgPhotoPost').css('-webkit-filter', '');
-                filterOn = false;
-            }
+        $('.item.btnFilter').click(function () {
+            $("#imgPhotoPost").removeClass();
+            $('#imgPhotoPost').addClass($(this).data('filter'));
         });
 
-        $('#btnFilter2').click(function () {
-
-            if (!filterOn) {
-                $('#imgPhotoPost').css('-webkit-filter', 'grayscale(100%)');
-                filterOn = true;
-            }
-            else {
-                $('#imgPhotoPost').css('-webkit-filter', '');
-                filterOn = false;
-            }
+        $('#imgPhotoPost').click(function () {
+            $("#imgPhotoPost").removeClass();
         });
+
     }();
 
     var SetURI = function (uri) {

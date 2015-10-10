@@ -11,6 +11,7 @@
     <link href="css/magnific-popup-modal.css" rel="stylesheet" />
     <link href="css/iosOverlay.css" rel="stylesheet">
     <link href="css/nav-bar-hacks.css" rel="stylesheet" />
+    <link href="css/instafilters.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -153,43 +154,43 @@
     <!--PHOTO EDIT PAGE-->
     <span id="photoedit" style="display:none;">
         <div class="row page">
-            <div class="fixed" style="padding-top:18px; background-color:#333333">
+            <div class="fixed" style="padding-top:18px; background-color:#333333; position:fixed;">
                 <nav class="top-bar" data-topbar role="navigation">
                     <a id="btnPhotoEditGoBack" class="back-button"><img src="img/menu/left-arrow.png" /></a>
-                    <a id="btnPhotoEditGoBack" class="settings-button"><img src="img/menu/right-arrow.png" /></a>
+                    <a id="btnPhotoProgess" class="settings-button"><img src="img/menu/right-arrow.png" /></a>
                     <ul class="title-area">
                         <li class="name">
-                            <a id="btnPhotoEditClose" class="close-button"><img src="img/menu/close.png" /></a>
+                            <a id="btnPhotoEditClose"><img id="mainLogomage" src="img/logo.png" style="height:30px;margin-top:7px;" /></a>
                         </li>
                     </ul>
-                </nav>
-                <div class="icon-bar five-up top-bar">
-                    <a class="item" id="btnFilter1">
-                        <span style="color:white;">filter 1</span>
-                    </a>
-                    <a class="item" id="btnFilter2">
-                        <span style="color:white;">filter 2</span>
-                    </a>
-                    <a class="item">
-                        <span style="color:white;">filter 3</span>
-                    </a>
-                    <a class="item">
-                        <span style="color:white;">filter 4</span>
-                    </a>
-                    <a class="item">
-                        <span style="color:white;">filter 5</span>
-                    </a>
-                </div>
+                </nav>                
             </div>
-            <div style="height: 28px;width: 100%"></div>
+            <div class="extra-space"></div>
             <!--CONTENT-->
             <span id="imagePhotoPostContainer">
-                <img id="imgPhotoPost" />
-            </span>            
+                <img id="imgPhotoPost" src="" />
+            </span>   
+            <div class="icon-bar five-up bottom-bar" style="position:fixed;bottom: 0;right: 0;">
+                <a class="item btnFilter" data-filter="ig-toaster">
+                    <span style="color:white;">filter 1</span>
+                </a>
+                <a class="item btnFilter" data-filter="ig-willow">
+                    <span style="color:white;">filter 2</span>
+                </a>
+                <a class="item btnFilter" data-filter="ig-kelvin">
+                    <span style="color:white;">filter 3</span>
+                </a>
+                <a class="item btnFilter" data-filter="ig-1977">
+                    <span style="color:white;">filter 4</span>
+                </a>
+                <a class="item btnFilter" data-filter="ig-earlybird">
+                    <span style="color:white;">filter 5</span>
+                </a>
+            </div>                     
         </div>
     </span>
 
-    <!--UGOFOR POP UP-->
+    <!--UGOFOR POP UPS-->
     <div id="ugofor-popup" class="mfp-hide">
         <div class="ugofor-slick">
             <div id="divCrave">
@@ -201,9 +202,9 @@
                 <div class="raveCraveBtn"><a id="btnRaveCrave" class="button large expand radius raveCrave"></a></div>
             </div>
             <div>
-                <ul class="small-block-grid-2">
-                    <li><center><img class="center" id="btnUgoForCamera" src="img/cameraButton.png" /></center></li>
-                    <li><center><img class="center" id="btnUgoForGallery" src="img/galleryButton.png" /></center></li>
+                <ul class="small-block-grid-2" style="color:white;font-size:28px;">
+                    <li id="btnUgoForCamera"><center><img class="center" src="img/cameraButton.png" style="width:105px;" />Camera</center></li>
+                    <li id="btnUgoForGallery"><center><img class="center" src="img/galleryButton.png" style="width:105px;" />Gallery</center></li>
                 </ul>
             </div>
         </div>
