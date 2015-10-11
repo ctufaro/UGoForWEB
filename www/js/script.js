@@ -381,11 +381,11 @@ var UGoFor = function () {
         });
 
         $('#btnUgoForCamera').click(function () {
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 45, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 35, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
 
         $('#btnUgoForGallery').click(function () {
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 45, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 35, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
       
         $("#btnPost").click(function () {
