@@ -481,7 +481,7 @@ var PhotoEdit = function () {
     var Events = function () {
 
         $('#btnPhotoEditGoBack').click(function () {
-            $('.ugofor-slick').slick('slickGoTo', 2);
+            $('.ugofor-slick').slick('slickGoTo', 2, false);
             $('.popup-modal').trigger('click');
         });
 
@@ -490,6 +490,8 @@ var PhotoEdit = function () {
         });
 
         $('#btnPhotoProgess').click(function () {
+            $('.ugofor-slick').slick('slickGoTo', 4, true);
+            $('.popup-modal').trigger('click');
         });
 
         $('#btnUploadPost').click(function () {

@@ -440,7 +440,16 @@ option:checked {
 .littleCrave{
     background-image:url('../img/littlecrave.png');
     background-repeat:no-repeat; 
+    background-position:center;    
+    height:60px;
+    width:130px; 
+}
+
+.littleShare{
+    background-image:url('../img/littleshare.png');
+    background-repeat:no-repeat; 
     background-position:center;
+    background-color: #f79421;
     height:60px;
     width:130px; 
 }
