@@ -200,8 +200,8 @@ var PGPlugins = function () {
             navigator.camera.getPicture(successMethod, failMethod, {
                 quality: qual,
                 allowEdit: edit,
-                //targetWidth: tw,
-                //targetHeight: th,
+                targetWidth: tw,
+                targetHeight: th,
                 correctOrientation: 1,
                 destinationType: destinationType.FILE_URI,
                 sourceType: picSource
@@ -381,11 +381,11 @@ var UGoFor = function () {
         });
 
         $('#btnUgoForCamera').click(function () {
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 35, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 39, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
 
         $('#btnUgoForGallery').click(function () {
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 35, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 39, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
       
         $("#btnPost").click(function () {
