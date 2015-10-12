@@ -312,7 +312,7 @@ var Feed = function () {
                             '.avatar-profilename': 'post.Username',
                             '+.arrow_box': 'post.SmallComment',
                             '.cover@src': 'post.PostedImage',
-                            '.cover@class+': 'post.Filter',
+                            //'.cover@class+': 'post.Filter',
                             '.day': 'post.TimePosted',
                             '.big-comment p': 'post.BigComment'
                         }
