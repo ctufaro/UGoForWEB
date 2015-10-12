@@ -8,8 +8,8 @@ var Pages = function () {
         //hashchange event
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
-        //Check if user is registered
-        if (UserSession.IsRegistered()) {
+        //Check if user is registered and a new login
+        if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
             Feed.LoadFeed();
             Feed.Render();
         }
@@ -300,6 +300,8 @@ var Feed = function () {
 
         Utilities.Spinner(true, "Loading Feed");
 
+        ClearFeed();
+
         $.ajax({
             type: "GET",
             url: Constants.RESTPosts,
@@ -329,9 +331,13 @@ var Feed = function () {
     }
 
     var RefreshFeed = function () {
+        ClearFeed();
+        LoadFeed();
+    }
+
+    var ClearFeed = function () {
         $(".posts").css("display", "none");
         $(".posts").html(Constants.PostPure);
-        LoadFeed();
     }
 
     return {
