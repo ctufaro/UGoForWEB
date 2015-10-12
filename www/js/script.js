@@ -158,13 +158,10 @@ var PGPlugins = function () {
         }
 
         //new post method
-        var PostUpload = function (imageURI) {
-            Utilities.Spinner(true, "Uploading");
+        var PostUpload = function (imageURI, filtername, guid) {
 
             var win = function (r) {
-                Utilities.Spinner(false, "Uploading");
                 navigator.camera.cleanup();
-                Feed.RefreshFeed();
             }
 
             var fail = function (error) {
@@ -174,8 +171,13 @@ var PGPlugins = function () {
 
             var options = new FileUploadOptions();
             options.fileKey = "file";
-            options.fileName = Utilities.Guid() + "_" + imageURI.substr(imageURI.lastIndexOf('/') + 1);
+            options.fileName = guid + "_" + imageURI.substr(imageURI.lastIndexOf('/') + 1);
             options.mimeType = "image/jpeg";
+            var params = new Object();
+            params['userid-' + UserSession.GetUserID()] = 'value';
+            params['filtername-' + filtername] = 'value';
+            params['guid-' + guid] = 'value';
+            options.params = params;
             options.chunkedMode = false;
             options.headers = {
                 Connection: "close"
@@ -310,6 +312,7 @@ var Feed = function () {
                             '.avatar-profilename': 'post.Username',
                             '+.arrow_box': 'post.SmallComment',
                             '.cover@src': 'post.PostedImage',
+                            '.cover@class+': 'post.Filter',
                             '.day': 'post.TimePosted',
                             '.big-comment p': 'post.BigComment'
                         }
@@ -403,7 +406,7 @@ var UGoFor = function () {
                 async: false,
                 data: {
                     "UserId": UserSession.GetUserID(), "PostID": 1, "ProfilePicURL": "xxx", "SmallComment": $("#txtSmallComment").val(),
-                    "TimePosted": "xxx", "PostedImage": "xxx", "BigComment": $("#txtBigComment").val(),
+                    "TimePosted": "xxx", "PostedImage": "xxx", "BigComment": $("#txtBigComment").val(), "Guid":PhotoEdit.GetGUID(),
                     "Location": coordinates
                 },
                 global: false,
@@ -411,17 +414,20 @@ var UGoFor = function () {
                     Message.Error(xhr + " - " + error);
                 },
                 success: function (data) {
-                    var newAppend = Constants.PostHTML;
-                    newAppend = newAppend.replace("{profileurl}", data.ProfilePicURL);
-                    newAppend = newAppend.replace("{profilename}", data.Username);
-                    newAppend = newAppend.replace("{littlecomment}", data.SmallComment);
-                    newAppend = newAppend.replace("{day}", data.TimePosted);
-                    newAppend = newAppend.replace("{foodurl}", data.PostedImage);
-                    newAppend = newAppend.replace("{bigcomment}", data.BigComment);
-                    $('.posts').prepend($(newAppend).hide().fadeIn(1000));
-                    $('#btnCancel').trigger('click');
-                    $('#txtBigComment').val('');
-                    $('#txtSmallComment').val('');
+                    $.magnificPopup.close();
+                    Feed.RefreshFeed();
+                    Feed.Render();
+                    //var newAppend = Constants.PostHTML;
+                    //newAppend = newAppend.replace("{profileurl}", data.ProfilePicURL);
+                    //newAppend = newAppend.replace("{profilename}", data.Username);
+                    //newAppend = newAppend.replace("{littlecomment}", data.SmallComment);
+                    //newAppend = newAppend.replace("{day}", data.TimePosted);
+                    //newAppend = newAppend.replace("{foodurl}", data.PostedImage);
+                    //newAppend = newAppend.replace("{bigcomment}", data.BigComment);
+                    //$('.posts').prepend($(newAppend).hide().fadeIn(1000));
+                    //$('#btnCancel').trigger('click');
+                    //$('#txtBigComment').val('');
+                    //$('#txtSmallComment').val('');
                     //append the newly saved post and clear fields
                 }
             })
@@ -473,12 +479,15 @@ var Settings = function () {
 
 var PhotoEdit = function () {
     var mainURI = '';
+    var guid = '';
 
     var Render = function () {
         Pages.RenderSelect("#photoedit", Constants.FullPages);
     }
 
     var Events = function () {
+
+        var filtername;
 
         $('#btnPhotoEditGoBack').click(function () {
             $('.ugofor-slick').slick('slickGoTo', 2, false);
@@ -490,20 +499,20 @@ var PhotoEdit = function () {
         });
 
         $('#btnPhotoProgess').click(function () {
+            guid = Utilities.Guid().replace(/-/g, '');;
+            PGPlugins.Camera.PostUpload(mainURI, filtername, guid);
             $('.ugofor-slick').slick('slickGoTo', 4, true);
             $('.popup-modal').trigger('click');
         });
 
-        $('#btnUploadPost').click(function () {
-            PGPlugins.Camera.PostUpload(mainURI);
-        });
-
         $('.item.btnFilter').click(function () {
+            filtername = ' ' + $(this).data('filter');
             $("#imgPhotoPost").removeClass();
-            $('#imgPhotoPost').addClass($(this).data('filter'));
+            $('#imgPhotoPost').addClass(filtername);
         });
 
         $('#imgPhotoPost').click(function () {
+            filtername = '';
             $("#imgPhotoPost").removeClass();
         });
 
@@ -512,6 +521,10 @@ var PhotoEdit = function () {
     var SetURI = function (uri) {
         mainURI = uri;
     };
+
+    var GetGUID = function () {
+        return guid;
+    }
 
     var PhotoSuccess = function (imageURI) {
         $.magnificPopup.close();
@@ -527,7 +540,7 @@ var PhotoEdit = function () {
         Message.Error(message);
     }
 
-    return { Render: Render, SetURI: SetURI, PhotoSuccess: PhotoSuccess, PhotoFail: PhotoFail }
+    return { Render: Render, SetURI: SetURI, PhotoSuccess: PhotoSuccess, PhotoFail: PhotoFail, GetGUID: GetGUID }
 
 }();
 
@@ -628,8 +641,10 @@ var Message = function () {
     String Constants Class
 */
 var Constants = function () {
-    var PostHTML = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'>{profilename}</div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div> <img class='cover' src='{foodurl}'> <div class='big-comment'> <p>{bigcomment}</p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
-    var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'> <p></p> <select class='post-icons' style='display: none;'> <option value='1'>Share</option> <option value='2'>Sweet</option> <option value='3'>Heart</option> </select><ul class='touchMultiSelect pull-right'><li class='noneButton '>None</li><li class='icon-share'>Share</li><li class='icon-sweet'>Sweet</li><li class='icon-heart'>Heart</li></ul> </div> </article>";
+    var PostHTML = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'>{profilename}</div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div> <img class='cover' src='{foodurl}'> <div class='big-comment'> <p>{bigcomment}</p><span class='icon-heart' style='float:right;'></span></div></article>";
+    var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'> <p></p> <span class='icon-heart' style='float:right;'></span></div></article>";
+    //var RESTPosts = "http://192.168.1.2:26684/api/posts";
+    //var RESTBlob = "http://192.168.1.2:26684/blobs/upload";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
