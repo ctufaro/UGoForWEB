@@ -603,3 +603,11 @@ option:checked {
     margin-left: 15px;
 }
 
+/*PULL TO REFRESH*/
+.scrollable{
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    height: 100%;
+    background: #fff;
+}
