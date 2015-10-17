@@ -83,8 +83,8 @@ var PGPlugins = function () {
         var Coordinates = "";
 
         var OnGPSSuccess = function (position) {
-            gpscoordinates = ("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
-            Message.Error("Your location is: " + gpscoordinates);
+            Coordinates = ("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
+            //Message.Error("Your location is: " + gpscoordinates);
         };
 
         var OnGPSError = function (error) {
@@ -92,7 +92,11 @@ var PGPlugins = function () {
             Coordinates = "";
         };
 
-        return { OnGPSSuccess: OnGPSSuccess, OnGPSError: OnGPSError, Coordinates: Coordinates }
+        var GetGPSCoordinates = function () {
+            return Coordinates;
+        }
+
+        return { OnGPSSuccess: OnGPSSuccess, OnGPSError: OnGPSError, Coordinates: Coordinates, GetGPSCoordinates: GetGPSCoordinates }
 
     }();
 
@@ -403,7 +407,7 @@ var UGoFor = function () {
             var coordinates = "NULL";
 
             if (PGPlugins.GPS.Coordinates.length > 0) {
-                coordinates = PGPlugins.getGPSCoordinates();
+                coordinates = PGPlugins.GPS.GetGPSCoordinates();
             }
 
             $.ajax
