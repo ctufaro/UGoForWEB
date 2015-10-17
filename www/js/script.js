@@ -405,7 +405,7 @@ var UGoFor = function () {
 
             var coordinates = "NULL";
 
-            if (PGPlugins.GPS.GetGPSCoordinates() > 0) {
+            if (PGPlugins.GPS.GetGPSCoordinates().length > 0) {
                 coordinates = PGPlugins.GPS.GetGPSCoordinates();
             }
 
