@@ -84,7 +84,6 @@ var PGPlugins = function () {
 
         var OnGPSSuccess = function (position) {
             Coordinates = ("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
-            //Message.Error("Your location is: " + gpscoordinates);
         };
 
         var OnGPSError = function (error) {
@@ -96,7 +95,7 @@ var PGPlugins = function () {
             return Coordinates;
         }
 
-        return { OnGPSSuccess: OnGPSSuccess, OnGPSError: OnGPSError, Coordinates: Coordinates, GetGPSCoordinates: GetGPSCoordinates }
+        return { OnGPSSuccess: OnGPSSuccess, OnGPSError: OnGPSError, GetGPSCoordinates: GetGPSCoordinates }
 
     }();
 
@@ -406,7 +405,7 @@ var UGoFor = function () {
 
             var coordinates = "NULL";
 
-            if (PGPlugins.GPS.Coordinates.length > 0) {
+            if (PGPlugins.GPS.GetGPSCoordinates() > 0) {
                 coordinates = PGPlugins.GPS.GetGPSCoordinates();
             }
 
