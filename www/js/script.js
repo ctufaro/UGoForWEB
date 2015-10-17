@@ -84,6 +84,7 @@ var PGPlugins = function () {
 
         var OnGPSSuccess = function (position) {
             gpscoordinates = ("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
+            Message.Error("Your location is: " + position);
         };
 
         var OnGPSError = function (error) {
