@@ -344,6 +344,22 @@ var Feed = function () {
         $(".posts").html(Constants.PostPure);
     }
 
+    var Events = function () {
+        $('.scrollable').pullToRefresh({
+            callback: function () {
+                var def = $.Deferred();
+
+                //setTimeout(function () {
+                //    def.resolve();
+                //}, 3000);
+                RefreshFeed();
+                def.resolve();
+
+                return def.promise();
+            }
+        });
+    }();
+
     return {
         Render: Render, LoadFeed: LoadFeed, RefreshFeed: RefreshFeed
     }

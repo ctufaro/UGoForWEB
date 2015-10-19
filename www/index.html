@@ -12,6 +12,7 @@
     <link href="css/iosOverlay.css" rel="stylesheet">
     <link href="css/nav-bar-hacks.css" rel="stylesheet" />
     <link href="css/instafilters.css" rel="stylesheet" />
+    <link href="css/pull-to-refresh.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -240,10 +241,9 @@
                 </ul>
             </nav>
         </div>
-        <div class="row page scrollable">
-            <div class="extra-space2"></div>
+        <div class="row page scrollable">         
             <!--CONTENT START-->
-            <span id="_feed" style="display:none;">
+            <span id="_feed" style="display:none;" class="wrap">
                 <span id="imagecontainer">
                     <span class="posts" style="display:none">
                         <article id="post">
@@ -298,6 +298,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+    <script src="js/vendor/jquery.plugin.pullToRefresh.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
