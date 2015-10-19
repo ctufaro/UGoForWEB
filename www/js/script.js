@@ -672,7 +672,7 @@ var Message = function () {
     String Constants Class
 */
 var Constants = function () {
-    var PostCommentHTML = "<span class='icon-heart' style='float:right;'></span><div class='post-comments' style='font-size:14px;'><div class='post-comment'><span class='post-comments-poster avatar-profilename'></span><span class='post-comments-msg'></span></div></div>";
+    var PostCommentHTML = "<div class='post-comments' style='font-size:14px;'><div class='post-comment'><span class='post-comments-poster avatar-profilename'></span><span class='post-comments-msg'></span></div></div>";
     var PostHTML = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'>{profilename}</div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div> <img class='cover' src='{foodurl}'> <div class='big-comment'> <p>{bigcomment}</p><span class='icon-heart' style='float:right;'></span>" + PostCommentHTML + "</div></article>";
     var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'> <p></p> <span class='icon-heart' style='float:right;'></span>" + PostCommentHTML + "</div></article>";
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
