@@ -673,8 +673,8 @@ var Message = function () {
 */
 var Constants = function () {
     var PostCommentHTML = "<div class='post-comments'><div class='post-comment'><span class='post-comments-poster avatar-profilename'></span><span class='post-comments-msg'></span></div></div>";
-    var PostHTML = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'>{profilename}</div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div><img class='cover' src='{foodurl}'> <div class='big-comment'> <div class='big-comment-yellow'><p>{bigcomment}</p><span class='icon-heart' style='float:right;'></span></div>" + PostCommentHTML + "</div></article>";
-    var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><p></p><span class='icon-heart' style='float:right;'></span></div>" + PostCommentHTML + "</div></article>";
+    var PostHTML = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'>{profilename}</div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div><img class='cover' src='{foodurl}'> <div class='big-comment'> <div class='big-comment-yellow'><p>{bigcomment}</p></div>" + PostCommentHTML + "</div></article>";
+    var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><p></p></div>" + PostCommentHTML + "</div></article>";
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
     //var RESTBlob = "http://192.168.1.2:26684/blobs/upload";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
