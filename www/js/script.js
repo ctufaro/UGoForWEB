@@ -322,8 +322,8 @@ var Feed = function () {
                             '.big-comment p': 'post.BigComment',
                             '.post-comment': {
                                 'pc<-post.PostComments': {
-                                    '.post-comments-poster': 'pc.PostCommenter',
-                                    '.post-comments-msg': 'pc.PostComment'
+                                    '.post-comments-poster': 'pc.Username',
+                                    '.post-comments-msg': 'pc.Comment'
                                 }
                             }
                         }
