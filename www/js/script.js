@@ -415,7 +415,7 @@ var UGoFor = function () {
         });
 
         $('#btnUgoForCamera').click(function () {
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 39, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 39, true, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
 
         $('#btnUgoForGallery').click(function () {
