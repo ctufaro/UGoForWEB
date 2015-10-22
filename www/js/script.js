@@ -320,6 +320,7 @@ var Feed = function () {
                             '.cover@src': 'post.PostedImage',
                             '.day': 'post.TimePosted',
                             '.big-comment .comment-location': 'post.BigComment',
+                            '.bubble-comment@data-postid': 'post.PostId',
                             '.post-comment': {
                                 'pc<-post.PostComments': {
                                     '.post-comments-poster': 'pc.Username',
@@ -348,6 +349,37 @@ var Feed = function () {
         $(".posts").css("display", "none");
         $(".posts").html(Constants.PostPure);
     }
+
+    var Comments = function () {
+
+        var currentPost;
+
+        var Events = function () {
+
+            $(document).on('click','.bubble-comment',function(){
+                currentPost = $(this).data('postid');
+                $('#postComments').fadeIn();
+                $('#txtPostComments').focus();
+                $('#txtPostComments').val("");
+                //Move the page down and fit it
+            });
+
+            $('#btnPostComments').click(function () {
+                if ($('#txtPostComments').val().length > 0) {
+                    //submit via ajax
+                    //append to dom
+                }
+                $('#postComments').fadeOut();
+            });
+
+            $('#txtPostComments').focusout(function () {
+                $('#txtPostComments').val("");
+                $('#postComments').fadeOut();
+            });
+
+        }();
+
+    }();
 
     var Events = function () {
         $('.scrollable').pullToRefresh({

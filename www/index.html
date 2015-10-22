@@ -256,7 +256,7 @@
                             <div class="big-comment">
                                 <div class="big-comment-yellow">
                                     <span class="comment-location"></span>
-                                    <span class="bubble-comment"></span>                                  
+                                    <span class="bubble-comment" data-postid=""></span>                                  
                                 </div>
                                 <div class='post-comments'>
                                     <div class='post-comment'>
@@ -276,11 +276,11 @@
             <div class="extra-space"></div>
         </div>
         
-        <!--BOTTOM NAVIGATION-->
-        <div style="bottom:34px; position:absolute; width:100%;z-index:100;">
-            <a href="#" class="button tiny" style="float: right;">Comment</a>
+        <!--BOTTOM NAVIGATION CLEAN THIS SHIT-->
+        <div id="postComments" style="bottom:34px; position:absolute; width:100%; z-index:100; display:none;">
+            <a href="#" id="btnPostComments" class="button tiny" style="float: right;">Comment</a>
             <div style="overflow: hidden;">
-                <input type="text" style="width: 100%;height:39px; font-size:20px;" />
+                <input type="text" id="txtPostComments" style="width: 100%;height:39px; font-size:20px;" />
             </div>
         </div> 
         <div class="icon-bar five-up bottom-bar">
