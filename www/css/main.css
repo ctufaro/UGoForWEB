@@ -257,8 +257,18 @@ a.icon {
     color:white;
 }
 .post-comments{
-    font-size:14px;
+    font-size:16px;
     padding:6px;
+
+}
+
+.bubble-comment{
+    float:right;
+    background-size:26px;
+    background-image: url('../img/comment.png');
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 26px;
 }
 
 .sign-login {
