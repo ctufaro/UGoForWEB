@@ -427,7 +427,7 @@ var UGoFor = function () {
         });
         
         $('.ugofor-slick').slick({
-            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: true, initialSlide:1
+            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: false, initialSlide:1
         });
 
         $('#btnShareYum').click(function () {
@@ -447,7 +447,7 @@ var UGoFor = function () {
         });
 
         $('#btnUgoForCamera').click(function () {
-            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 39, true, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
+            PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 39, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
 
         $('#btnUgoForGallery').click(function () {
