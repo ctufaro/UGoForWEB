@@ -391,9 +391,9 @@ var Feed = function () {
                     ({
                         type: "POST", url: Constants.RESTComments, async: false,
                         data: {
-                            "UserId": 150,//UserSession.GetUserID(),
+                            "UserId": UserSession.GetUserID(),
                             "PostID": currentPost, "Comment": $('#txtPostComments').val(),
-                            "Location": 'somewhere'//PGPlugins.GPS.GetGPSCoordinates()
+                            "Location": PGPlugins.GPS.GetGPSCoordinates()
                         },
                         global: false,
                         error: function (xhr, error) {
