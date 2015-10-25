@@ -391,9 +391,9 @@ var Feed = function () {
                     ({
                         type: "POST", url: Constants.RESTComments, async: false,
                         data: {
-                            "UserId": UserSession.GetUserID(),
+                            "UserId": 150,//UserSession.GetUserID(),
                             "PostID": currentPost, "Comment": $('#txtPostComments').val(),
-                            "Location": PGPlugins.GPS.GetGPSCoordinates()
+                            "Location": 'somewhere'//PGPlugins.GPS.GetGPSCoordinates()
                         },
                         global: false,
                         error: function (xhr, error) {
@@ -748,7 +748,7 @@ var Message = function () {
 var Constants = function () {
     var PostHTML = '';
     var PostPure = $('#post').parent().html();
-    var PostComment = $('.post-comment')[0].outerHTML;
+    var PostComment = $('.post-comments').html;
     var PostComments = $('#postComments')[0].outerHTML;
     //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
