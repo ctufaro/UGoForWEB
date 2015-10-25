@@ -258,8 +258,13 @@ a.icon {
 }
 .post-comments{
     font-size:16px;
-    padding:6px;
+    padding-bottom:4px;
+}
 
+.post-comment{
+    padding:6px;
+    padding-top:0px;
+    padding-bottom:0px;
 }
 
 .bubble-comment{

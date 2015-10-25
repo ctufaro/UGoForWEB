@@ -326,7 +326,10 @@ var Feed = function () {
                                     '.post-comments-poster': 'pc.Username',
                                     '.post-comments-msg': 'pc.Comment'
                                 }
-                            }
+                            },
+                            '.message-append@id': function (a) { return 'ma' + a.item.PostId; },
+                            '.textbox-append@id': function (a) { return 'tb' + a.item.PostId; }
+
                         }
                     }
                 };
@@ -358,23 +361,23 @@ var Feed = function () {
 
             $(document).on('click','.bubble-comment',function(){
                 currentPost = $(this).data('postid');
-                $('#postComments').fadeIn();
+                $('#tb' + currentPost).append($('#postComments').hide().fadeIn(1000));
                 $('#txtPostComments').focus();
                 $('#txtPostComments').val("");
-                //Move the page down and fit it
             });
 
             $('#btnPostComments').click(function () {
+                var appendThis = "<div class='post-comment'><span class='post-comments-poster avatar-profilename'>ugoforchris&nbsp;</span><span class='post-comments-msg'>{0}</span></div>";
                 if ($('#txtPostComments').val().length > 0) {
+                    $('#ma' + currentPost).append(appendThis.replace('{0}', $('#txtPostComments').val()));
+                    $('#postComments').css('display','none');
                     //submit via ajax
                     //append to dom
                 }
-                $('#postComments').fadeOut();
             });
 
             $('#txtPostComments').focusout(function () {
-                $('#txtPostComments').val("");
-                $('#postComments').fadeOut();
+                $('#postComments').css('display', 'none');
             });
 
         }();
@@ -704,9 +707,10 @@ var Message = function () {
     String Constants Class
 */
 var Constants = function () {
-    var PostCommentHTML = "<div class='post-comments'><div class='post-comment'><span class='post-comments-poster avatar-profilename'></span><span class='post-comments-msg'></span></div></div>";
-    var PostHTML = "<article id='post'><img class='avatar' style='float: left' src='{profileurl}'><div class='avatar-profilename'>{profilename}</div><div class='arrow_box'>{littlecomment}<span class='day pull-right'>{day}</span> </div><img class='cover' src='{foodurl}'> <div class='big-comment'> <div class='big-comment-yellow'><span class='comment-location'>{bigcomment}</span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
-    var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
+    var PostPure = $('#post').parent().html();
+    var PostHTML = '';
+    //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
+
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
     //var RESTBlob = "http://192.168.1.2:26684/blobs/upload";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
