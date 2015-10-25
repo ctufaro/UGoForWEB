@@ -384,7 +384,7 @@ var Feed = function () {
             $(document).on('click', '#btnPostComments', function () {
                 var appendThis = "<div class='post-comment'><span class='post-comments-poster avatar-profilename'>ugoforchris&nbsp;</span><span class='post-comments-msg'>{0}</span></div>";
                 if ($('#txtPostComments').val().length > 0) {
-                    $('#ma' + currentPost).append(appendThis.replace('{0}', $('#txtPostComments').val()));
+                    //$('#ma' + currentPost).append(appendThis.replace('{0}', $('#txtPostComments').val()));
                     $('#postComments').css('display', 'none');
 
                     $.ajax
