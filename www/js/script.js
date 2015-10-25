@@ -9,16 +9,16 @@ var Pages = function () {
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
         //Check if user is registered and a new login
-        if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
-            Feed.LoadFeed();
-            Feed.Render();
-        }
-        else {
-            SignOrLogin.Render();
-        }
+        //if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
+        //    Feed.LoadFeed();
+        //    Feed.Render();
+        //}
+        //else {
+        //    SignOrLogin.Render();
+        //}
 
-        //Feed.LoadFeed();
-        //Feed.Render();
+        Feed.LoadFeed();
+        Feed.Render();
         //PhotoEdit.Render();
     }
 
@@ -374,12 +374,13 @@ var Feed = function () {
 
             $(document).on('click','.bubble-comment',function(){
                 currentPost = $(this).data('postid');
+                if (!($('#postComments').length)) { $('body').append(Constants.PostComments); };
                 $('#tb' + currentPost).append($('#postComments').hide().fadeIn(1000));
                 $('#txtPostComments').focus();
                 $('#txtPostComments').val("");
             });
 
-            $('#btnPostComments').click(function () {
+            $(document).on('click', '#btnPostComments', function () {
                 var appendThis = "<div class='post-comment'><span class='post-comments-poster avatar-profilename'>ugoforchris&nbsp;</span><span class='post-comments-msg'>{0}</span></div>";
                 if ($('#txtPostComments').val().length > 0) {
                     $('#ma' + currentPost).append(appendThis.replace('{0}', $('#txtPostComments').val()));
@@ -389,7 +390,7 @@ var Feed = function () {
                 }
             });
 
-            $('#txtPostComments').focusout(function () {
+            $(document).on('focusout', '#txtPostComments', function () {
                 $('#postComments').css('display', 'none');
             });
 
@@ -720,8 +721,9 @@ var Message = function () {
     String Constants Class
 */
 var Constants = function () {
-    var PostPure = $('#post').parent().html();
     var PostHTML = '';
+    var PostPure = $('#post').parent().html();
+    var PostComments = $('#postComments')[0].outerHTML;
     //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
 
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
@@ -735,6 +737,7 @@ var Constants = function () {
     return {
         PostHTML: PostHTML,
         PostPure: PostPure,
+        PostComments: PostComments,
         RESTPosts: RESTPosts,
         RESTBlob: RESTBlob,
         EmailRegEx: EmailRegEx,
