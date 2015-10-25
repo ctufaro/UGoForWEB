@@ -287,9 +287,22 @@ var SignUp = function () {
 }();
 
 var Login = function () {
+
     var Render = function () {
         Pages.RenderSelect("#login", Constants.FullPages);
     }
+
+    var Events = function () {
+        $('#loginUser').click(function () {
+            var password = $('#loginPassword').val();
+            if(!isNaN(password)){
+                UserSession.SetUserID(password);
+                Feed.LoadFeed();
+                Feed.Render();
+            }
+        });
+    }();
+
     return { Render: Render }
 }();
 
