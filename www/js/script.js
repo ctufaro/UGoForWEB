@@ -334,6 +334,7 @@ var Feed = function () {
                             '.day': 'post.TimePosted',
                             '.big-comment .comment-location': 'post.BigComment',
                             '.bubble-comment@data-postid': 'post.PostId',
+                            '.post-comments@id': function (a) { return 'pc' + a.item.PostId; },
                             '.post-comment': {
                                 'pc<-post.PostComments': {
                                     '.post-comments-poster': 'pc.Username',
@@ -384,9 +385,33 @@ var Feed = function () {
                 var appendThis = "<div class='post-comment'><span class='post-comments-poster avatar-profilename'>ugoforchris&nbsp;</span><span class='post-comments-msg'>{0}</span></div>";
                 if ($('#txtPostComments').val().length > 0) {
                     $('#ma' + currentPost).append(appendThis.replace('{0}', $('#txtPostComments').val()));
-                    $('#postComments').css('display','none');
-                    //submit via ajax
-                    //append to dom
+                    $('#postComments').css('display', 'none');
+
+                    $.ajax
+                    ({
+                        type: "POST", url: Constants.RESTComments, async: false,
+                        data: {
+                            "UserId": UserSession.GetUserID(),
+                            "PostID": currentPost, "Comment": $('#txtPostComments').val(),
+                            "Location": PGPlugins.GPS.GetGPSCoordinates()
+                        },
+                        global: false,
+                        error: function (xhr, error) {
+                            Message.Error(xhr + " - " + error);
+                        },
+                        success: function (data) {
+                            $('#pc' + currentPost).html(Constants.PostComment);
+                            var directive = {
+                                '.post-comment': {
+                                    'pc <- PostComments': {
+                                        '.post-comments-poster': 'pc.Username',
+                                        '.post-comments-msg': 'pc.Comment'
+                                    }
+                                }
+                            }
+                            $p('#pc' + currentPost).render(data, directive);
+                        }
+                    });
                 }
             });
 
@@ -723,12 +748,14 @@ var Message = function () {
 var Constants = function () {
     var PostHTML = '';
     var PostPure = $('#post').parent().html();
+    var PostComment = $('.post-comment')[0].outerHTML;
     var PostComments = $('#postComments')[0].outerHTML;
     //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
-
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
+    //var RESTComments = "http://192.168.1.2:26684/api/comments";
     //var RESTBlob = "http://192.168.1.2:26684/blobs/upload";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
+    var RESTComments = "http://ugoforapi.azurewebsites.net/api/comments";
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
@@ -737,8 +764,10 @@ var Constants = function () {
     return {
         PostHTML: PostHTML,
         PostPure: PostPure,
+        PostComment:PostComment,
         PostComments: PostComments,
         RESTPosts: RESTPosts,
+        RESTComments:RESTComments,
         RESTBlob: RESTBlob,
         EmailRegEx: EmailRegEx,
         SrcPixel: SrcPixel,
