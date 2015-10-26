@@ -9,16 +9,16 @@ var Pages = function () {
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
         //Check if user is registered and a new login
-        //if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
-        //    Feed.LoadFeed();
-        //    Feed.Render();
-        //}
-        //else {
-        //    SignOrLogin.Render();
-        //}
+        if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
+            Feed.LoadFeed();
+            Feed.Render();
+        }
+        else {
+            SignOrLogin.Render();
+        }
 
-        Feed.LoadFeed();
-        Feed.Render();
+        //Feed.LoadFeed();
+        //Feed.Render();
         //PhotoEdit.Render();
     }
 
@@ -340,10 +340,7 @@ var Feed = function () {
                                     '.post-comments-poster': 'pc.Username',
                                     '.post-comments-msg': 'pc.Comment'
                                 }
-                            },
-                            '.message-append@id': function (a) { return 'ma' + a.item.PostId; },
-                            '.textbox-append@id': function (a) { return 'tb' + a.item.PostId; }
-
+                            }
                         }
                     }
                 };
@@ -375,8 +372,8 @@ var Feed = function () {
 
             $(document).on('click','.bubble-comment',function(){
                 currentPost = $(this).data('postid');
-                if (!($('#postComments').length)) { $('body').append(Constants.PostComments); };
-                $('#tb' + currentPost).append($('#postComments').hide().fadeIn(1000));
+                if (!($('.postComments').length)) { $('body').append(Constants.PostComments); };
+                $('#pc' + currentPost).find('.textbox-append').append($('.postComments').hide().fadeIn(1000));
                 $('#txtPostComments').focus();
                 $('#txtPostComments').val("");
             });
@@ -384,24 +381,21 @@ var Feed = function () {
             $(document).on('click', '#btnPostComments', function () {
                 var appendThis = "<div class='post-comment'><span class='post-comments-poster avatar-profilename'>ugoforchris&nbsp;</span><span class='post-comments-msg'>{0}</span></div>";
                 if ($('#txtPostComments').val().length > 0) {
-                    //$('#ma' + currentPost).append(appendThis.replace('{0}', $('#txtPostComments').val()));
-                    $('#postComments').css('display', 'none');
+                    $('.postComments').css('display', 'none');
 
                     $.ajax
                     ({
                         type: "POST", url: Constants.RESTComments, async: false,
                         data: {
-                            "UserId": 1,//UserSession.GetUserID(),
+                            "UserId": UserSession.GetUserID(),
                             "PostID": currentPost, "Comment": $('#txtPostComments').val(),
-                            "Location": 'somewhere'
+                            "Location": PGPlugins.GPS.GetGPSCoordinates()
                         },
                         global: false,
                         error: function (xhr, error) {
                             Message.Error(xhr + " - " + error);
                         },
                         success: function (data) {
-                            //console.log(data);
-                            console.log(Constants.PostComment);
                             $('#pc' + currentPost).html(Constants.PostComment);
                             var directive = {
                                 '.post-comment': {
@@ -411,7 +405,6 @@ var Feed = function () {
                                     }
                                 }
                             }
-                            console.log('rendered');
                             $p('#pc' + currentPost).render(data, directive);
                         }
                     });
@@ -419,7 +412,7 @@ var Feed = function () {
             });
 
             $(document).on('focusout', '#txtPostComments', function () {
-                $('#postComments').css('display', 'none');
+                $('.postComments').css('display', 'none');
             });
 
         }();
@@ -753,8 +746,7 @@ var Constants = function () {
     var PostHTML = '';
     var PostPure = $('#post').parent().html();
     var PostComment = $('.post-comments').html();
-    var PostComments = $('#postComments')[0].outerHTML;
-
+    var PostComments = $('.postComments')[0].outerHTML;
     //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
     //var RESTComments = "http://192.168.1.2:26684/api/comments";
