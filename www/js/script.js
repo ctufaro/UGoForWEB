@@ -9,16 +9,16 @@ var Pages = function () {
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
         //Check if user is registered and a new login
-        if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
-            Feed.LoadFeed();
-            Feed.Render();
-        }
-        else {
-            SignOrLogin.Render();
-        }
+        //if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
+        //    Feed.LoadFeed();
+        //    Feed.Render();
+        //}
+        //else {
+        //    SignOrLogin.Render();
+        //}
 
-        //Feed.LoadFeed();
-        //Feed.Render();
+        Feed.LoadFeed();
+        Feed.Render();
         //PhotoEdit.Render();
     }
 
@@ -391,15 +391,17 @@ var Feed = function () {
                     ({
                         type: "POST", url: Constants.RESTComments, async: false,
                         data: {
-                            "UserId": UserSession.GetUserID(),
+                            "UserId": 1,//UserSession.GetUserID(),
                             "PostID": currentPost, "Comment": $('#txtPostComments').val(),
-                            "Location": PGPlugins.GPS.GetGPSCoordinates()
+                            "Location": 'somewhere'
                         },
                         global: false,
                         error: function (xhr, error) {
                             Message.Error(xhr + " - " + error);
                         },
                         success: function (data) {
+                            //console.log(data);
+                            console.log(Constants.PostComment);
                             $('#pc' + currentPost).html(Constants.PostComment);
                             var directive = {
                                 '.post-comment': {
@@ -409,6 +411,7 @@ var Feed = function () {
                                     }
                                 }
                             }
+                            console.log('rendered');
                             $p('#pc' + currentPost).render(data, directive);
                         }
                     });
@@ -746,10 +749,12 @@ var Message = function () {
     String Constants Class
 */
 var Constants = function () {
+
     var PostHTML = '';
     var PostPure = $('#post').parent().html();
-    var PostComment = $('.post-comments').html;
+    var PostComment = $('.post-comments').html();
     var PostComments = $('#postComments')[0].outerHTML;
+
     //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
     //var RESTComments = "http://192.168.1.2:26684/api/comments";
