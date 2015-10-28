@@ -433,6 +433,12 @@ var Feed = function () {
                 return def.promise();
             }
         });
+
+        //$('.scrollable').on('scroll', function () {
+            //if ($(this).scrollTop() + $(this).innerHeight() >= (this.scrollHeight * .85)) {
+                //load old posts
+            //}
+        //})
     }();
 
     return {
