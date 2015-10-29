@@ -308,6 +308,8 @@ var Login = function () {
 
 var Feed = function () {
 
+    var lastLoadPost;
+
     var Render = function () {
         Pages.RenderSelect("#main", Constants.FullPages);
         Pages.RenderSelect("#_feed", Constants.PartialPages)
@@ -334,7 +336,7 @@ var Feed = function () {
                             '.day': 'post.TimePosted',
                             '.big-comment .comment-location': 'post.BigComment',
                             '.bubble-comment@data-postid': 'post.PostId',
-                            '.post-comments@id': function (a) { return 'pc' + a.item.PostId; },
+                            '.post-comments@id': function (a) { lastLoadPost = a.item.PostId; return 'pc' + a.item.PostId; },
                             '.post-comment': {
                                 'pc<-post.PostComments': {
                                     '.post-comments-poster': 'pc.Username',
@@ -357,6 +359,14 @@ var Feed = function () {
     var RefreshFeed = function () {
         ClearFeed();
         LoadFeed();
+    }
+
+    var PrependFeed = function () { }
+
+    var AppendFeed = function () {
+        //1.var url = RESTPosts + "/" + lastLoadPost + "/0";
+        //2.take that result set and append to .posts
+        //3.make sure calls dont overlap (guard clause)
     }
 
     var ClearFeed = function () {
