@@ -9,16 +9,16 @@ var Pages = function () {
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
         //Check if user is registered and a new login
-        if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
-            Feed.LoadFeed();
-            Feed.Render();
-        }
-        else {
-            SignOrLogin.Render();
-        }
+        //if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
+        //    Feed.LoadFeed();
+        //    Feed.Render();
+        //}
+        //else {
+        //    SignOrLogin.Render();
+        //}
 
-        //Feed.LoadFeed();
-        //Feed.Render();
+        Feed.LoadFeed();
+        Feed.Render();
         //PhotoEdit.Render();
     }
 
@@ -370,7 +370,7 @@ var Feed = function () {
             url: Constants.RESTPosts + "/" + lastLoadPost + "/0",
             error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
-                if (data.length == 0) { return;}
+                if (data.length == 0) { isAppended = false; return; }
                 var directive = {
                     'article': {
                         'post<-': { //for each entry in posts name the element 'post'
