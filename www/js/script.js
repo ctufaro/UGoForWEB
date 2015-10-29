@@ -309,6 +309,7 @@ var Login = function () {
 var Feed = function () {
 
     var lastLoadPost;
+    var isAppended = false;
 
     var Render = function () {
         Pages.RenderSelect("#main", Constants.FullPages);
@@ -364,9 +365,39 @@ var Feed = function () {
     var PrependFeed = function () { }
 
     var AppendFeed = function () {
-        //1.var url = RESTPosts + "/" + lastLoadPost + "/0";
-        //2.take that result set and append to .posts
-        //3.make sure calls dont overlap (guard clause)
+        $.ajax({
+            type: "GET",
+            url: Constants.RESTPosts + "/" + lastLoadPost + "/0",
+            error: function (xhr, statusText) { Message.Error(statusText); },
+            success: function (data) {
+                if (data.length == 0) { return;}
+                var directive = {
+                    'article': {
+                        'post<-': { //for each entry in posts name the element 'post'
+                            '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
+                            '.avatar-profilename': 'post.Username',
+                            '+.arrow_box': 'post.SmallComment',
+                            '.cover@src': 'post.PostedImage',
+                            '.day': 'post.TimePosted',
+                            '.big-comment .comment-location': 'post.BigComment',
+                            '.bubble-comment@data-postid': 'post.PostId',
+                            '.post-comments@id': function (a) { lastLoadPost = a.item.PostId; return 'pc' + a.item.PostId; },
+                            '.post-comment': {
+                                'pc<-post.PostComments': {
+                                    '.post-comments-poster': 'pc.Username',
+                                    '.post-comments-msg': 'pc.Comment'
+                                }
+                            }
+                        }
+                    }
+                };
+                $('body').append("<span id='post-money'><span class='post-template"+lastLoadPost+"'>" + Constants.PostPure + "</span></span>")
+                var compiled = $p('.post-template' + lastLoadPost).compile(directive);
+                $('.posts').append(compiled(data));
+                isAppended = false;
+                $("span[id=post-money]").remove();
+            }
+        });
     }
 
     var ClearFeed = function () {
@@ -444,11 +475,15 @@ var Feed = function () {
             }
         });
 
-        //$('.scrollable').on('scroll', function () {
-            //if ($(this).scrollTop() + $(this).innerHeight() >= (this.scrollHeight * .85)) {
-                //load old posts
-            //}
-        //})
+        $('.scrollable').on('scroll', function () {
+            if (!isAppended) {
+                if ($(this).scrollTop() + $(this).innerHeight() >= (this.scrollHeight * .75)) {
+                    AppendFeed();
+                    isAppended = true;
+                }
+            }
+        })
+
     }();
 
     return {
