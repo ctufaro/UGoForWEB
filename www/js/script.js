@@ -9,16 +9,16 @@ var Pages = function () {
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
         //Check if user is registered and a new login
-        //if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
-        //    Feed.LoadFeed();
-        //    Feed.Render();
-        //}
-        //else {
-        //    SignOrLogin.Render();
-        //}
+        if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
+            Feed.LoadFeed();
+            Feed.Render();
+        }
+        else {
+            SignOrLogin.Render();
+        }
 
-        Feed.LoadFeed();
-        Feed.Render();
+        //Feed.LoadFeed();
+        //Feed.Render();
         //PhotoEdit.Render();
     }
 
@@ -294,12 +294,32 @@ var Login = function () {
 
     var Events = function () {
         $('#loginUser').click(function () {
+            var userName = $('#loginUsername').val();
             var password = $('#loginPassword').val();
-            if(!isNaN(password)){
-                UserSession.SetUserID(password);
-                Feed.LoadFeed();
-                Feed.Render();
-            }
+            $.ajax
+            ({
+                type: "POST", url: Constants.RESTLogin, async: false,
+                data: {
+                    "Username": userName,
+                    "Password": password
+                },
+                global: false,
+                error: function (xhr, error) {
+                    Message.Error(xhr + " - " + error);
+                },
+                success: function (data) {
+                    var userId = parseInt(data);
+                    if (userId < 0) {
+                        Message.Error("Invalid Credentials, forget much?");
+                    }
+                    else {
+                        UserSession.SetUserID(userId);
+                        Profile.SetProfile();
+                        Feed.LoadFeed();
+                        Feed.Render();
+                    }
+                }
+            });
         });
     }();
 
@@ -592,13 +612,18 @@ var UGoFor = function () {
 }();
 
 var Profile = function () {
+
     var Render = function () {
         Pages.RenderSelect("#main", Constants.FullPages);
         Pages.RenderSelect("#_profile", Constants.PartialPages);
     }
 
+    var SetProfile = function () {
+        $('#spnLoggedInUserId').html(UserSession.GetUserID());
+    }
+
     return {
-        Render: Render
+        Render: Render, SetProfile: SetProfile
     }
 
 }();
@@ -799,9 +824,11 @@ var Constants = function () {
     var PostComment = $('.post-comments').html();
     var PostComments = $('.postComments')[0].outerHTML;
     //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
+    //var RESTLogin = "http://192.168.1.2:26684/api/login";
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
     //var RESTComments = "http://192.168.1.2:26684/api/comments";
     //var RESTBlob = "http://192.168.1.2:26684/blobs/upload";
+    var RESTLogin = "http://ugoforapi.azurewebsites.net/api/login";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
     var RESTComments = "http://ugoforapi.azurewebsites.net/api/comments";
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
@@ -814,6 +841,7 @@ var Constants = function () {
         PostPure: PostPure,
         PostComment:PostComment,
         PostComments: PostComments,
+        RESTLogin : RESTLogin,
         RESTPosts: RESTPosts,
         RESTComments:RESTComments,
         RESTBlob: RESTBlob,
