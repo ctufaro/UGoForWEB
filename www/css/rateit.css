@@ -107,22 +107,26 @@ BIGDOLLARS
 div.bigstars div.rateit-range
 {
     background: url('../img/icons/money.png');
+    background-size: 64px 64px;
     height: 64px;
 }
 
 div.bigstars div.rateit-hover
 {
     background: url('../img/icons/money-green.png');
+    background-size: 64px 64px;
 }
 
 div.bigstars div.rateit-selected
 {
     background: url('../img/icons/money-green.png');
+    background-size: 64px 64px;
 }
 
 div.bigstars div.rateit-reset
 {
     background: url(star-black32.png);
+    background-size: 64px 64px;
     width: 64px;
     height: 64px;
 
@@ -131,4 +135,5 @@ div.bigstars div.rateit-reset
 div.bigstars div.rateit-reset:hover
 {
     background: url('../img/icons/money.png');
+    background-size: 64px 64px;
 }

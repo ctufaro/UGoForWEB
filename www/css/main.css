@@ -461,19 +461,17 @@ option:checked {
 }
 
 /*UGOFOR POPUP SCREEN*/
-.littleCrave{
-    background-image:url('../img/littlecrave.png');
-    background-repeat:no-repeat; 
-    background-position:center;    
-    height:60px;
-    width:130px; 
+.ugBtn{
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-size: 50px !important;
+    font-weight:bolder;
+    padding:0px !important;
+    margin-bottom: .5rem !important;  
+    letter-spacing:-2px;
 }
 
-.littleShare{
-    background-image:url('../img/littleshare.png');
-    background-repeat:no-repeat; 
-    background-position:center;
-    background-color: #f79421;
+
+.littleBtn{
     height:60px;
     width:130px; 
 }
@@ -481,20 +479,13 @@ option:checked {
 .raveCrave{
     height:65px;
     width:130px; 
-    margin-bottom: .15rem; 
-    background-image:url('../img/raveacrave.png');
-    background-repeat:no-repeat; 
-    background-position:center;
-    
 }
+
 .shareYum{
     height:65px;
     width:130px; 
     margin-bottom: .15rem; 
-    background-image:url('../img/shareyum.png');
-    background-repeat:no-repeat; 
     background-color:#f79421;
-    background-position:center;
 }
 
 .shareYumBtn .button:hover, .button:focus{
@@ -505,22 +496,6 @@ option:checked {
     background-color: #008EBD;
 }
 
-.range-slider{
-    height:20px;
-}
-
-.range-slider-handle,
-.range-slider-handle:hover{
-    background-image:url('../img/icons/dollar.png');
-    background-color:transparent;
-    background-size: 32px 32px;
-    height:32px;
-}
-
-.range-slider-active-segment{
-    background-color:#3f9342;
-    height:18px;
-}
 
 /*SETTINGS SCREEN*/
 
