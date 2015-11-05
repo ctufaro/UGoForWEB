@@ -13,6 +13,7 @@
     <link href="css/nav-bar-hacks.css" rel="stylesheet" />
     <link href="css/instafilters.css" rel="stylesheet" />
     <link href="css/pull-to-refresh.css" rel="stylesheet" />
+    <link href="css/rateit.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -204,23 +205,16 @@
     <!--UGOFOR POP UPS-->
     <div id="ugofor-popup" class="mfp-hide">
         <div class="ugofor-slick">
-            <div id="divCrave">
-                <label id="cravePrice" style="font-size:50px;color:white;text-align:center;">$0</label>
+            <div id="divCrave" style="text-align:center;">
                 <div><input type="text" id="txtCrave" placeholder="What are you craving??" style="height:60px;font-size:28px;" /></div>
-                <div class="range-slider" data-slider data-options="start: 0; end: 50; step: .01;">
-                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
-                    <span class="range-slider-active-segment"></span>
-                    <input type="hidden">
-                </div>
-                <div style="text-align:center;"><a class="button large radius littleCrave"></a></div>
+                <div class="rateit bigstars" data-rateit-starwidth="64" data-rateit-starheight="64" data-rateit-resetable="false"></div>
+                <div><a class="button large radius littleCrave"></a></div>
             </div>
             <div>
-                <p>&nbsp;</p>
                 <div class="shareYumBtn"><a id="btnShareYum" class="button large expand radius shareYum"></a></div>
                 <div class="raveCraveBtn"><a id="btnRaveCrave" class="button large expand radius raveCrave"></a></div>
             </div>
             <div>
-                <p>&nbsp;</p>
                 <ul class="small-block-grid-2" style="color:white;font-size:28px;">
                     <li id="btnUgoForCamera"><center><img class="center" src="img/cameraButton.png" style="width:105px;" />Camera</center></li>
                     <li id="btnUgoForGallery"><center><img class="center" src="img/galleryButton.png" style="width:105px;" />Gallery</center></li>
@@ -321,6 +315,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
     <script src="js/vendor/jquery.plugin.pullToRefresh.js"></script>
+    <script src="js/vendor/jquery.rateit.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
