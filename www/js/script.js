@@ -544,7 +544,10 @@ var UGoFor = function () {
         });
 
         $('#btnRaveCrave').click(function () {
+            $('.range-slider').foundation('slider', 'set_value', 0);
             $('.ugofor-slick').slick('slickGoTo', 0);
+            //this line below is bullshit
+            setTimeout(function () {$(document).foundation('slider', 'reflow');}, 500);            
         });
 
         $('#btnUgoForPrev').click(function () {
@@ -861,7 +864,10 @@ var Main = (function () {
     $(document).ready(function () { document.addEventListener("deviceready", PGPlugins.OnPGDeviceReady, false); });
 
     //Zurb Stuff
-    $(document).foundation({ abide: { focus_on_invalid: false, live_validate: false, timeout: 0 } });
+    $(document).foundation({
+        abide: { focus_on_invalid: false, live_validate: false, timeout: 0 },
+        slider: { on_change: function () { $('#cravePrice').text('$'+$('.range-slider').attr("data-slider"));}}
+    });
 
     //Fastclick load
     $(function () { FastClick.attach(document.body); });

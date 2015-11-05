@@ -205,14 +205,22 @@
     <div id="ugofor-popup" class="mfp-hide">
         <div class="ugofor-slick">
             <div id="divCrave">
+                <label id="cravePrice" style="font-size:50px;color:white;text-align:center;">$0</label>
                 <div><input type="text" id="txtCrave" placeholder="What are you craving??" style="height:60px;font-size:28px;" /></div>
+                <div class="range-slider" data-slider data-options="start: 0; end: 50; step: .01;">
+                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                    <span class="range-slider-active-segment"></span>
+                    <input type="hidden">
+                </div>
                 <div style="text-align:center;"><a class="button large radius littleCrave"></a></div>
             </div>
             <div>
+                <p>&nbsp;</p>
                 <div class="shareYumBtn"><a id="btnShareYum" class="button large expand radius shareYum"></a></div>
                 <div class="raveCraveBtn"><a id="btnRaveCrave" class="button large expand radius raveCrave"></a></div>
             </div>
             <div>
+                <p>&nbsp;</p>
                 <ul class="small-block-grid-2" style="color:white;font-size:28px;">
                     <li id="btnUgoForCamera"><center><img class="center" src="img/cameraButton.png" style="width:105px;" />Camera</center></li>
                     <li id="btnUgoForGallery"><center><img class="center" src="img/galleryButton.png" style="width:105px;" />Gallery</center></li>

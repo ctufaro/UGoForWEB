@@ -505,6 +505,23 @@ option:checked {
     background-color: #008EBD;
 }
 
+.range-slider{
+    height:20px;
+}
+
+.range-slider-handle,
+.range-slider-handle:hover{
+    background-image:url('../img/icons/dollar.png');
+    background-color:transparent;
+    background-size: 32px 32px;
+    height:32px;
+}
+
+.range-slider-active-segment{
+    background-color:#3f9342;
+    height:18px;
+}
+
 /*SETTINGS SCREEN*/
 
 .setting-layout{
