@@ -544,6 +544,8 @@ var UGoFor = function () {
         });
 
         $('#btnRaveCrave').click(function () {
+            $('.rateit').rateit('reset');
+            $('#txtCrave').val('');
             $('.ugofor-slick').slick('slickGoTo', 0);
         });
 
@@ -605,6 +607,11 @@ var UGoFor = function () {
             })
         });
 
+        $('#btnCrave').click(function () {
+            var rating = $('.rateit-range').attr('aria-valuenow');
+            $('#txtCrave').val(rating);
+        });
+
     }();
 
     return { Render: Render }
@@ -619,7 +626,7 @@ var Profile = function () {
     }
 
     var SetProfile = function () {
-        $('#spnLoggedInUserId').html(UserSession.GetUserID());
+        $('#spnLoggedInUserId').text(UserSession.GetUserID());
     }
 
     return {

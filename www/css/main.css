@@ -131,6 +131,11 @@ h6 {
     margin-bottom:5px;
 }
 
+/* BOTTOM BAR */
+.icon-bar > a:hover {
+    background-color:transparent !important;
+}
+
 #post {
     margin-bottom: 30px;
 }
@@ -467,7 +472,7 @@ option:checked {
     font-weight:bolder;
     padding:0px !important;
     margin-bottom: .5rem !important;  
-    letter-spacing:-2px;
+    letter-spacing:-2.5px;
 }
 
 
