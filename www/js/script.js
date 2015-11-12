@@ -353,6 +353,7 @@ var Feed = function () {
                             '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
                             '.avatar-profilename': 'post.Username',
                             '+.arrow_box': 'post.SmallComment',
+                            '.ugslider@class+': function (a) { if (a.item.SmallComment.toLowerCase().indexOf('crav') > -1) { return ' post-slider'; } },
                             '.cover@src': 'post.PostedImage',
                             '.day': 'post.TimePosted',
                             '.big-comment .comment-location': 'post.BigComment',
@@ -371,7 +372,9 @@ var Feed = function () {
                 $('#imagecontainer').imagesLoaded().always(function () {
                     $(".posts").css("display", "block");
                     Utilities.Spinner(false, "Loading Feed");
+                    CraveSlides();
                 });
+
             }
         });
 
@@ -383,6 +386,14 @@ var Feed = function () {
     }
 
     var PrependFeed = function () { }
+
+    var CraveSlides = function () {
+        $('.ugslider.post-slider').append("<img src='img/burger.jpg' class'cover'>");
+        $('.post-slider').slick({ arrows: false, dots: false, useCSS: false });
+        $('.post-slider').addClass('cover');
+        $('.slick-list').addClass('cover');
+        $('.post-slider').slick('setPosition');
+    }
 
     var AppendFeed = function () {
         $.ajax({
@@ -538,6 +549,8 @@ var UGoFor = function () {
         $('.ugofor-slick').slick({
             dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: false, initialSlide:1
         });
+
+
 
         $('#btnShareYum').click(function () {
             $('.ugofor-slick').slick('slickGoTo', 2);
