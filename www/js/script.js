@@ -388,7 +388,10 @@ var Feed = function () {
     var PrependFeed = function () { }
 
     var CraveSlides = function () {
-        $('.ugslider.post-slider').append("<img src='img/burger.jpg' class'cover'>");
+        var html = "<div class='responder-wrapper'><img src='img/burger.jpg' class'cover'><div class='responder'><div><img class='avatar2' src='https://ugoforstore.blob.core.windows.net/ugoforphoto/98dd712a-f4f5-e68c-71db-9b063e652b56_cdv_photo_002.jpg'>";
+        html = html + "</div><div class='responder-comment'><div class='arrow-box-responder'>Shake Shack<span class='responder-profilename'>ugoforchris</span></div></div></div></div>";
+        //$('.ugslider.post-slider').append("<img src='img/burger.jpg' class'cover'>");
+        $('.ugslider.post-slider').append(html);
         $('.post-slider').slick({ arrows: false, dots: false, useCSS: false });
         $('.post-slider').addClass('cover');
         $('.slick-list').addClass('cover');

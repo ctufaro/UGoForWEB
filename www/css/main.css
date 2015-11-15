@@ -634,3 +634,87 @@ option:checked {
     height: 100%;
     background: #fff;
 }
+
+/* RESPONDER */
+
+.avatar2 {
+    float: right;
+    max-width: 50px;
+    margin-bottom: -15px;
+    position: relative;
+    z-index: 1;
+    -webkit-transform: translate3d(0,0,0);
+    border: 1px solid #fff;
+    display: inline-block;
+}
+
+.responder-wrapper{
+    position:relative;
+}
+
+.responder{
+    position:absolute; 
+    top:4px; 
+    right:0; 
+    width:100%;
+}
+
+.responder-profilename
+{
+    color:#f79421;
+    font-size:12px;
+    font-weight:600;
+    float: right;
+    margin-top:1px;
+}
+
+.responder-comment{
+    display:inline-block;
+    float:right;
+    min-width:180px;
+    text-align:right;
+    width:55%;
+    margin-right:4px;
+}
+
+.arrow-box-responder:after,
+.arrow-box-responder:before {
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.arrow-box-responder:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #fff;
+    border-width: 8px;
+    margin-top: -8px;
+}
+.arrow-box-responder:before {
+    border-color: rgba(170, 170, 170, 0);
+    border-left-color: #aaaaaa;
+    border-width: 9px;
+    margin-top: -9px;
+}
+
+.arrow-box-responder {
+    position: relative;
+    background: #fff;
+    border: 1px solid #aaaaaa;
+    padding: 2px 3px 3px;
+    display: inline-block;
+    z-index: 1;
+    -webkit-transform: translate3d(0,0,0); /*iphone z-index scroll fix*/
+    -webkit-box-shadow: -4px 6px 15px -1px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: -4px 6px 15px -1px rgba(0, 0, 0, 0.35);
+    box-shadow: -4px 6px 15px -1px rgba(0, 0, 0, 0.35);
+    font-size: 14px;
+    width:100%; 
+    text-align:left;
+}
+
+
