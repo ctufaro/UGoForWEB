@@ -9,7 +9,7 @@ var Pages = function () {
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
         //Check if user is registered and a new login
-        if (UserSession.IsRegistered() && Number(UserSession.GetUserID()) > 149) {
+        if (UserSession.IsRegistered()) {
             Feed.LoadFeed();
             Feed.Render();
         }
@@ -17,9 +17,6 @@ var Pages = function () {
             SignOrLogin.Render();
         }
 
-        //Feed.LoadFeed();
-        //Feed.Render();
-        //PhotoEdit.Render();
     }
 
     var Render = function (url) {
