@@ -48,7 +48,8 @@
   <gap:plugin name="org.apache.cordova.vibration" />
   
   <!--Third Party Plugins-->
-  <gap:plugin name="com.sharinglabs.cordova.plugin.cache" version="1.0.0" />  
+  <gap:plugin name="com.sharinglabs.cordova.plugin.cache" version="1.0.0" />
+  <plugin name="com.phonegap.plugins.pushplugin" spec="2.5.0" source="pgb" />
   
   <!--Chris-->
   <icon src="content/icon.png" />

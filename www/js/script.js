@@ -30,7 +30,7 @@ var Pages = function () {
             case '#login':
                 Login.Render();
                 break;
-            case '#settings':
+            case '#settings':after 
                 Settings.Render();
                 break;
             case '#_feed':
@@ -68,11 +68,13 @@ var PGPlugins = function () {
 
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value
+    var pushNotification;
 
     var OnPGDeviceReady = function () {
         navigator.geolocation.getCurrentPosition(GPS.OnGPSSuccess, GPS.OnGPSError);
         pictureSource = navigator.camera.PictureSourceType;
         destinationType = navigator.camera.DestinationType;
+        pushNotification = window.plugins.pushNotification;
     };
 
     var GPS = function () {
@@ -228,7 +230,43 @@ var PGPlugins = function () {
         }
     }();
 
-    return { OnPGDeviceReady: OnPGDeviceReady, GPS: GPS, Camera: Camera };
+    var DeviceToken = function () {
+
+        var GetDeviceId = function () {
+            pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "OnNotificationAPN" });
+        }        
+
+        var OnNotificationAPN = function(e) {
+            if (e.alert) {
+                Message.Error(e.alert);
+            }
+
+            if (e.badge) {
+                pushNotification.setApplicationIconBadgeNumber(SuccessHandler, e.badge);
+            }
+        }
+
+        var TokenHandler = function(result) {
+            //$("#app-status-ul").append('<li>token: ' + result + '</li>');
+            // Your iOS push server needs to know the token before it can push to this device
+            // here is where you might want to send it the token for later use.
+        }
+
+        var SuccessHandler = function(result) {
+            $("#deviceId").text(result);
+        }
+
+        var ErrorHandler = function (error) {
+            Message.Error(error);
+        }
+
+        return {
+            GetDeviceId: GetDeviceId
+        }
+
+    }();
+
+    return { OnPGDeviceReady: OnPGDeviceReady, GPS: GPS, Camera: Camera, DeviceToken: DeviceToken };
 
 }();
 
@@ -270,6 +308,7 @@ var SignUp = function () {
             if ($('#signUsername').val().length > 0 && emailValid && $('#signPassword').val().length > 0 && !profilePicValid) {
                 try {
                     PGPlugins.Camera.ImageUpload();
+                    PGPlugins.DeviceToken.GetDeviceId();
                 }
                 catch (err) {
                     Message.Error(err.message);
@@ -312,6 +351,7 @@ var Login = function () {
                     else {
                         UserSession.SetUserID(userId);
                         Profile.SetProfile();
+                        PGPlugins.DeviceToken.GetDeviceId();
                         Feed.LoadFeed();
                         Feed.Render();
                     }
