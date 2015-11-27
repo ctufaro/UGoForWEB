@@ -30,7 +30,7 @@ var Pages = function () {
             case '#login':
                 Login.Render();
                 break;
-            case '#settings':after 
+            case '#settings': 
                 Settings.Render();
                 break;
             case '#_feed':
