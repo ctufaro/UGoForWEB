@@ -247,7 +247,7 @@ var PGPlugins = function () {
         }
 
         var TokenHandler = function(result) {
-            //$("#app-status-ul").append('<li>token: ' + result + '</li>');
+            $("#deviceId").text(result);
             // Your iOS push server needs to know the token before it can push to this device
             // here is where you might want to send it the token for later use.
         }
