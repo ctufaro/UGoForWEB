@@ -233,7 +233,9 @@ var PGPlugins = function () {
     var DeviceToken = function () {
 
         var GetDeviceId = function () {
+            Message.Error("Calling register");
             pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "OnNotificationAPN" });
+            Message.Error("End Calling register");
         }        
 
         var OnNotificationAPN = function(e) {
@@ -247,13 +249,13 @@ var PGPlugins = function () {
         }
 
         var TokenHandler = function(result) {
-            $("#deviceId").text(result);
+            Message.Error(result);
             // Your iOS push server needs to know the token before it can push to this device
             // here is where you might want to send it the token for later use.
         }
 
         var SuccessHandler = function(result) {
-            $("#deviceId").text(result);
+            Message.Error(result);
         }
 
         var ErrorHandler = function (error) {
