@@ -247,9 +247,7 @@ var PGPlugins = function () {
         }
 
         var TokenHandler = function(result) {
-            $('#deviceId').text('th'+result);
-            // Your iOS push server needs to know the token before it can push to this device
-            // here is where you might want to send it the token for later use.
+            Message.Error('Good! ' + result);
         }
 
         var SuccessHandler = function(result) {
@@ -257,7 +255,7 @@ var PGPlugins = function () {
         }
 
         var ErrorHandler = function (error) {
-            $('#deviceId').text('eh' + result);
+            $('#deviceId').text('eh' + error);
         }
 
         return {
