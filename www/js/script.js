@@ -233,7 +233,11 @@ var PGPlugins = function () {
     var DeviceToken = function () {
 
         var GetDeviceId = function () {
-            pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "OnNotificationAPN" });
+            try {
+                pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "OnNotificationAPN" });
+            }
+            catch (e) {
+            }
         }        
 
         var OnNotificationAPN = function(e) {
@@ -247,15 +251,26 @@ var PGPlugins = function () {
         }
 
         var TokenHandler = function(result) {
-            Message.Error('Good! ' + result);
+            try {
+                var deviceId = result;
+                var userId = UserSession.GetUserID();
+                $.ajax
+                ({
+                    type: "POST", url: Constants.RESTDevice, async: false,
+                    data: {"UserId": UserSession.GetUserID(),"DeviceId": deviceId },
+                    global: false,
+                    error: function (xhr, error) {Message.Error(xhr + " - " + error);},
+                    success: function (data) {}
+                });
+            }
+            catch (e) {
+            }
         }
 
         var SuccessHandler = function(result) {
-            $('#deviceId').text('sh' + result);
         }
 
         var ErrorHandler = function (error) {
-            $('#deviceId').text('eh' + error);
         }
 
         return {
@@ -348,7 +363,6 @@ var Login = function () {
                     }
                     else {
                         UserSession.SetUserID(userId);
-                        Profile.SetProfile();
                         PGPlugins.DeviceToken.GetDeviceId();
                         Feed.LoadFeed();
                         Feed.Render();
@@ -674,6 +688,7 @@ var Profile = function () {
     var Render = function () {
         Pages.RenderSelect("#main", Constants.FullPages);
         Pages.RenderSelect("#_profile", Constants.PartialPages);
+        SetProfile();
     }
 
     var SetProfile = function () {
@@ -889,6 +904,7 @@ var Constants = function () {
     var RESTLogin = "http://ugoforapi.azurewebsites.net/api/login";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
     var RESTComments = "http://ugoforapi.azurewebsites.net/api/comments";
+    var RESTDevice = "http://ugoforapi.azurewebsites.net/api/device";
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
@@ -901,7 +917,8 @@ var Constants = function () {
         PostComments: PostComments,
         RESTLogin : RESTLogin,
         RESTPosts: RESTPosts,
-        RESTComments:RESTComments,
+        RESTComments: RESTComments,
+        RESTDevice: RESTDevice,
         RESTBlob: RESTBlob,
         EmailRegEx: EmailRegEx,
         SrcPixel: SrcPixel,
