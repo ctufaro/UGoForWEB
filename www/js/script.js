@@ -234,7 +234,7 @@ var PGPlugins = function () {
 
         var GetDeviceId = function () {
             try {
-                pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "id" : "true", "ecb": "onNotificationAPN" });
+                pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });
             }
             catch (e) {
             }
@@ -243,6 +243,7 @@ var PGPlugins = function () {
         window.onNotificationAPN = function (e) {
             //alert('onNotificationAPN:result:1:=' + JSON.stringify(e));
             UserSession.SetPushID(e.id);
+            UserSession.SetPushType(e.type);
 
             if (e.alert) {
                 Message.Error(e.alert);
@@ -807,6 +808,14 @@ var UserSession = function () {
         return window.localStorage.getItem("userid");
     }
 
+    var GetPushID = function () {
+        return window.localStorage.getItem("pushid");
+    }
+
+    var GetPushType = function () {
+        return window.localStorage.getItem("type");
+    }
+
     var SetUserID = function (value) {
         window.localStorage.setItem("userid", value);
     }
@@ -815,8 +824,8 @@ var UserSession = function () {
         window.localStorage.setItem("pushid", value);
     }
 
-    var GetPushID = function () {
-        return window.localStorage.getItem("pushid");
+    var SetPushType = function (value) {
+        window.localStorage.setItem("type", value);
     }
 
     var IsRegistered = function () {
@@ -832,7 +841,7 @@ var UserSession = function () {
         window.localStorage.clear();
     }
 
-    return { GetUserID: GetUserID, SetUserID: SetUserID, SetPushID: SetPushID, GetPushID:GetPushID, IsRegistered: IsRegistered, ClearUserID: ClearUserID }
+    return { GetUserID: GetUserID, SetUserID: SetUserID, SetPushID: SetPushID, SetPushType: SetPushType, GetPushID:GetPushID, GetPushType: GetPushType, IsRegistered: IsRegistered, ClearUserID: ClearUserID }
 }();
 
 /*
