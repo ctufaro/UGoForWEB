@@ -240,7 +240,8 @@ var PGPlugins = function () {
             }
         }
 
-        function onNotificationAPN(e) {
+        window.onNotificationAPN = function (e) {
+            alert('onNotificationAPN:result:1:=' + JSON.stringify(e));
 
             UserSession.SetPushID(e.id);
 
