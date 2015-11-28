@@ -234,7 +234,7 @@ var PGPlugins = function () {
 
         var GetDeviceId = function () {
             try {
-                pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });
+                pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "id" : "true", "ecb": "onNotificationAPN" });
             }
             catch (e) {
             }
