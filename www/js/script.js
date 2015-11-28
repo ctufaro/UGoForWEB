@@ -242,7 +242,7 @@ var PGPlugins = function () {
 
         var onNotificationAPN = function (e) {
 
-            Message.Error(e.big);
+            UserSession.SetPushID(e.id);
 
             if (e.alert) {
                 Message.Error(e.alert);
@@ -695,7 +695,8 @@ var Profile = function () {
     }
 
     var SetProfile = function () {
-        $('#spnLoggedInUserId').text(UserSession.GetUserID());
+        //$('#spnLoggedInUserId').text(UserSession.GetUserID());
+        $('#spnLoggedInUserId').text(UserSession.GetPushID());
     }
 
     return {
@@ -810,6 +811,14 @@ var UserSession = function () {
         window.localStorage.setItem("userid", value);
     }
 
+    var SetPushID = function (value) {
+        window.localStorage.setItem("pushid", value);
+    }
+
+    var GetPushID = function () {
+        return window.localStorage.getItem("pushid");
+    }
+
     var IsRegistered = function () {
         if (window.localStorage.getItem("userid") === null) {
             return false;
@@ -823,7 +832,7 @@ var UserSession = function () {
         window.localStorage.clear();
     }
 
-    return { GetUserID: GetUserID, SetUserID: SetUserID, IsRegistered: IsRegistered, ClearUserID: ClearUserID }
+    return { GetUserID: GetUserID, SetUserID: SetUserID, SetPushID: SetPushID, GetPushID:GetPushID, IsRegistered: IsRegistered, ClearUserID: ClearUserID }
 }();
 
 /*
