@@ -238,9 +238,9 @@ var PGPlugins = function () {
             }
             catch (e) {
             }
-        }        
+        }
 
-        var onNotificationAPN = function (e) {
+        function onNotificationAPN(e) {
 
             UserSession.SetPushID(e.id);
 
