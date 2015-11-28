@@ -242,8 +242,6 @@ var PGPlugins = function () {
 
         window.onNotificationAPN = function (e) {
             //alert('onNotificationAPN:result:1:=' + JSON.stringify(e));
-            Feed.RefreshFeed();
-
             UserSession.SetPushID(e.id);
 
             if (e.alert) {
