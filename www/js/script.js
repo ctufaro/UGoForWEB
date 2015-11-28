@@ -234,21 +234,19 @@ var PGPlugins = function () {
 
         var GetDeviceId = function () {
             try {
-                pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "OnNotificationAPN" });
+                pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });
             }
             catch (e) {
             }
         }        
 
-        var OnNotificationAPN = function (e) {
+        var onNotificationAPN = function (e) {
+
+            Message.Error(e.big);
 
             if (e.alert) {
                 Message.Error(e.alert);
-            }
-
-            if (e.big) {
-                Message.Error(e.big);
-            }
+            }   
 
             if (e.badge) {
                 pushNotification.setApplicationIconBadgeNumber(SuccessHandler, e.badge);
