@@ -240,7 +240,10 @@ var PGPlugins = function () {
             }
         }        
 
-        var OnNotificationAPN = function(e) {
+        var OnNotificationAPN = function (e) {
+
+            Message.Error("what is happening here?" + e);
+
             if (e.alert) {
                 Message.Error(e.alert);
             }
