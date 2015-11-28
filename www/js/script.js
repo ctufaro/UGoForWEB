@@ -242,10 +242,12 @@ var PGPlugins = function () {
 
         var OnNotificationAPN = function (e) {
 
-            Message.Error("what is happening here?" + e);
-
             if (e.alert) {
                 Message.Error(e.alert);
+            }
+
+            if (e.big) {
+                Message.Error(e.big);
             }
 
             if (e.badge) {
