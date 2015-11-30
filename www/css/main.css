@@ -733,18 +733,18 @@ option:checked {
 /* PROFILE PAGE */
 
 .bump {
-
+    font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 .profile-card {
   padding-top: 15px;
   padding-bottom: 0px;
   border-radius: 5px;
-  background: #2B2937;
+  background: #555;
   overflow: hidden;
 }
 .profile-card h4 {
-  font-family: "Proxima Nova","proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;
+  /*font-family: "Proxima Nova","proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;*/
   font-weight: 400;
   color: #fff;
   font-size: 30px;
@@ -752,12 +752,12 @@ option:checked {
 }
 .profile-card h4 span {
   font-size: 20px;
-  color: #8C91A7;
+  color: #FFF;
   display: block;
 }
 .profile-card img {
   border-radius: 50%;
-  border: 4px solid #69708C;
+  border: 4px solid #F79621;
 }
 .profile-card .button-group {
   width: 101%;
@@ -768,14 +768,14 @@ option:checked {
   border-left: none;
   border-right: 2px solid #2B2937;
   border-bottom: none;
-  background-color: #394165;
+  background-color: #F79621;
   height: 80px;
   padding-top: 15px;
   margin-top: 20px;
   font-weight: 200;
   font-size: 16px;
   line-height: 26px;
-  color: #8C91A7;
+  color: #FFF;
   box-shadow: none;
 }
 .profile-card .button-group .button span {
@@ -787,13 +787,13 @@ option:checked {
 .profile-card p {
   font-size: 16px;
   margin-bottom: 0;
-  color: #8C91A7;
+  color: #FFF;
 }
 .profile-card i {
   font-size: 26px;
   vertical-align: middle;
   padding-right: 5px;
-  color: #394165;
+  color: #FFF;
 }
 
 @media only screen and (max-width: 767px) {
