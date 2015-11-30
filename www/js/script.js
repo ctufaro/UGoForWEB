@@ -548,18 +548,8 @@ var Feed = function () {
     }();
 
     var Events = function () {
-        $('.scrollable').pullToRefresh({
-            callback: function () {
-                var def = $.Deferred();
-
-                //setTimeout(function () {
-                //    def.resolve();
-                //}, 3000);
-                RefreshFeed();
-                def.resolve();
-
-                return def.promise();
-            }
+        $('.refresh-button').click(function () {
+            Feed.RefreshFeed();
         });
 
         $('.scrollable').on('scroll', function () {
