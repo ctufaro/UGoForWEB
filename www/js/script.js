@@ -686,7 +686,7 @@ var Profile = function () {
     }
 
     var SetProfile = function () {
-        $('#spnLoggedInUserId').text(UserSession.GetUserID());
+        //$('#spnLoggedInUserId').text(UserSession.GetUserID());
     }
 
     return {
