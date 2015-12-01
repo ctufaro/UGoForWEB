@@ -743,6 +743,7 @@ option:checked {
   background: #555;
   overflow: hidden;
 }
+
 .profile-card h4 {
   /*font-family: "Proxima Nova","proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;*/
   font-weight: 400;
@@ -750,18 +751,22 @@ option:checked {
   font-size: 30px;
   line-height: 26px;
 }
+
 .profile-card h4 span {
   font-size: 20px;
   color: #FFF;
   display: block;
 }
+
 .profile-card img {
   /*border-radius: 50%;*/
   border: 2px solid #FFF;
 }
+
 .profile-card .button-group {
   width: 101%;
 }
+
 .profile-card .button-group .button {
   margin-bottom: 0;
   border-top: none;
@@ -778,17 +783,20 @@ option:checked {
   color: #FFF;
   box-shadow: none;
 }
+
 .profile-card .button-group .button span {
   display: block;
   font-size: 24px;
   font-weight: 600;
   color: #fff;
 }
+
 .profile-card p {
   font-size: 16px;
   margin-bottom: 0;
   color: #FFF;
 }
+
 .profile-card i {
   font-size: 26px;
   vertical-align: middle;
@@ -811,4 +819,4 @@ option:checked {
   .profile-card .button-group .button span {
     font-size: 20px;
   }
-}
+}
