@@ -30,7 +30,7 @@ var Pages = function () {
             case '#login':
                 Login.Render();
                 break;
-            case '#settings': 
+            case '#_settings': 
                 Settings.Render();
                 break;
             case '#_feed':
@@ -698,7 +698,7 @@ var Profile = function () {
 var Settings = function () {
 
     var Render = function () {
-        Pages.RenderSelect("#settings", Constants.FullPages);
+        Pages.RenderSelect("#_settings", Constants.PartialPages);
     }
 
     var Events = function () {
@@ -918,8 +918,8 @@ var Constants = function () {
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#settings", "#photoedit"];
-    var PartialPages = ["#_feed", "#_profile"];
+    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#photoedit"];
+    var PartialPages = ["#_feed", "#_profile", "#_settings"];
     return {
         PostHTML: PostHTML,
         PostPure: PostPure,
