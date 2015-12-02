@@ -569,7 +569,7 @@ var Feed = function () {
 
 }();
 
-var UGoFor = function () {
+var UGoPost = function () {
 
     var Render = function () {
 
@@ -582,45 +582,45 @@ var UGoFor = function () {
             type: 'inline', preloader: false, closeOnBgClick: true, showCloseBtn: false,
             callbacks: {
                 open: function () {
-                    $('.ugofor-slick').slick('setPosition');
+                    $('.ugopost-slick').slick('setPosition');
                     //document.ontouchstart = function (e) { e.preventDefault(); }                   
                 },
                 close: function () {
-                    $('.ugofor-slick').slick('slickGoTo',1);
+                    $('.ugopost-slick').slick('slickGoTo',1);
                     //document.ontouchstart = function (e) { return true; }
                 }
             }
         });
         
-        $('.ugofor-slick').slick({
+        $('.ugopost-slick').slick({
             dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: false, initialSlide:1
         });
 
 
 
         $('#btnShareYum').click(function () {
-            $('.ugofor-slick').slick('slickGoTo', 2);
+            $('.ugopost-slick').slick('slickGoTo', 2);
         });
 
         $('#btnRaveCrave').click(function () {
             $('.rateit').rateit('reset');
             $('#txtCrave').val('');
-            $('.ugofor-slick').slick('slickGoTo', 0);
+            $('.ugopost-slick').slick('slickGoTo', 0);
         });
 
-        $('#btnUgoForPrev').click(function () {
-            $('.ugofor-slick').slick('slickPrev');
+        $('#btnUgoPostPrev').click(function () {
+            $('.ugopost-slick').slick('slickPrev');
         });
 
-        $('#btnUgoForNext').click(function () {
-            $('.ugofor-slick').slick('slickNext');
+        $('#btnUgoPostNext').click(function () {
+            $('.ugopost-slick').slick('slickNext');
         });
 
-        $('#btnUgoForCamera').click(function () {
+        $('#btnUgoPostCamera').click(function () {
             PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 1, 49, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
 
-        $('#btnUgoForGallery').click(function () {
+        $('#btnUgoPostGallery').click(function () {
             PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 49, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
       
@@ -734,7 +734,7 @@ var PhotoEdit = function () {
         var filtername;
 
         $('#btnPhotoEditGoBack').click(function () {
-            $('.ugofor-slick').slick('slickGoTo', 2, false);
+            $('.ugopost-slick').slick('slickGoTo', 2, false);
             $('.popup-modal').trigger('click');
         });
 
@@ -745,7 +745,7 @@ var PhotoEdit = function () {
         $('#btnPhotoProgess').click(function () {
             guid = Utilities.Guid().replace(/-/g, '');;
             PGPlugins.Camera.PostUpload(mainURI, filtername, guid);
-            $('.ugofor-slick').slick('slickGoTo', 4, true);
+            $('.ugopost-slick').slick('slickGoTo', 4, true);
             $('.popup-modal').trigger('click');
         });
 
