@@ -78,7 +78,11 @@ var PGPlugins = function () {
     };
 
     var OnPGDeviceResume = function () {
-        
+        //if coming from a notification than:
+        //if its a new post, simply refresh the page
+        //if its a new comment, refresh that comment
+
+        //else check for updates, make reresh icon turn yellow?
     };
 
     var GPS = function () {
