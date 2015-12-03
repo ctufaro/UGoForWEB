@@ -77,6 +77,10 @@ var PGPlugins = function () {
         pushNotification = window.plugins.pushNotification;
     };
 
+    var OnPGDeviceResume = function () {
+        Message.Error("On Resume Fired!");
+    };
+
     var GPS = function () {
 
         var Coordinates = "";
@@ -943,7 +947,10 @@ var Constants = function () {
 var Main = (function () {
 
     //Wait for device API libraries to load   
-    $(document).ready(function () { document.addEventListener("deviceready", PGPlugins.OnPGDeviceReady, false); });
+    $(document).ready(function () {
+        document.addEventListener("deviceready", PGPlugins.OnPGDeviceReady, false);
+        document.addEventListener("resume", PGPlugins.OnPGDeviceResume, false);
+    });
 
     //Zurb Stuff
     $(document).foundation({
