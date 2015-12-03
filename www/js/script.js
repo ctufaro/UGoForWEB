@@ -287,7 +287,7 @@ var PGPlugins = function () {
 
     }();
 
-    return { OnPGDeviceReady: OnPGDeviceReady, GPS: GPS, Camera: Camera, DeviceToken: DeviceToken };
+    return { OnPGDeviceReady: OnPGDeviceReady, OnPGDeviceResume:OnPGDeviceResume, GPS: GPS, Camera: Camera, DeviceToken: DeviceToken };
 
 }();
 
