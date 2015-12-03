@@ -78,7 +78,7 @@ var PGPlugins = function () {
     };
 
     var OnPGDeviceResume = function () {
-        Message.Error("On Resume Fired!");
+        
     };
 
     var GPS = function () {
