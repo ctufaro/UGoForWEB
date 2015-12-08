@@ -433,7 +433,6 @@ var Feed = function () {
                 $('#imagecontainer').imagesLoaded().always(function () {
                     $(".posts").css("display", "block");
                     Utilities.Spinner(false, "Loading Feed");
-                    CraveSlides();
                 });
 
             }
@@ -674,14 +673,50 @@ var UGoPost = function () {
             })
         });
 
-        $('#btnCrave').click(function () {
-            var rating = $('.rateit-range').attr('aria-valuenow');
-            $('#txtCrave').val(rating);
-        });
-
     }();
 
     return { Render: Render }
+
+}();
+
+var RaveCrave = function () {
+    var Events = function () {
+        
+        var coordinates = "NULL";
+
+        if (PGPlugins.GPS.GetGPSCoordinates().length > 0) {
+            coordinates = PGPlugins.GPS.GetGPSCoordinates();
+        }
+
+        $('#btnCrave').click(function () {
+            if ($('#txtCrave').val().length == 0) { return; }
+            var craveText = $('#txtCrave').val();            
+            var craveAmt = $('.rateit-range').attr('aria-valuenow');
+            console.log(craveAmt);
+            $.ajax
+            ({
+                type: "POST",
+                url: Constants.RESTCrave,
+                async: false,
+                data: {
+                    "UserId": UserSession.GetUserID(),
+                    "CravingAmt": craveAmt,
+                    "CravingPic": "https://ugoforstore.blob.core.windows.net/ugoforphoto/135bffdbe36b2297f3bea03943e56a03_cdv_photo_001.jpg",
+                    "CravingText": "Craving " + craveText,
+                    "Location": coordinates,
+                    "Type": "2"                    
+                },
+                global: false,
+                error: function (xhr, error) {
+                    Message.Error(xhr + " - " + error);
+                },
+                success: function (data) {}
+            })
+            $.magnificPopup.close();
+            $('.rateit-range').attr('aria-valuenow',0);
+            Feed.RefreshFeed();
+        });
+    }();
 
 }();
 
@@ -898,7 +933,7 @@ var Utilities = function () {
 */
 var Message = function () {
 
-    var Error = function (msg) {
+    var Error = function (msg) {        
         navigator.notification.alert(msg, null, 'Sugar Snaps!', 'Done');
     }
 
@@ -921,6 +956,7 @@ var Constants = function () {
     //var RESTBlob = "http://192.168.1.2:26684/blobs/upload";
     var RESTLogin = "http://ugoforapi.azurewebsites.net/api/login";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
+    var RESTCrave = "http://ugoforapi.azurewebsites.net/api/crave";
     var RESTComments = "http://ugoforapi.azurewebsites.net/api/comments";
     var RESTDevice = "http://ugoforapi.azurewebsites.net/api/device";
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
@@ -936,6 +972,7 @@ var Constants = function () {
         RESTLogin : RESTLogin,
         RESTPosts: RESTPosts,
         RESTComments: RESTComments,
+        RESTCrave: RESTCrave,
         RESTDevice: RESTDevice,
         RESTBlob: RESTBlob,
         EmailRegEx: EmailRegEx,
