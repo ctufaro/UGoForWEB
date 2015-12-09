@@ -610,7 +610,7 @@ var UGoPost = function () {
         });
 
         $('#btnRaveCrave').click(function () {
-            $('.rateit').rateit('reset');
+            //$('.rateit').rateit('reset');
             $('#txtCrave').val('');
             $('.ugopost-slick').slick('slickGoTo', 0);
         });
@@ -691,7 +691,8 @@ var RaveCrave = function () {
         $('#btnCrave').click(function () {
             if ($('#txtCrave').val().length == 0) { return; }
             var craveText = $('#txtCrave').val();            
-            var craveAmt = $('.rateit-range').attr('aria-valuenow');
+            //var craveAmt = $('.rateit-range').attr('aria-valuenow');
+            var craveAmt = coordinates;
             console.log(craveAmt);
             $.ajax
             ({
@@ -713,7 +714,7 @@ var RaveCrave = function () {
                 success: function (data) {}
             })
             $.magnificPopup.close();
-            $('.rateit-range').attr('aria-valuenow',0);
+            //$('.rateit-range').attr('aria-valuenow',0);
             Feed.RefreshFeed();
         });
     }();
