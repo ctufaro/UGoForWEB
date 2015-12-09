@@ -702,7 +702,7 @@ var RaveCrave = function () {
                 data: {
                     "UserId": UserSession.GetUserID(),
                     "CravingAmt": craveAmt,
-                    "CravingPic": "https://ugoforstore.blob.core.windows.net/ugoforphoto/135bffdbe36b2297f3bea03943e56a03_cdv_photo_001.jpg",
+                    "CravingPic": "img/cravesmile.jpg",
                     "CravingText": "Craving " + craveText,
                     "Location": coordinates,
                     "Type": "2"                    
