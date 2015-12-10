@@ -71,7 +71,7 @@ var PGPlugins = function () {
     var pushNotification;
 
     var OnPGDeviceReady = function () {
-        navigator.geolocation.getCurrentPosition(GPS.OnGPSSuccess, GPS.OnGPSError);
+        navigator.geolocation.getCurrentPosition(GPS.OnGPSSuccess, GPS.OnGPSError, { timeout: 5000 });
         pictureSource = navigator.camera.PictureSourceType;
         destinationType = navigator.camera.DestinationType;
         pushNotification = window.plugins.pushNotification;
