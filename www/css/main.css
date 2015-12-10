@@ -652,7 +652,7 @@ option:checked {
 
 .avatar2 {
     float: right;
-    max-width: 50px;
+    max-width: 70px;
     margin-bottom: -15px;
     position: relative;
     z-index: 1;
@@ -667,7 +667,7 @@ option:checked {
 
 .responder{
     position:absolute; 
-    top:4px; 
+    top:25px; 
     right:0; 
     width:100%;
 }
@@ -675,13 +675,14 @@ option:checked {
 .responder-profilename
 {
     color:#f79421;
-    font-size:12px;
+    font-size:14px;
     font-weight:600;
     float: right;
-    margin-top:1px;
+    margin-top:-22px;
 }
 
 .responder-comment{
+    margin-top:5%;
     display:inline-block;
     float:right;
     min-width:180px;
@@ -725,7 +726,7 @@ option:checked {
     -webkit-box-shadow: -4px 6px 15px -1px rgba(0, 0, 0, 0.35);
     -moz-box-shadow: -4px 6px 15px -1px rgba(0, 0, 0, 0.35);
     box-shadow: -4px 6px 15px -1px rgba(0, 0, 0, 0.35);
-    font-size: 14px;
+    font-size:16px;
     width:100%; 
     text-align:left;
 }
