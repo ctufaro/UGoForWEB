@@ -682,18 +682,16 @@ var UGoPost = function () {
 var RaveCrave = function () {
     var Events = function () {
         
-        var coordinates = "NULL";
-
-        if (PGPlugins.GPS.GetGPSCoordinates().length > 0) {
-            coordinates = PGPlugins.GPS.GetGPSCoordinates();
-        }
-
         $('#btnCrave').click(function () {
             if ($('#txtCrave').val().length == 0) { return; }
-            var craveText = $('#txtCrave').val();            
-            //var craveAmt = $('.rateit-range').attr('aria-valuenow');
-            var craveAmt = coordinates;
-            console.log(craveAmt);
+            var craveShortText = $('#txtCrave').val();            
+            var craveLongText = "NULL";
+            var coordinates = "NULL";
+
+            if (PGPlugins.GPS.GetGPSCoordinates().length > 0) {
+                coordinates = PGPlugins.GPS.GetGPSCoordinates();
+            }
+
             $.ajax
             ({
                 type: "POST",
@@ -701,9 +699,9 @@ var RaveCrave = function () {
                 async: false,
                 data: {
                     "UserId": UserSession.GetUserID(),
-                    "CravingAmt": craveAmt,
+                    "CravingTextLong": craveLongText,
                     "CravingPic": "img/cravesmile.jpg",
-                    "CravingText": "Craving " + craveText,
+                    "CravingTextShort": "Craving " + craveShortText,
                     "Location": coordinates,
                     "Type": "2"                    
                 },
