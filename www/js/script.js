@@ -99,6 +99,7 @@ var PGPlugins = function () {
         };
 
         var GetGPSCoordinates = function () {
+            navigator.geolocation.getCurrentPosition(GPS.OnGPSSuccess, GPS.OnGPSError);
             return Coordinates;
         }
 
