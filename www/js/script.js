@@ -99,6 +99,7 @@ var PGPlugins = function () {
         };
 
         var GetGPSCoordinates = function () {
+            navigator.geolocation.getCurrentPosition(GPS.OnGPSSuccess, GPS.OnGPSError);
             return Coordinates;
         }
 
@@ -603,9 +604,9 @@ var UGoPost = function () {
             dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: false, initialSlide:1
         });
 
-
-
         $('#btnShareYum').click(function () {
+            $('#txtSmallComment').val('');
+            $('#txtBigComment').val('');
             $('.ugopost-slick').slick('slickGoTo', 2);
         });
 
@@ -639,11 +640,13 @@ var UGoPost = function () {
                 coordinates = PGPlugins.GPS.GetGPSCoordinates();
             }
 
+            Utilities.SmallSpinner(true, "", "btnPost");
+
             $.ajax
             ({
                 type: "POST",
                 url: Constants.RESTPosts,
-                async: false,
+                async: true,
                 data: {
                     "UserId": UserSession.GetUserID(), "PostID": 1, "ProfilePicURL": "xxx", "SmallComment": $("#txtSmallComment").val(),
                     "TimePosted": "xxx", "PostedImage": "xxx", "BigComment": $("#txtBigComment").val(), "Guid":PhotoEdit.GetGUID(),
@@ -654,6 +657,7 @@ var UGoPost = function () {
                     Message.Error(xhr + " - " + error);
                 },
                 success: function (data) {
+                    Utilities.SmallSpinner(false, "Share", "btnPost");
                     $.magnificPopup.close();
                     Feed.RefreshFeed();
                     Feed.Render();
@@ -692,11 +696,13 @@ var RaveCrave = function () {
                 coordinates = PGPlugins.GPS.GetGPSCoordinates();
             }
 
+            Utilities.SmallSpinner(true, "", "btnCrave");
+
             $.ajax
             ({
                 type: "POST",
                 url: Constants.RESTCrave,
-                async: false,
+                async: true,
                 data: {
                     "UserId": UserSession.GetUserID(),
                     "CravingTextLong": craveLongText,
@@ -709,11 +715,13 @@ var RaveCrave = function () {
                 error: function (xhr, error) {
                     Message.Error(xhr + " - " + error);
                 },
-                success: function (data) {}
+                success: function (data) {
+                    $.magnificPopup.close();
+                    Utilities.SmallSpinner(false, "Crave", "btnCrave");
+                    Feed.RefreshFeed();
+                }
             })
-            $.magnificPopup.close();
-            //$('.rateit-range').attr('aria-valuenow',0);
-            Feed.RefreshFeed();
+
         });
     }();
 
@@ -919,11 +927,24 @@ var Utilities = function () {
 
     }
 
+    var SmallSpinner = function (toggle, message, id) {
+        var jQ = '#' + id;
+        if (toggle == true) {
+            $(jQ).addClass("waitSpinner");
+            $(jQ).text("");
+        }
+        else {
+            $(jQ).removeClass("waitSpinner");
+            $(jQ).text(message);
+        }        
+    }
+
     return {
         ClearCache: ClearCache,
         Guid: Guid,
         RegEx: RegEx,
-        Spinner: Spinner
+        Spinner: Spinner,
+        SmallSpinner: SmallSpinner
     }
 }();
 
