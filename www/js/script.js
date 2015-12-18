@@ -433,7 +433,7 @@ var Feed = function () {
                 };
                 $p('.posts').render(data, directive);
                 $('#imagecontainer').imagesLoaded().always(function () {
-                    $('.ugslider').slick({ arrows: false, dots: false, useCSS: false });
+                    $('.ugslider').slick({ arrows: false, dots: false, useCSS: true });
                     $(".posts").css("display", "block");
                     Utilities.Spinner(false, "Loading Feed");
                     $('.ugslider').slick('setPosition');
