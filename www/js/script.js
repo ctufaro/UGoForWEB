@@ -415,8 +415,9 @@ var Feed = function () {
                             '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
                             '.avatar-profilename': 'post.Username',
                             '+.arrow_box': 'post.SmallComment',
-                            '.ugslider@class+': function (a) { if (a.item.SmallComment.toLowerCase().indexOf('crav') > -1) { return ' post-slider'; } },
+                            '.ugslider@class+': function (a) { if (a.item.Type != 2) { return ' ugslider-display'; } },
                             '.cover@src': 'post.PostedImage',
+                            '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
                             '.day': 'post.TimePosted',
                             '.big-comment .comment-location': 'post.BigComment',
                             '.bubble-comment@data-postid': 'post.PostId',
@@ -432,31 +433,19 @@ var Feed = function () {
                 };
                 $p('.posts').render(data, directive);
                 $('#imagecontainer').imagesLoaded().always(function () {
+                    $('.ugslider').slick({ arrows: false, dots: false, useCSS: false });
                     $(".posts").css("display", "block");
                     Utilities.Spinner(false, "Loading Feed");
+                    $('.ugslider').slick('setPosition');
                 });
 
             }
         });
-
     }
 
     var RefreshFeed = function () {
         ClearFeed();
         LoadFeed();
-    }
-
-    var PrependFeed = function () { }
-
-    var CraveSlides = function () {
-        var html = "<div class='responder-wrapper'><img src='img/burger.jpg' class'cover'><div class='responder'><div><img class='avatar2' src='https://ugoforstore.blob.core.windows.net/ugoforphoto/98dd712a-f4f5-e68c-71db-9b063e652b56_cdv_photo_002.jpg'>";
-        html = html + "</div><div class='responder-comment'><div class='arrow-box-responder'>Shake Shack<span class='responder-profilename'>ugoforchris</span></div></div></div></div>";
-        //$('.ugslider.post-slider').append("<img src='img/burger.jpg' class'cover'>");
-        $('.ugslider.post-slider').append(html);
-        $('.post-slider').slick({ arrows: false, dots: false, useCSS: false });
-        $('.post-slider').addClass('cover');
-        $('.slick-list').addClass('cover');
-        $('.post-slider').slick('setPosition');
     }
 
     var AppendFeed = function () {

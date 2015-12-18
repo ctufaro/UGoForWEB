@@ -650,10 +650,28 @@ option:checked {
 
 /* RESPONDER */
 
+.ugslider{
+    margin-top:30px;
+}
+
+.ugslider-cover{
+    margin-top:-136px;
+}
+
+@media ( max-width: 363px) {
+    .ugslider-cover{
+        margin-top:-156px;
+    }
+}
+
+.ugslider-display{
+    display:none;
+}
+
 .avatar2 {
     float: right;
     max-width: 70px;
-    margin-bottom: -15px;
+    /*margin-bottom: -15px;*/
     position: relative;
     z-index: 1;
     -webkit-transform: translate3d(0,0,0);
@@ -679,6 +697,7 @@ option:checked {
     font-weight:600;
     float: right;
     margin-top:-22px;
+    padding-right:10px;
 }
 
 .responder-comment{
