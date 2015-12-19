@@ -420,14 +420,7 @@ var Feed = function () {
                             '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
                             '.day': 'post.TimePosted',
                             '.big-comment .comment-location': 'post.BigComment',
-                            '.bubble-comment@data-postid': 'post.PostId',
-                            '.post-comments@id': function (a) { lastLoadPost = a.item.PostId; return 'pc' + a.item.PostId; },
-                            '.post-comment': {
-                                'pc<-post.PostComments': {
-                                    '.post-comments-poster': 'pc.Username',
-                                    '.post-comments-msg': 'pc.Comment'
-                                }
-                            }
+                            '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
                         }
                     }
                 };
@@ -464,22 +457,13 @@ var Feed = function () {
                             '.cover@src': 'post.PostedImage',
                             '.day': 'post.TimePosted',
                             '.big-comment .comment-location': 'post.BigComment',
-                            '.bubble-comment@data-postid': 'post.PostId',
-                            '.post-comments@id': function (a) { lastLoadPost = a.item.PostId; return 'pc' + a.item.PostId; },
-                            '.post-comment': {
-                                'pc<-post.PostComments': {
-                                    '.post-comments-poster': 'pc.Username',
-                                    '.post-comments-msg': 'pc.Comment'
-                                }
-                            }
+                            '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
                         }
                     }
                 };
-                $('body').append("<span id='post-money'><span class='post-template"+lastLoadPost+"'>" + Constants.PostPure + "</span></span>")
                 var compiled = $p('.post-template' + lastLoadPost).compile(directive);
                 $('.posts').append(compiled(data));
                 isAppended = false;
-                $("span[id=post-money]").remove();
             }
         });
     }
@@ -488,61 +472,6 @@ var Feed = function () {
         $(".posts").css("display", "none");
         $(".posts").html(Constants.PostPure);
     }
-
-    var Comments = function () {
-
-        var currentPost;
-
-        var Events = function () {
-
-            $(document).on('click','.bubble-comment',function(){
-                currentPost = $(this).data('postid');
-                if (!($('.postComments').length)) { $('body').append(Constants.PostComments); };
-                $('#pc' + currentPost).find('.textbox-append').append($('.postComments').hide().fadeIn(1000));
-                $('#txtPostComments').focus();
-                $('#txtPostComments').val("");
-            });
-
-            $(document).on('click', '#btnPostComments', function () {
-                var appendThis = "<div class='post-comment'><span class='post-comments-poster avatar-profilename'>ugoforchris&nbsp;</span><span class='post-comments-msg'>{0}</span></div>";
-                if ($('#txtPostComments').val().length > 0) {
-                    $('.postComments').css('display', 'none');
-
-                    $.ajax
-                    ({
-                        type: "POST", url: Constants.RESTComments, async: false,
-                        data: {
-                            "UserId": UserSession.GetUserID(),
-                            "PostID": currentPost, "Comment": $('#txtPostComments').val(),
-                            "Location": PGPlugins.GPS.GetGPSCoordinates()
-                        },
-                        global: false,
-                        error: function (xhr, error) {
-                            Message.Error(xhr + " - " + error);
-                        },
-                        success: function (data) {
-                            $('#pc' + currentPost).html(Constants.PostComment);
-                            var directive = {
-                                '.post-comment': {
-                                    'pc <- PostComments': {
-                                        '.post-comments-poster': 'pc.Username',
-                                        '.post-comments-msg': 'pc.Comment'
-                                    }
-                                }
-                            }
-                            $p('#pc' + currentPost).render(data, directive);
-                        }
-                    });
-                }
-            });
-
-            $(document).on('focusout', '#txtPostComments', function () {
-                $('.postComments').css('display', 'none');
-            });
-
-        }();
-
-    }();
 
     var Events = function () {
         $('.refresh-button').click(function () {
@@ -650,18 +579,6 @@ var UGoPost = function () {
                     $.magnificPopup.close();
                     Feed.RefreshFeed();
                     Feed.Render();
-                    //var newAppend = Constants.PostHTML;
-                    //newAppend = newAppend.replace("{profileurl}", data.ProfilePicURL);
-                    //newAppend = newAppend.replace("{profilename}", data.Username);
-                    //newAppend = newAppend.replace("{littlecomment}", data.SmallComment);
-                    //newAppend = newAppend.replace("{day}", data.TimePosted);
-                    //newAppend = newAppend.replace("{foodurl}", data.PostedImage);
-                    //newAppend = newAppend.replace("{bigcomment}", data.BigComment);
-                    //$('.posts').prepend($(newAppend).hide().fadeIn(1000));
-                    //$('#btnCancel').trigger('click');
-                    //$('#txtBigComment').val('');
-                    //$('#txtSmallComment').val('');
-                    //append the newly saved post and clear fields
                 }
             })
         });
@@ -956,8 +873,6 @@ var Constants = function () {
 
     var PostHTML = '';
     var PostPure = $('#post').parent().html();
-    var PostComment = $('.post-comments').html();
-    var PostComments = $('.postComments')[0].outerHTML;
     //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
     //var RESTLogin = "http://192.168.1.2:26684/api/login";
     //var RESTPosts = "http://192.168.1.2:26684/api/posts";
@@ -976,8 +891,6 @@ var Constants = function () {
     return {
         PostHTML: PostHTML,
         PostPure: PostPure,
-        PostComment:PostComment,
-        PostComments: PostComments,
         RESTLogin : RESTLogin,
         RESTPosts: RESTPosts,
         RESTComments: RESTComments,
