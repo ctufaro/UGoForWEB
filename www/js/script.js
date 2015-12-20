@@ -415,10 +415,11 @@ var Feed = function () {
                             '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
                             '.avatar-profilename': 'post.Username',
                             '+.arrow_box': 'post.SmallComment',
-                            '.ugslider@class+': function (a) { if (a.item.Type != 2) { return ' ugslider-display'; } },
+                            '.ugslider@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
                             '.cover@src': 'post.PostedImage',
                             '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
                             '.day': 'post.TimePosted',
+                            '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
                             '.big-comment .comment-location': 'post.BigComment',
                             '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
                         }
@@ -426,6 +427,7 @@ var Feed = function () {
                 };
                 $p('.posts').render(data, directive);
                 $('#imagecontainer').imagesLoaded().always(function () {
+                    //after all post images have loaded
                     $('.ugslider').slick({ arrows: false, dots: false, useCSS: true });
                     $(".posts").css("display", "block");
                     Utilities.Spinner(false, "Loading Feed");
@@ -481,7 +483,7 @@ var Feed = function () {
         $('.scrollable').on('scroll', function () {
             if (!isAppended) {
                 if ($(this).scrollTop() + $(this).innerHeight() >= (this.scrollHeight * .75)) {
-                    AppendFeed();
+                    //AppendFeed();
                     isAppended = true;
                 }
             }
