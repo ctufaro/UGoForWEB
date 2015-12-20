@@ -420,6 +420,7 @@ var Feed = function () {
                             '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
                             '.day': 'post.TimePosted',
                             '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
+                            '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
                             '.big-comment .comment-location': 'post.BigComment',
                             '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
                         }
