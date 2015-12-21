@@ -48,10 +48,10 @@ var Pages = function () {
         if ($(page).css('display') == "none") {
             jQuery.each(pageArray, function (index, value) {
                 if (page != value) {
-                    $(value).hide();
+                    $(value).css('display','none');
                 }
                 else {
-                    $(value).show();
+                    $(value).css('display', 'block');
                 }
             });
         }
