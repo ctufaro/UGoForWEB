@@ -443,6 +443,10 @@ var Feed = function () {
         $('.ugslider').slick('setPosition');
 
         $('.yum-icon').click(function (e) {
+            //reset gross
+            var gross = $(this).closest('div').find('.gross-icon');
+            $('img', gross).attr("src", "img/icons/gross.png");
+
             var imgSrcVal = $('img', this).attr("src");
             if (imgSrcVal === 'img/icons/yum.png') {
                 $('img', this).attr("src", "img/icons/yum-filled.png");
@@ -453,6 +457,10 @@ var Feed = function () {
         });
 
         $('.gross-icon').click(function (e) {
+            //rest yum
+            var yum = $(this).closest('div').find('.yum-icon');
+            $('img', yum).attr("src", "img/icons/yum.png");
+
             var imgSrcVal = $('img', this).attr("src");
             if (imgSrcVal === 'img/icons/gross.png') {
                 $('img', this).attr("src", "img/icons/gross-filled.png");
@@ -462,6 +470,8 @@ var Feed = function () {
             }
         });
 
+        $('.crave-icon').click(function (e) {
+        });
     }
 
     var RefreshFeed = function () {

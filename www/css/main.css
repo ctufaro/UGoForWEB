@@ -740,6 +740,20 @@ option:checked {
     padding-bottom:5px;
 }
 
+.share-comment {
+    width: 100%; 
+    position: absolute;
+}
+
+.share-comment-icons{
+    width: 100%; 
+    padding:3px; 
+    position: absolute; 
+    top: -40px; 
+    background-color: rgba(74,73,74,.5); 
+    text-align:right;
+}
+
 
 /*WAITING SPIINER BUTTON CLICK*/
 .waitSpinner{
