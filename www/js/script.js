@@ -429,14 +429,39 @@ var Feed = function () {
                 $p('.posts').render(data, directive);
                 $('#imagecontainer').imagesLoaded().always(function () {
                     //after all post images have loaded
-                    $('.ugslider').slick({ arrows: false, dots: false, useCSS: true });
-                    $(".posts").css("display", "block");
-                    Utilities.Spinner(false, "Loading Feed");
-                    $('.ugslider').slick('setPosition');
+                    CompleteFeed();
                 });
 
             }
         });
+    }
+
+    var CompleteFeed = function () {
+        $('.ugslider').slick({ arrows: false, dots: false, useCSS: true });
+        $(".posts").css("display", "block");
+        Utilities.Spinner(false, "Loading Feed");
+        $('.ugslider').slick('setPosition');
+
+        $('.yum-icon').click(function (e) {
+            var imgSrcVal = $('img', this).attr("src");
+            if (imgSrcVal === 'img/icons/yum.png') {
+                $('img', this).attr("src", "img/icons/yum-filled.png");
+            }
+            else {
+                $('img', this).attr("src", "img/icons/yum.png");
+            }
+        });
+
+        $('.gross-icon').click(function (e) {
+            var imgSrcVal = $('img', this).attr("src");
+            if (imgSrcVal === 'img/icons/gross.png') {
+                $('img', this).attr("src", "img/icons/gross-filled.png");
+            }
+            else {
+                $('img', this).attr("src", "img/icons/gross.png");
+            }
+        });
+
     }
 
     var RefreshFeed = function () {
