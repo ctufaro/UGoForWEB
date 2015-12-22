@@ -149,6 +149,20 @@ h6 {
     background-color:transparent !important;
 }
 
+.numberCircle {
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    padding: 1px;    
+    background: #008EBD;
+    border: 2px solid #008EBD;
+    color: white;
+    text-align: center;    
+    font: 13px Arial, sans-serif;
+    font-weight:bold;
+    position:absolute;
+}
+
 #post {
     margin-bottom: 30px;
 }
@@ -753,7 +767,6 @@ option:checked {
     background-color: rgba(74,73,74,.5); 
     text-align:right;
 }
-
 
 /*WAITING SPIINER BUTTON CLICK*/
 .waitSpinner{
