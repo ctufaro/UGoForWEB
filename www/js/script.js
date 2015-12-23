@@ -439,7 +439,7 @@ var Feed = function () {
     }
 
     var CompleteFeed = function () {
-        $('.ugslider').slick({ arrows: false, dots: false, useCSS: true });
+        $('.ugslider').slick({ arrows: false, dots: false, useCSS: false });
         $(".posts").css("display", "block");
         Utilities.Spinner(false, "Loading Feed");
         $('.ugslider').slick('setPosition');
