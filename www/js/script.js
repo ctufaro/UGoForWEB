@@ -415,11 +415,13 @@ var Feed = function () {
                             '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
                             '.avatar-profilename': 'post.Username',
                             '+.arrow_box': 'post.SmallComment',
+                            '.ugslider@data-slickid': function (a) { { return a.item.PostId; } },
                             '.ugslider@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
                             '.cover@src': 'post.PostedImage',
                             '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
                             '.day': 'post.TimePosted',
                             '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
+                            '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
                             '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
                             '.big-comment .comment-location': 'post.BigComment',
                             '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
@@ -471,6 +473,12 @@ var Feed = function () {
         });
 
         $('.crave-icon').click(function (e) {
+            //var postid = $(this).data("postid");
+            //var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
+            //var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
+            //slideCount++;
+            //slickSlider.slick('slickAdd', '<div><h3>Fuck You '+slideCount+'</h3></div>');
+            //slickSlider.slick('slickGoTo', slideCount-1);
         });
     }
 
