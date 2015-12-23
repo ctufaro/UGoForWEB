@@ -476,8 +476,9 @@ var Feed = function () {
             var postid = $(this).data("postid");
             $('.popup-modal').trigger('click');
             $('.ugopost-slick').slick('slickGoTo', 4, true);
-            $('#btnCravePost').click(function (e) {
+            $('#btnCravePost').unbind().click(function (e) {
                 //ajax here
+                console.log(postid);
                 var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
                 var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
                 slideCount++;
