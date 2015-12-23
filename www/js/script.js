@@ -473,14 +473,21 @@ var Feed = function () {
         });
 
         $('.crave-icon').click(function (e) {
-            //var postid = $(this).data("postid");
-            //var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
-            //var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
-            //slideCount++;
-            //var html = "<div><img class='avatar2' src='https://ugoforstore.blob.core.windows.net/ugoforphoto/98dd712a-f4f5-e68c-71db-9b063e652b56_cdv_photo_002.jpg'><div class='responder-comment'><span class='responder-profilename'>admin</span><div class='arrow-box-responder'>Test Slide " + slideCount + "</div></div></div>";
-            //slickSlider.slick('slickAdd', html);
-            //slickSlider.slick('slickGoTo', slideCount-1);
-        });
+            var postid = $(this).data("postid");
+            $('.popup-modal').trigger('click');
+            $('.ugopost-slick').slick('slickGoTo', 4, true);
+            $('#btnCravePost').click(function (e) {
+                //ajax here
+                var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
+                var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
+                slideCount++;
+                var html = "<div><img class='avatar2' src='https://ugoforstore.blob.core.windows.net/ugoforphoto/98dd712a-f4f5-e68c-71db-9b063e652b56_cdv_photo_002.jpg'><div class='responder-comment'><span class='responder-profilename'>admin</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
+                $.magnificPopup.close();
+                slickSlider.slick('slickAdd', html);
+                slickSlider.slick('slickGoTo', slideCount - 1, true);
+                $('#txtCravePost').val('');
+            });
+        });        
     }
 
     var RefreshFeed = function () {
@@ -552,7 +559,7 @@ var UGoPost = function () {
         var position;
 
         $('.popup-modal').magnificPopup({
-            type: 'inline', preloader: false, closeOnBgClick: true, showCloseBtn: false,
+            type: 'inline', preloader: false, closeOnBgClick: true, showCloseBtn: true,
             callbacks: {
                 open: function () {
                     $('.ugopost-slick').slick('setPosition');

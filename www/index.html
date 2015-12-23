@@ -7,8 +7,8 @@
     <link href="css/googlefonts.css" rel="stylesheet" />
     <link href="css/foundation.css" rel="stylesheet" />
     <link href="css/slick.css" rel="stylesheet" />
-    <link href="css/main.css" rel="stylesheet" />
     <link href="css/magnific-popup-modal.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
     <link href="css/iosOverlay.css" rel="stylesheet">
     <link href="css/nav-bar-hacks.css" rel="stylesheet" />
     <link href="css/instafilters.css" rel="stylesheet" />
@@ -176,7 +176,6 @@
         <div class="ugopost-slick">
             <div id="divCrave" style="text-align:center;">
                 <div><input type="text" id="txtCrave" placeholder="What are you craving??" style="height:60px;font-size:28px;" /></div>
-                <!--<div class="rateit bigstars" data-rateit-starwidth="64" data-rateit-starheight="64" data-rateit-resetable="false" data-rateit-value="1" data-rateit-ispreset="true"></div>-->
                 <div><a id="btnCrave" class="button large radius littleBtn ugBtn">Crave</a></div>
             </div>
             <div>
@@ -193,6 +192,10 @@
                 <div><input type="text" id="txtSmallComment" placeholder="Food Description" style="height:60px;font-size:28px;" /></div>
                 <div><input type="text" id="txtBigComment" placeholder="Place to Eat It" style="height:60px;font-size:32px;" /></div>
                 <div style="text-align:center;"><a id="btnPost" style="background-color: #f79421;" class="button large radius littleBtn ugBtn">Share</a></div>
+            </div>
+            <div style="text-align:center;">
+                <div><input type="text" id="txtCravePost" placeholder="Comment" style="height:60px;font-size:28px;" /></div>
+                <div><a id="btnCravePost" class="button large radius littleBtn ugBtn">Post</a></div>
             </div>
         </div>
     </div>
@@ -398,7 +401,7 @@
             <a class="item" href="#_feed">
                 <img src="img/menu/taco.png" style="height:25px;width:25px;" /><span style="color:white;">feed</span>
             </a>
-            <a class="item popup-modal" href="#ugopost-popup">
+            <a class="item popup-modal" href="#ugopost-popup" id="shit">
                 <img src="img/menu/burger.png" style="height:25px;width:25px;" /><span style="color:white;">post</span>
             </a>
             <a class="item" id="btnUGoFor">
