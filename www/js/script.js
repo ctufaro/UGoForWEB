@@ -756,7 +756,7 @@ var PhotoEdit = function () {
         $('#btnPhotoProgess').click(function () {
             guid = Utilities.Guid().replace(/-/g, '');;
             PGPlugins.Camera.PostUpload(mainURI, filtername, guid);
-            $('.ugopost-slick').slick('slickGoTo', 4, true);
+            $('.ugopost-slick').slick('slickGoTo', 3, true);
             $('.popup-modal').trigger('click');
         });
 
