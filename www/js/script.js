@@ -472,18 +472,24 @@ var Feed = function () {
             }
         });
 
+        //pile of shit here
         $('.crave-icon').click(function (e) {
             var postid = $(this).data("postid");
             $('.popup-modal').trigger('click');
             $('.ugopost-slick').slick('slickGoTo', 4, true);
             $('#btnCravePost').unbind().click(function (e) {
-                //ajax here
-                console.log(postid);
+
                 var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
+
+                slickSlider.on('afterChange', function (event, slick, currentSlide, nextSlide) {
+                    Utilities.SmallSpinner(false, "Post", "btnCravePost");
+                    $.magnificPopup.close();
+                });
+
                 var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
                 slideCount++;
                 var html = "<div><img class='avatar2' src='https://ugoforstore.blob.core.windows.net/ugoforphoto/98dd712a-f4f5-e68c-71db-9b063e652b56_cdv_photo_002.jpg'><div class='responder-comment'><span class='responder-profilename'>admin</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
-                $.magnificPopup.close();
+                Utilities.SmallSpinner(true, "", "btnCravePost");
                 slickSlider.slick('slickAdd', html);
                 slickSlider.slick('slickGoTo', slideCount - 1, true);
                 $('#txtCravePost').val('');
