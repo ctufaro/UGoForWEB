@@ -417,9 +417,16 @@ var Feed = function () {
                             '+.arrow_box': 'post.SmallComment',
                             '.ugslider@data-slickid': function (a) { { return a.item.PostId; } },
                             '.ugslider@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
+                            '.ugslider-slides': {
+                                'pc<-post.PostComments': {
+                                    '.avatar2@src': 'pc.ProfileUrl',
+                                    '.responder-profilename': 'pc.Username',
+                                    '.arrow-box-responder': 'pc.Comment'
+                                }
+                            },
                             '.cover@src': 'post.PostedImage',
                             '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
-                            '.day': 'post.TimePosted',
+                            '.day': 'post.TimePosted',                            
                             '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
                             '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
                             '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
@@ -481,14 +488,14 @@ var Feed = function () {
 
                 var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
 
-                slickSlider.on('afterChange', function (event, slick, currentSlide, nextSlide) {
+                slickSlider.on('setPosition', function (event, slick, currentSlide, nextSlide) {
                     Utilities.SmallSpinner(false, "Post", "btnCravePost");
                     $.magnificPopup.close();
                 });
 
                 var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
                 slideCount++;
-                var html = "<div><img class='avatar2' src='https://ugoforstore.blob.core.windows.net/ugoforphoto/98dd712a-f4f5-e68c-71db-9b063e652b56_cdv_photo_002.jpg'><div class='responder-comment'><span class='responder-profilename'>admin</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
+                var html = "<div><img class='avatar2' src='img/craveplaceholder.jpg'><div class='responder-comment'><span class='responder-profilename'>myprofilename</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
                 Utilities.SmallSpinner(true, "", "btnCravePost");
                 slickSlider.slick('slickAdd', html);
                 slickSlider.slick('slickGoTo', slideCount - 1, true);
