@@ -268,7 +268,7 @@ h4 {
 
 @media ( max-width: 363px) {
     .ugslider-cover {
-        margin-top: -156px;
+        /*margin-top: -156px;*/
     }
 }
 
