@@ -486,6 +486,25 @@ var Feed = function () {
             $('.ugopost-slick').slick('slickGoTo', 4, true);
             $('#btnCravePost').unbind().click(function (e) {
 
+                //ajax call here
+                if ($('#txtCravePost').val().length > 0) {
+
+                    $.ajax
+                    ({
+                        type: "POST", url: Constants.RESTComments,
+                        data: {
+                            "UserId": UserSession.GetUserID(),
+                            "PostID": postid, "Comment": $('#txtCravePost').val(),
+                            "Location": PGPlugins.GPS.GetGPSCoordinates().length > 0 ? PGPlugins.GPS.GetGPSCoordinates() : "WEB"
+                        },
+                        global: false,
+                        error: function (xhr, error) {
+                            Message.Error(xhr + " - " + error);
+                        },
+                        success: function (data) { }
+                    });
+                }
+
                 var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
 
                 slickSlider.on('setPosition', function (event, slick, currentSlide, nextSlide) {
