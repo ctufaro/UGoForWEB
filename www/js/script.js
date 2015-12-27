@@ -421,6 +421,7 @@ var Feed = function () {
                                 'pc<-post.PostComments': {
                                     '.avatar2@src': 'pc.ProfileUrl',
                                     '.responder-profilename': 'pc.Username',
+                                    '.ugslider-slide@class+': function (a) { if (a.item.Username === 'ugoforadmin') { return ' ugslider-visibility'; } },
                                     '.arrow-box-responder': 'pc.Comment'
                                 }
                             },
