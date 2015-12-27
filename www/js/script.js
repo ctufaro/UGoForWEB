@@ -118,7 +118,7 @@ var PGPlugins = function () {
         }
 
         //new user register profile method
-        var ImageUpload = function () {
+        var ImageUpload = function (userName) {
 
             Utilities.Spinner(true, "Registering");
 
@@ -131,6 +131,7 @@ var PGPlugins = function () {
                 var userId = $.parseJSON(str).CustomData;
                 Utilities.ClearCache();
                 UserSession.SetUserID(userId);
+                UserSession.SetUserName(userName)
                 //dont like this
                 Feed.LoadFeed();
                 Feed.Render();
@@ -333,7 +334,7 @@ var SignUp = function () {
             if (profilePicValid) { $(".picerror").css("display", "block"); } else { $(".picerror").css("display", "none"); }
             if ($('#signUsername').val().length > 0 && emailValid && $('#signPassword').val().length > 0 && !profilePicValid) {
                 try {
-                    PGPlugins.Camera.ImageUpload();
+                    PGPlugins.Camera.ImageUpload($('#signUsername').val());
                     PGPlugins.DeviceToken.GetDeviceId();
                 }
                 catch (err) {
@@ -376,6 +377,7 @@ var Login = function () {
                     }
                     else {
                         UserSession.SetUserID(userId);
+                        UserSession.SetUserName(userName);
                         PGPlugins.DeviceToken.GetDeviceId();
                         Feed.LoadFeed();
                         Feed.Render();
@@ -515,7 +517,7 @@ var Feed = function () {
 
                 var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
                 slideCount++;
-                var html = "<div><img class='avatar2' src='img/craveplaceholder.jpg'><div class='responder-comment'><span class='responder-profilename'>myprofilename</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
+                var html = "<div><img class='avatar2' src='img/craveplaceholder.jpg'><div class='responder-comment'><span class='responder-profilename'>"+UserSession.GetUserName()+"</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
                 Utilities.SmallSpinner(true, "", "btnCravePost");
                 slickSlider.slick('slickAdd', html);
                 slickSlider.slick('slickGoTo', slideCount - 1, true);
@@ -841,6 +843,10 @@ var UserSession = function () {
         return window.localStorage.getItem("userid");
     }
 
+    var GetUserName = function () {
+        return window.localStorage.getItem("username");
+    }
+
     var GetPushID = function () {
         return window.localStorage.getItem("pushid");
     }
@@ -851,6 +857,10 @@ var UserSession = function () {
 
     var SetUserID = function (value) {
         window.localStorage.setItem("userid", value);
+    }
+
+    var SetUserName = function (value) {
+        window.localStorage.setItem("username", value);
     }
 
     var SetPushID = function (value) {
@@ -874,7 +884,18 @@ var UserSession = function () {
         window.localStorage.clear();
     }
 
-    return { GetUserID: GetUserID, SetUserID: SetUserID, SetPushID: SetPushID, SetPushType: SetPushType, GetPushID:GetPushID, GetPushType: GetPushType, IsRegistered: IsRegistered, ClearUserID: ClearUserID }
+    return {
+        GetUserID: GetUserID,
+        SetUserID: SetUserID,
+        GetUserName: GetUserName,
+        SetUserName: SetUserName,
+        GetPushID: GetPushID,
+        SetPushID: SetPushID,
+        GetPushType: GetPushType,
+        SetPushType: SetPushType,
+        IsRegistered: IsRegistered,
+        ClearUserID: ClearUserID
+    }
 }();
 
 /*
