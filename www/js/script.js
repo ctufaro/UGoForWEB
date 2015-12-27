@@ -33,6 +33,9 @@ var Pages = function () {
             case '#_settings': 
                 Settings.Render();
                 break;
+            case '#_follow':
+                Follow.Render();
+                break;
             case '#_feed':
                 Feed.Render();
                 break;
@@ -767,6 +770,20 @@ var Settings = function () {
 
 }();
 
+var Follow = function () {
+
+    var Render = function () {
+        Pages.RenderSelect("#_follow", Constants.PartialPages);
+    }
+
+    var Events = function () {
+
+    }();
+
+    return { Render: Render }
+
+}();
+
 var PhotoEdit = function () {
     var mainURI = '';
     var guid = '';
@@ -996,7 +1013,7 @@ var Constants = function () {
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
     var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#photoedit"];
-    var PartialPages = ["#_feed", "#_profile", "#_settings"];
+    var PartialPages = ["#_feed", "#_profile", "#_settings", "#_follow"];
     return {
         PostHTML: PostHTML,
         PostPure: PostPure,
