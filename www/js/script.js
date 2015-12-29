@@ -20,6 +20,9 @@ var Pages = function () {
     }
 
     var Render = function (url) {
+
+        Utilities.ToggleHeight(false);
+
         switch (url.split('/')[0]) {
             case '#signOrLogin':
                 SignOrLogin.Render();
@@ -399,6 +402,7 @@ var Feed = function () {
     var isAppended = false;
 
     var Render = function () {
+        Utilities.ToggleHeight(true);
         Pages.RenderSelect("#main", Constants.FullPages);
         Pages.RenderSelect("#_feed", Constants.PartialPages)
     }
@@ -971,12 +975,22 @@ var Utilities = function () {
         }        
     }
 
+    var ToggleHeight = function (toggle) {
+        if (toggle == true) {
+            $('.scrollable').css("height","100%");            
+        }
+        else {
+            $('.scrollable').css("height", "");
+        }
+    }
+
     return {
         ClearCache: ClearCache,
         Guid: Guid,
         RegEx: RegEx,
         Spinner: Spinner,
-        SmallSpinner: SmallSpinner
+        SmallSpinner: SmallSpinner,
+        ToggleHeight: ToggleHeight
     }
 }();
 
