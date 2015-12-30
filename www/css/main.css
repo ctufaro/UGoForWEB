@@ -535,11 +535,15 @@ h4 {
     padding-top:5px;
     padding-left:8%; 
     margin:0;
-    background-color:#555;
+    background-color:white;
+}
+
+.follow-layout-avatar{
+    border: 1px solid #F79621;
 }
 
 .follow-layout-profile{
-    color:white;
+    /*color:white;*/
 }
 
 .follow-layout-cell {
