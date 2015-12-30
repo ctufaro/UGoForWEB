@@ -101,15 +101,12 @@ h4 {
 
 .numberCircle {
     border-radius: 50%;
-    margin-left:11px;
-    margin-top:13.5px;
-    background: #008EBD;
-    border: 2px solid #008EBD;
-    color: #fff;
-    font: 12px Arial,sans-serif;
+    margin-left: 13px;
+    margin-top: 15px;
+    color: #008EBD;
+    font: 13px Arial,sans-serif;
     font-weight: 700;
     position: absolute;
-
 }
 
 /*FEED*/
