@@ -17,6 +17,8 @@ var Pages = function () {
             SignOrLogin.Render();
         }
 
+        Follow.LoadUsers();
+
     }
 
     var Render = function (url) {
@@ -440,6 +442,7 @@ var Feed = function () {
                             '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
                             '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
                             '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
+                            '.share-comment-icons@data-postid': function (a) { { return a.item.PostId; } },
                             '.big-comment .comment-location': 'post.BigComment',
                             '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
                         }
@@ -463,6 +466,7 @@ var Feed = function () {
 
         $('.yum-icon').click(function (e) {
             var gross = $(this).closest('div').find('.gross-icon');
+            var postId = $(this).closest('div').data('postid');
             $('img', gross).removeClass("gross-icon-fill-img");
             $('img', gross).addClass("gross-icon-img");
 
@@ -470,27 +474,32 @@ var Feed = function () {
             if (imgSrcVal === 'yum-icon-img') {
                 $('img', this).removeClass("yum-icon-fill");
                 $('img', this).addClass("yum-icon-fill-img");
+                ToggleYumYuck("yum", postId);
+
             }
             else {
                 $('img', this).removeClass("yum-icon-fill-img");
                 $('img', this).addClass("yum-icon-img");
+                ToggleYumYuck("unyum", postId);
             }
         });
 
         $('.gross-icon').click(function (e) {
             var yum = $(this).closest('div').find('.yum-icon');
+            var postId = $(this).closest('div').data('postid');
             $('img', yum).removeClass("yum-icon-fill-img");
             $('img', yum).addClass("yum-icon-img");
 
             var imgSrcVal = $('img', this).attr("class");
             if (imgSrcVal === 'gross-icon-img') {
-
                 $('img', this).removeClass("gross-icon-fill");
                 $('img', this).addClass("gross-icon-fill-img");
+                ToggleYumYuck("yuck", postId);
             }
             else {
                 $('img', this).removeClass("gross-icon-fill-img");
                 $('img', this).addClass("gross-icon-img");
+                ToggleYumYuck("unyuck", postId);
             }
         });
 
@@ -536,6 +545,24 @@ var Feed = function () {
                 $('#txtCravePost').val('');
             });
         });        
+    }
+
+    var ToggleYumYuck = function (action, postId) {
+        $.ajax
+        ({
+            type: "POST",
+            url: Constants.RESTAction,
+            data: {
+                "UserId": UserSession.GetUserID(),
+                "Action": action,
+                "Value": postId
+            },
+            global: false,
+            error: function (xhr, error) {
+                Message.Error(xhr + " - " + error);
+            },
+            success: function (data) { }
+        });
     }
 
     var RefreshFeed = function () {
@@ -785,11 +812,64 @@ var Follow = function () {
         Pages.RenderSelect("#_follow", Constants.PartialPages);
     }
 
+    var LoadUsers = function () {
+        $.ajax({
+            type: "GET",
+            url: Constants.RESTUsers,
+            error: function (xhr, statusText) { Message.Error(statusText); },
+            success: function (data) {
+                var directive = {
+                    '.follow-user': {
+                        'user<-': { //for each entry in posts name the element 'post'
+                            '.avatar@src': 'user.ProfileUrl',
+                            '.follow-layout-profile': 'user.UserName',
+                            '.follow-btn@data-profile-id': 'user.Id',
+                        }
+                    }
+                };
+                $p('.follow-layout').render(data, directive);
+                Events();
+            }
+        });
+
+    }
+
+    var ToggleFollow = function (toggle, userid) {
+        var action = (toggle == true) ? "follow" : "unfollow";
+
+        $.ajax
+        ({
+            type: "POST",
+            url: Constants.RESTAction,
+            data: {
+                "UserId": UserSession.GetUserID(),
+                "Action": action,
+                "Value": userid
+            },
+            global: false,
+            error: function (xhr, error) {
+                Message.Error(xhr + " - " + error);
+            },
+            success: function (data) { }
+        });
+    }
+
     var Events = function () {
+        $('.follow-btn').click(function (e) {
+            var id = $(this).data('profile-id');
+            var text = $(this).text();
+            if (text === '+Follow') {
+                ToggleFollow(true, id);
+                $(this).text('Unfollow');                
+            }
+            else {
+                ToggleFollow(false, id);
+                $(this).text('+Follow');
+            }
+        });
+    };
 
-    }();
-
-    return { Render: Render }
+    return { Render: Render, LoadUsers: LoadUsers }
 
 }();
 
@@ -1028,6 +1108,8 @@ var Constants = function () {
     var RESTCrave = "http://ugoforapi.azurewebsites.net/api/crave";
     var RESTComments = "http://ugoforapi.azurewebsites.net/api/comments";
     var RESTDevice = "http://ugoforapi.azurewebsites.net/api/device";
+    var RESTUsers = "http://ugoforapi.azurewebsites.net/api/users";
+    var RESTAction = "http://ugoforapi.azurewebsites.net/api/action";
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
@@ -1042,6 +1124,8 @@ var Constants = function () {
         RESTCrave: RESTCrave,
         RESTDevice: RESTDevice,
         RESTBlob: RESTBlob,
+        RESTUsers: RESTUsers,
+        RESTAction: RESTAction,
         EmailRegEx: EmailRegEx,
         SrcPixel: SrcPixel,
         FullPages: FullPages,
