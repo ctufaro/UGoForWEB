@@ -462,30 +462,35 @@ var Feed = function () {
         $('.ugslider').slick('setPosition');
 
         $('.yum-icon').click(function (e) {
-            //reset gross
             var gross = $(this).closest('div').find('.gross-icon');
-            $('img', gross).attr("src", "img/icons/gross.png");
+            $('img', gross).removeClass("gross-icon-fill-img");
+            $('img', gross).addClass("gross-icon-img");
 
-            var imgSrcVal = $('img', this).attr("src");
-            if (imgSrcVal === 'img/icons/yum.png') {
-                $('img', this).attr("src", "img/icons/yum-filled.png");
+            var imgSrcVal = $('img', this).attr("class");
+            if (imgSrcVal === 'yum-icon-img') {
+                $('img', this).removeClass("yum-icon-fill");
+                $('img', this).addClass("yum-icon-fill-img");
             }
             else {
-                $('img', this).attr("src", "img/icons/yum.png");
+                $('img', this).removeClass("yum-icon-fill-img");
+                $('img', this).addClass("yum-icon-img");
             }
         });
 
         $('.gross-icon').click(function (e) {
-            //rest yum
             var yum = $(this).closest('div').find('.yum-icon');
-            $('img', yum).attr("src", "img/icons/yum.png");
+            $('img', yum).removeClass("yum-icon-fill-img");
+            $('img', yum).addClass("yum-icon-img");
 
-            var imgSrcVal = $('img', this).attr("src");
-            if (imgSrcVal === 'img/icons/gross.png') {
-                $('img', this).attr("src", "img/icons/gross-filled.png");
+            var imgSrcVal = $('img', this).attr("class");
+            if (imgSrcVal === 'gross-icon-img') {
+
+                $('img', this).removeClass("gross-icon-fill");
+                $('img', this).addClass("gross-icon-fill-img");
             }
             else {
-                $('img', this).attr("src", "img/icons/gross.png");
+                $('img', this).removeClass("gross-icon-fill-img");
+                $('img', this).addClass("gross-icon-img");
             }
         });
 

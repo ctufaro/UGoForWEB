@@ -115,6 +115,28 @@ h4 {
     margin-bottom: 30px;
 }
 
+.yum-icon-img{
+    content:url('../img/icons/yum.png');
+    width:35px; 
+    margin-right:5px;
+}
+
+.yum-icon-fill-img{
+    content:url('../img/icons/yum-filled.png');
+    width:35px; 
+    margin-right:5px;
+}
+
+.gross-icon-img{
+    content:url('../img/icons/gross.png');
+    width:35px;
+}
+
+.gross-icon-fill-img{
+    content:url('../img/icons/gross-filled.png');
+    width:35px;
+}
+
 .avatar {
     margin-right: 10px;
     float: left;
