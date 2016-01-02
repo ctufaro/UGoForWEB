@@ -815,7 +815,7 @@ var Follow = function () {
     var LoadUsers = function () {
         $.ajax({
             type: "GET",
-            url: Constants.RESTUsers,
+            url: Constants.RESTUsers+"/"+UserSession.GetUserID(),
             error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
                 var directive = {
