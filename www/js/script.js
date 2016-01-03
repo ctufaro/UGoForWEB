@@ -417,7 +417,7 @@ var Feed = function () {
 
         $.ajax({
             type: "GET",
-            url: Constants.RESTPosts,
+            url: Constants.RESTPosts+"/"+UserSession.GetUserID(),
             error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
                 var directive = {
@@ -573,7 +573,7 @@ var Feed = function () {
     var AppendFeed = function () {
         $.ajax({
             type: "GET",
-            url: Constants.RESTPosts + "/" + lastLoadPost + "/0",
+            url: Constants.RESTPosts + "/" + lastLoadPost + "/0"+"/"+UserSession.GetUserID(),
             error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
                 if (data.length == 0) { isAppended = false; return; }
