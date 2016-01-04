@@ -441,6 +441,8 @@ var Feed = function () {
                             '.day': 'post.TimePosted',                            
                             '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
                             '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
+                            //'.yum-icon-img@class+': function (a) { if (1 > 0) { return ' yum-icon-fill-img'; } },
+                            //'.gross-icon-img@class+': function (a) { if (1 > 0) { return ' gross-icon-fill-img'; } },
                             '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
                             '.share-comment-icons@data-postid': function (a) { { return a.item.PostId; } },
                             '.big-comment .comment-location': 'post.BigComment',
@@ -824,6 +826,7 @@ var Follow = function () {
                             '.avatar@src': 'user.ProfileUrl',
                             '.follow-layout-profile': 'user.UserName',
                             '.follow-btn@data-profile-id': 'user.Id',
+                            //,'.follow-btn': function (a) { return 'follow'; }
                         }
                     }
                 };
