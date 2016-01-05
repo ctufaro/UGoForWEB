@@ -581,8 +581,7 @@ h4 {
     height:50px;
     background-image:url('../img/menu/profile-small.png');
     background-repeat:no-repeat;
-    background-position-x:4px;
-    background-position-y:12px;
+    background-position: 12px 12px; 
     padding-left:35px !important;
 }
 
