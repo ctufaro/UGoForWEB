@@ -826,7 +826,7 @@ var Follow = function () {
                             '.avatar@src': 'user.ProfileUrl',
                             '.follow-layout-profile': 'user.UserName',
                             '.follow-btn@data-profile-id': 'user.Id',
-                            //,'.follow-btn': function (a) { return 'follow'; }
+                            '.follow-btn': function (a) { var r; (a.item.Followed === 1) ? r = 'Unfollow' : r = '+Follow'; return r; }
                         }
                     }
                 };
