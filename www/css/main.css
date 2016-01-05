@@ -572,6 +572,18 @@ h4 {
     padding-left:30%;
 }
 
+.follow-btn::before{
+    content:url('../img/menu/profile-small.png');
+    padding-right:5px;
+    margin-left:-10px;
+    float:left;
+}
+
+.follow-btn{
+    font-size:14px !important;
+    height:50px;
+}
+
 /*SETTINGS*/
 
 .setting-layout {
