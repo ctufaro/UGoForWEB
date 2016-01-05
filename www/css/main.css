@@ -573,15 +573,17 @@ h4 {
 }
 
 .follow-btn::before{
-    content:url('../img/menu/profile-small.png');
-    padding-right:5px;
-    margin-left:-10px;
-    float:left;
+
 }
 
 .follow-btn{
     font-size:14px !important;
     height:50px;
+    background-image:url('../img/menu/profile-small.png');
+    background-repeat:no-repeat;
+    background-position-x:4px;
+    background-position-y:12px;
+    padding-left:35px !important;
 }
 
 /*SETTINGS*/
