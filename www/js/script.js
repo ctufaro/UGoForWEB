@@ -18,6 +18,7 @@ var Pages = function () {
         }
 
         Follow.LoadUsers();
+        Profile.LoadProfile();
 
     }
 
@@ -540,7 +541,7 @@ var Feed = function () {
 
                 var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
                 slideCount++;
-                var html = "<div><img class='avatar2' src='img/craveplaceholder.jpg'><div class='responder-comment'><span class='responder-profilename'>"+UserSession.GetUserName()+"</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
+                var html = "<div><img class='avatar2' src='"+Profile.GetProfileImage()+"'><div class='responder-comment'><span class='responder-profilename'>"+UserSession.GetUserName()+"</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
                 Utilities.SmallSpinner(true, "", "btnCravePost");
                 slickSlider.slick('slickAdd', html);
                 slickSlider.slick('slickGoTo', slideCount - 1, true);
@@ -765,6 +766,7 @@ var RaveCrave = function () {
 }();
 
 var Profile = function () {
+    var profileImageUrl = "";
 
     var Render = function () {
         Pages.RenderSelect("#main", Constants.FullPages);
@@ -776,8 +778,27 @@ var Profile = function () {
         //$('#spnLoggedInUserId').text(UserSession.GetUserID());
     }
 
+    var GetProfileImage = function () {
+        return profileImageUrl;
+    }
+
+    var LoadProfile = function () {
+        $.ajax({
+            type: "GET",
+            url: Constants.RESTProfile + "/" + UserSession.GetUserID(),
+            error: function (xhr, statusText) { Message.Error(statusText); },
+            success: function (data) {
+                profileImageUrl = data.ProfileUrl;
+                $("#profileImagePic").attr('src', data.ProfileUrl);
+                $("#profileImageData").html(data.UserName + "<span>" + data.Email + "</span>");
+            }
+        });
+
+        
+    }
+
     return {
-        Render: Render, SetProfile: SetProfile
+        Render: Render, SetProfile: SetProfile, LoadProfile: LoadProfile, GetProfileImage: GetProfileImage
     }
 
 }();
@@ -1113,6 +1134,7 @@ var Constants = function () {
     var RESTDevice = "http://ugoforapi.azurewebsites.net/api/device";
     var RESTUsers = "http://ugoforapi.azurewebsites.net/api/users";
     var RESTAction = "http://ugoforapi.azurewebsites.net/api/action";
+    var RESTProfile = "http://ugoforapi.azurewebsites.net/api/profile";
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
@@ -1129,6 +1151,7 @@ var Constants = function () {
         RESTBlob: RESTBlob,
         RESTUsers: RESTUsers,
         RESTAction: RESTAction,
+        RESTProfile: RESTProfile,
         EmailRegEx: EmailRegEx,
         SrcPixel: SrcPixel,
         FullPages: FullPages,
