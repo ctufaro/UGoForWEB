@@ -771,11 +771,7 @@ var Profile = function () {
     var Render = function () {
         Pages.RenderSelect("#main", Constants.FullPages);
         Pages.RenderSelect("#_profile", Constants.PartialPages);
-        SetProfile();
-    }
-
-    var SetProfile = function () {
-        //$('#spnLoggedInUserId').text(UserSession.GetUserID());
+        LoadProfileStats();
     }
 
     var GetProfileImage = function () {
@@ -792,13 +788,38 @@ var Profile = function () {
                 $("#profileImagePic").attr('src', data.ProfileUrl);
                 $("#profileImageData").html(data.UserName + "<span>" + data.Email + "</span>");
             }
-        });
+        });        
+    }
 
-        
+    var LoadProfileStats = function () {
+        $.ajax({
+            type: "GET",
+            url: Constants.RESTProfile + "/stats/" + UserSession.GetUserID(),
+            error: function (xhr, statusText) { Message.Error(statusText); },
+            success: function (data) {
+                var Followers;
+                var Yums;
+                var Yucks;
+                $.each(data, function (key, value) {
+                    var action = value['Action'];
+                    switch (action) {
+                        case "Followers":
+                            $('#profileFollowerStat').html(parseInt(value['Count']));
+                            break;
+                        case "Yums":
+                            $('#profileYumStat').html(parseInt(value['Count']));;
+                            break;
+                        case "Yucks":
+                            $('#profileYuckStat').html(parseInt(value['Count']));
+                            break;
+                    }
+                });
+            }
+        });
     }
 
     return {
-        Render: Render, SetProfile: SetProfile, LoadProfile: LoadProfile, GetProfileImage: GetProfileImage
+        Render: Render, LoadProfile: LoadProfile, GetProfileImage: GetProfileImage
     }
 
 }();
