@@ -403,6 +403,7 @@ var Feed = function () {
 
     var lastLoadPost;
     var isAppended = false;
+    var yumHTML = $('#post').html();
 
     var Render = function () {
         Utilities.ToggleHeight(true);
@@ -459,6 +460,25 @@ var Feed = function () {
 
             }
         });
+    }
+
+    var AppendYum = function (avatar, profilename, smallComment, time, mainImg, bigComment) {
+        try{
+            var rawHtml = yumHTML;
+            rawHtml = Utilities.StripHTML(rawHtml, '<!--comments start-->', '<!--end comments-->');
+            rawHtml = Utilities.StripHTML(rawHtml, '<!--crave start-->', '<!--end crave-->');
+            rawHtml = '<article id="post">' + rawHtml + '</article>';
+            rawHtml = rawHtml.replace('class="avatar" src=""', 'class="avatar" src="' + avatar + '"');
+            rawHtml = rawHtml.replace('class="avatar-profilename">', 'class="avatar-profilename">' + profilename);
+            rawHtml = rawHtml.replace('class="arrow_box">', 'class="arrow_box">' + smallComment);
+            rawHtml = rawHtml.replace('class="day pull-right">', 'class="day pull-right">' + time);
+            rawHtml = rawHtml.replace('<img src="img/burger.jpg" class="cover">', '<img src="' + Constants.BlobUrl + mainImg + '" class="cover">');
+            rawHtml = rawHtml.replace('class="comment-location">', 'class="comment-location">' + bigComment);
+            $('.posts').prepend(rawHtml);
+        }
+        catch(err){
+            Message.Error(err.toString());
+        }
     }
 
     var CompleteFeed = function () {
@@ -547,7 +567,7 @@ var Feed = function () {
                 slickSlider.slick('slickGoTo', slideCount - 1, true);
                 $('#txtCravePost').val('');
             });
-        });        
+        });          
     }
 
     var ToggleYumYuck = function (action, postId) {
@@ -622,7 +642,7 @@ var Feed = function () {
     }();
 
     return {
-        Render: Render, LoadFeed: LoadFeed, RefreshFeed: RefreshFeed
+        Render: Render, LoadFeed: LoadFeed, RefreshFeed: RefreshFeed, AppendYum: AppendYum
     }
 
 }();
@@ -709,7 +729,9 @@ var UGoPost = function () {
                 success: function (data) {
                     Utilities.SmallSpinner(false, "Share", "btnPost");
                     $.magnificPopup.close();
-                    Feed.RefreshFeed();
+                    var photoUrl = PhotoEdit.GetGUID() + "_" + PhotoEdit.GetURI().substr(PhotoEdit.GetURI().lastIndexOf('/') + 1);
+                    Feed.AppendYum(Profile.GetProfileImage(), UserSession.GetUserName(), $("#txtSmallComment").val(), '1s', photoUrl, $("#txtBigComment").val());
+                    //Feed.RefreshFeed();
                     Feed.Render();
                 }
             })
@@ -967,6 +989,10 @@ var PhotoEdit = function () {
         return guid;
     }
 
+    var GetURI = function () {
+        return mainURI;
+    }
+
     var PhotoSuccess = function (imageURI) {
         $.magnificPopup.close();
         $("#imgPhotoPost").attr('src', imageURI + "?guid=" + Utilities.Guid()).one("load", function () {
@@ -981,7 +1007,7 @@ var PhotoEdit = function () {
         Message.Error(message);
     }
 
-    return { Render: Render, SetURI: SetURI, PhotoSuccess: PhotoSuccess, PhotoFail: PhotoFail, GetGUID: GetGUID }
+    return { Render: Render, SetURI: SetURI, PhotoSuccess: PhotoSuccess, PhotoFail: PhotoFail, GetGUID: GetGUID, GetURI: GetURI }
 
 }();
 
@@ -1105,6 +1131,13 @@ var Utilities = function () {
         }        
     }
 
+    var StripHTML = function (rawHtml, startText, endText) {
+        var startIndex = rawHtml.indexOf(startText);
+        var endIndex = rawHtml.indexOf(endText) + endText.length;
+        var toBeRemoved = rawHtml.substring(startIndex, endIndex);
+        return rawHtml.replace(toBeRemoved, '');
+    }
+
     var ToggleHeight = function (toggle) {
         if (toggle == true) {
             $('.scrollable').css("height","100%");            
@@ -1120,6 +1153,7 @@ var Utilities = function () {
         RegEx: RegEx,
         Spinner: Spinner,
         SmallSpinner: SmallSpinner,
+        StripHTML: StripHTML,
         ToggleHeight: ToggleHeight
     }
 }();
@@ -1140,14 +1174,8 @@ var Message = function () {
     String Constants Class
 */
 var Constants = function () {
-
-    var PostHTML = '';
     var PostPure = $('#post').parent().html();
-    //var PostPure = "<article id='post'><img class='avatar' style='float: left' src=''><div class='avatar-profilename'></div><div class='arrow_box'><span class='day pull-right'></span> </div> <img class='cover' src=''> <div class='big-comment'><div class='big-comment-yellow'><span class='comment-location'></span><span class='bubble-comment'></span></div>" + PostCommentHTML + "</div></article>";
-    //var RESTLogin = "http://192.168.1.2:26684/api/login";
-    //var RESTPosts = "http://192.168.1.2:26684/api/posts";
-    //var RESTComments = "http://192.168.1.2:26684/api/comments";
-    //var RESTBlob = "http://192.168.1.2:26684/blobs/upload";
+    var BlobUrl = "https://ugoforstore.blob.core.windows.net/ugoforphoto/";
     var RESTLogin = "http://ugoforapi.azurewebsites.net/api/login";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
     var RESTCrave = "http://ugoforapi.azurewebsites.net/api/crave";
@@ -1162,8 +1190,8 @@ var Constants = function () {
     var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#photoedit"];
     var PartialPages = ["#_feed", "#_profile", "#_settings", "#_follow"];
     return {
-        PostHTML: PostHTML,
         PostPure: PostPure,
+        BlobUrl: BlobUrl,
         RESTLogin : RESTLogin,
         RESTPosts: RESTPosts,
         RESTComments: RESTComments,
