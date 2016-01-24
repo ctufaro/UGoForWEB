@@ -19,7 +19,6 @@ var Pages = function () {
 
         Follow.LoadUsers();
         Profile.LoadProfile();
-
     }
 
     var Render = function (url) {
