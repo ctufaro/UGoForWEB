@@ -481,6 +481,27 @@ var Feed = function () {
         }
     }
 
+    var AppendCrave = function (avatar, profilename, smallComment, time, bigComment) {
+        try {
+            var rawHtml = yumHTML;
+            rawHtml = Utilities.StripHTML(rawHtml, '<!--share-comment start-->', '<!--end share-comment-->');
+            rawHtml = '<article id="post">' + rawHtml + '</article>';
+            rawHtml = rawHtml.replace('class="avatar" src=""', 'class="avatar" src="' + avatar + '"');
+            rawHtml = rawHtml.replace('class="avatar-profilename">', 'class="avatar-profilename">' + profilename);
+            rawHtml = rawHtml.replace('class="arrow_box">', 'class="arrow_box">' + smallComment);
+            rawHtml = rawHtml.replace('class="day pull-right">', 'class="day pull-right">' + time);
+            rawHtml = rawHtml.replace('<img src="img/burger.jpg" class="cover">', '<img src="img/cravesmile.jpg" class="cover ugslider-cover">');
+            rawHtml = rawHtml.replace('class="comment-location">', 'class="comment-location">' + bigComment);
+            rawHtml = rawHtml.replace('ugslider-slides', 'slick-list draggable');
+            rawHtml = rawHtml.replace('ugslider-slide', 'ugslider-slide ugslider-visibility');
+            rawHtml = rawHtml.replace('cravesmile.jpg', 'craveprofile.jpg');
+            $('.posts').prepend(rawHtml);
+        }
+        catch (err) {
+            Message.Error(err.toString());
+        }
+    }
+
     var CompleteFeed = function () {
         $('.ugslider').slick({ arrows: false, dots: false, useCSS: true });
         $(".posts").css("display", "block");
@@ -642,7 +663,7 @@ var Feed = function () {
     }();
 
     return {
-        Render: Render, LoadFeed: LoadFeed, RefreshFeed: RefreshFeed, AppendYum: AppendYum
+        Render: Render, LoadFeed: LoadFeed, RefreshFeed: RefreshFeed, AppendYum: AppendYum, AppendCrave: AppendCrave
     }
 
 }();
@@ -745,7 +766,7 @@ var UGoPost = function () {
 
 var RaveCrave = function () {
     var Events = function () {
-        
+       
         $('#btnCrave').click(function () {
             if ($('#txtCrave').val().length == 0) { return; }
             var craveShortText = $('#txtCrave').val();            
@@ -778,7 +799,9 @@ var RaveCrave = function () {
                 success: function (data) {
                     $.magnificPopup.close();
                     Utilities.SmallSpinner(false, "Crave", "btnCrave");
-                    Feed.RefreshFeed();
+                    Feed.AppendCrave(Profile.GetProfileImage(), UserSession.GetUserName(), 'Craving ' + craveShortText, '1s', '&nbsp;');
+                    //Feed.RefreshFeed();
+                    Feed.Render();
                 }
             })
 
