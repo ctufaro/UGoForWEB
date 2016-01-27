@@ -441,6 +441,7 @@ var Feed = function () {
                             '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
                             '.day': 'post.TimePosted',                            
                             '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
+                            '+.crave-count': function (a) { return Utilities.SlideArrayTally(a.item.PostComments); },
                             '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
                             '.yum-icon-img@class+': function (a) { if (a.item.Yummed === 1) { return ' yum-icon-fill-img'; } },
                             '.gross-icon-img@class+': function (a) { if (a.item.Yucked === 1) { return ' gross-icon-fill-img'; } },
@@ -506,6 +507,32 @@ var Feed = function () {
         $(".posts").css("display", "block");
         Utilities.Spinner(false, "Loading Feed");
         $('.ugslider').slick('setPosition');
+
+        $('.ugslider').on('swipe', function (event, slick, direction) {
+            var slickid = $(this).data('slickid');            
+            var spanSlickCount = $("span").find("[data-slideid='" + slickid + "']");
+            var spanSlickParent = $(spanSlickCount).parent();
+            var total = parseInt(spanSlickParent.html().split('</span>/')[1]);
+            var count = parseInt(spanSlickCount.html());
+            if (direction === 'left') {
+                if (count + 1 > total) {
+                    count = 1;
+                }
+                else {
+                    count = count + 1;
+                }
+
+            }
+            else {
+                if (count - 1 < total) {
+                    count = total;
+                }
+                else {
+                    count = count - 1;
+                }
+            }
+            spanSlickCount.html(count);
+        });
 
         $('.yum-icon').click(function (e) {
             var gross = $(this).closest('div').find('.gross-icon');
@@ -1169,6 +1196,17 @@ var Utilities = function () {
         }
     }
 
+    var SlideArrayTally = function (postComments) {
+        var retval = "";
+        if (postComments.length > 0) {
+            var firstElement = postComments[0];
+            if (firstElement.Id != null) {
+                retval = "<span data-slideid='"+firstElement.PostId+"'>1</span>/" + postComments.length;
+            }
+        }
+        return retval;
+    }
+
     return {
         ClearCache: ClearCache,
         Guid: Guid,
@@ -1176,7 +1214,8 @@ var Utilities = function () {
         Spinner: Spinner,
         SmallSpinner: SmallSpinner,
         StripHTML: StripHTML,
-        ToggleHeight: ToggleHeight
+        ToggleHeight: ToggleHeight,
+        SlideArrayTally: SlideArrayTally
     }
 }();
 
