@@ -524,7 +524,7 @@ var Feed = function () {
 
             }
             else {
-                if (count - 1 < total) {
+                if (count - 1 < 1) {
                     count = total;
                 }
                 else {
