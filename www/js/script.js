@@ -421,45 +421,73 @@ var Feed = function () {
             url: Constants.RESTPosts+"/"+UserSession.GetUserID(),
             error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
-                var directive = {
-                    'article': {
-                        'post<-': { //for each entry in posts name the element 'post'
-                            '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
-                            '.avatar-profilename': 'post.Username',
-                            '+.arrow_box': 'post.SmallComment',
-                            '.ugslider@data-slickid': function (a) { { return a.item.PostId; } },
-                            '.ugslider@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
-                            '.ugslider-slides': {
-                                'pc<-post.PostComments': {
-                                    '.avatar2@src': 'pc.ProfileUrl',
-                                    '.responder-profilename': 'pc.Username',
-                                    '.ugslider-slide@class+': function (a) { if (a.item.Username === 'ugoforadmin') { return ' ugslider-visibility'; } },
-                                    '.arrow-box-responder': 'pc.Comment'
-                                }
-                            },
-                            '.cover@src': 'post.PostedImage',
-                            '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
-                            '.day': 'post.TimePosted',                            
-                            '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
-                            '+.crave-count': function (a) { return Utilities.SlideArrayTally(a.item.PostComments); },
-                            '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
-                            '.yum-icon-img@class+': function (a) { if (a.item.Yummed === 1) { return ' yum-icon-fill-img'; } },
-                            '.gross-icon-img@class+': function (a) { if (a.item.Yucked === 1) { return ' gross-icon-fill-img'; } },
-                            '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
-                            '.share-comment-icons@data-postid': function (a) { { return a.item.PostId; } },
-                            '.big-comment .comment-location': 'post.BigComment',
-                            '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
-                        }
-                    }
-                };
-                $p('.posts').render(data, directive);
+                $p('.posts').render(data, PureFeed());
                 $('#imagecontainer').imagesLoaded().always(function () {
                     //after all post images have loaded
                     CompleteFeed();
                 });
-
             }
         });
+    }
+
+    var ClearFeed = function () {
+        $(".posts").css("display", "none");
+        $(".posts").html(Constants.PostPure);
+    }
+
+    var RefreshFeed = function () {
+        ClearFeed();
+        LoadFeed();
+    }
+
+    var PureFeed = function () {
+        var directive = {
+            'article': {
+                'post<-': { //for each entry in posts name the element 'post'
+                    '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
+                    '.avatar-profilename': 'post.Username',
+                    '+.arrow_box': 'post.SmallComment',
+                    '.ugslider@data-slickid': function (a) { { return a.item.PostId; } },
+                    '.ugslider@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
+                    '.ugslider-slides': {
+                        'pc<-post.PostComments': {
+                            '.avatar2@src': 'pc.ProfileUrl',
+                            '.responder-profilename': 'pc.Username',
+                            '.ugslider-slide@class+': function (a) { if (a.item.Username === 'ugoforadmin') { return ' ugslider-visibility'; } },
+                            '.arrow-box-responder': 'pc.Comment'
+                        }
+                    },
+                    '.cover@src': 'post.PostedImage',
+                    '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
+                    '.day': 'post.TimePosted',
+                    '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
+                    '+.crave-count': function (a) { return Utilities.SlideArrayTally(a.item.PostComments); },
+                    '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
+                    '.yum-icon-img@class+': function (a) { if (a.item.Yummed === 1) { return ' yum-icon-fill-img'; } },
+                    '.gross-icon-img@class+': function (a) { if (a.item.Yucked === 1) { return ' gross-icon-fill-img'; } },
+                    '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
+                    '.share-comment-icons@data-postid': function (a) { { return a.item.PostId; } },
+                    '.big-comment .comment-location': 'post.BigComment',
+                    '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
+                }
+            }
+        };
+        return directive;
+    }
+
+    var AppendFeed = function () {
+        $.ajax({
+            type: "GET",
+            url: Constants.RESTPosts + "/" + lastLoadPost + "/0"+"/"+UserSession.GetUserID(),
+            error: function (xhr, statusText) { Message.Error(statusText); },
+            success: function (data) {
+                if (data.length == 0) { isAppended = false; return; }
+                var postClass = "posts" + lastLoadPost;
+                $('.posts').append("<span class='" + postClass + "'><article id='posts'>" + yumHTML + "</article></span>");
+                $p('.' + postClass).render(data, PureFeed());
+                isAppended = false;
+            }
+        });       
     }
 
     var AppendYum = function (avatar, profilename, smallComment, time, mainImg, bigComment) {
@@ -635,43 +663,6 @@ var Feed = function () {
         });
     }
 
-    var RefreshFeed = function () {
-        ClearFeed();
-        LoadFeed();
-    }
-
-    var AppendFeed = function () {
-        $.ajax({
-            type: "GET",
-            url: Constants.RESTPosts + "/" + lastLoadPost + "/0"+"/"+UserSession.GetUserID(),
-            error: function (xhr, statusText) { Message.Error(statusText); },
-            success: function (data) {
-                if (data.length == 0) { isAppended = false; return; }
-                var directive = {
-                    'article': {
-                        'post<-': { //for each entry in posts name the element 'post'
-                            '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
-                            '.avatar-profilename': 'post.Username',
-                            '+.arrow_box': 'post.SmallComment',
-                            '.cover@src': 'post.PostedImage',
-                            '.day': 'post.TimePosted',
-                            '.big-comment .comment-location': 'post.BigComment',
-                            '.big-comment-yellow@data-postid': function (a) { lastLoadPost = a.item.PostId; }
-                        }
-                    }
-                };
-                var compiled = $p('.post-template' + lastLoadPost).compile(directive);
-                $('.posts').append(compiled(data));
-                isAppended = false;
-            }
-        });
-    }
-
-    var ClearFeed = function () {
-        $(".posts").css("display", "none");
-        $(".posts").html(Constants.PostPure);
-    }
-
     var Events = function () {
         $('.refresh-button').click(function () {
             Feed.RefreshFeed();
@@ -680,7 +671,7 @@ var Feed = function () {
         $('.scrollable').on('scroll', function () {
             if (!isAppended) {
                 if ($(this).scrollTop() + $(this).innerHeight() >= (this.scrollHeight * .75)) {
-                    //AppendFeed();
+                    AppendFeed();
                     isAppended = true;
                 }
             }
