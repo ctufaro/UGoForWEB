@@ -485,6 +485,7 @@ var Feed = function () {
                 var postClass = "posts" + lastLoadPost;
                 $('.posts').append("<span class='" + postClass + " posts'><article id='post'>" + yumHTML + "</article></span>");
                 $p('.' + postClass).render(data, PureFeed());
+                CompleteFeed();
                 isAppended = false;
             }
         });       
