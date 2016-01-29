@@ -483,7 +483,7 @@ var Feed = function () {
             success: function (data) {
                 if (data.length == 0) { isAppended = false; return; }
                 var postClass = "posts" + lastLoadPost;
-                $('.posts').append("<span class='" + postClass + "'><article id='posts'>" + yumHTML + "</article></span>");
+                $('.posts').append("<span class='" + postClass + " posts'><article id='post'>" + yumHTML + "</article></span>");
                 $p('.' + postClass).render(data, PureFeed());
                 isAppended = false;
             }
