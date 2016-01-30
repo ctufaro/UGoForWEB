@@ -421,7 +421,7 @@ var Feed = function () {
             url: Constants.RESTPosts+"/"+UserSession.GetUserID(),
             error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
-                $p('.posts').render(data, PureFeed());
+                $p('.posts').render(data, PureFeed(false,0));
                 $('#imagecontainer').imagesLoaded().always(function () {
                     //after all post images have loaded
                     CompleteFeed();
@@ -440,7 +440,7 @@ var Feed = function () {
         LoadFeed();
     }
 
-    var PureFeed = function () {
+    var PureFeed = function (appended, appendId) {
         var directive = {
             'article': {
                 'post<-': { //for each entry in posts name the element 'post'
@@ -463,6 +463,10 @@ var Feed = function () {
                     '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
                     '+.crave-count': function (a) { return Utilities.SlideArrayTally(a.item.PostComments); },
                     '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
+                    //items being appended
+                    '.yum-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
+                    '.gross-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
+                    //items being appended
                     '.yum-icon-img@class+': function (a) { if (a.item.Yummed === 1) { return ' yum-icon-fill-img'; } },
                     '.gross-icon-img@class+': function (a) { if (a.item.Yucked === 1) { return ' gross-icon-fill-img'; } },
                     '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
@@ -476,16 +480,22 @@ var Feed = function () {
     }
 
     var AppendFeed = function () {
+        var appendId = lastLoadPost;
         $.ajax({
             type: "GET",
-            url: Constants.RESTPosts + "/" + lastLoadPost + "/0"+"/"+UserSession.GetUserID(),
+            url: Constants.RESTPosts + "/" + lastLoadPost + "/0" + "/" + UserSession.GetUserID(),
             error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
                 if (data.length == 0) { isAppended = false; return; }
-                var postClass = "posts" + lastLoadPost;
-                $('.posts').append("<span class='" + postClass + " posts'><article id='post'>" + yumHTML + "</article></span>");
-                $p('.' + postClass).render(data, PureFeed());
-                CompleteFeed();
+                var postClass = "posts" + appendId;
+                $('.posts').append("<span id='imagecontainer-" + appendId + "'><span class='" + postClass + " posts'><article id='post'>" + yumHTML + "</article></span></span>");
+                $p('.' + postClass).render(data, PureFeed(true, appendId));
+
+                $('#imagecontainer-' + appendId).imagesLoaded().always(function () {
+                    //after all post images have loaded
+                    ApplyYumYuck('.yum-icon-' + appendId, '.gross-icon-' + appendId);
+                });              
+                
                 isAppended = false;
             }
         });       
@@ -563,44 +573,7 @@ var Feed = function () {
             spanSlickCount.html(count);
         });
 
-        $('.yum-icon').click(function (e) {
-            var gross = $(this).closest('div').find('.gross-icon');
-            var postId = $(this).closest('div').data('postid');
-            $('img', gross).removeClass("gross-icon-fill-img");
-            $('img', gross).addClass("gross-icon-img");
-
-            var imgSrcVal = $('img', this).attr("class");
-            if (imgSrcVal === 'yum-icon-img') {
-                $('img', this).removeClass("yum-icon-fill");
-                $('img', this).addClass("yum-icon-fill-img");
-                ToggleYumYuck("yum", postId);
-
-            }
-            else {
-                $('img', this).removeClass("yum-icon-fill-img");
-                $('img', this).addClass("yum-icon-img");
-                ToggleYumYuck("unyum", postId);
-            }
-        });
-
-        $('.gross-icon').click(function (e) {
-            var yum = $(this).closest('div').find('.yum-icon');
-            var postId = $(this).closest('div').data('postid');
-            $('img', yum).removeClass("yum-icon-fill-img");
-            $('img', yum).addClass("yum-icon-img");
-
-            var imgSrcVal = $('img', this).attr("class");
-            if (imgSrcVal === 'gross-icon-img') {
-                $('img', this).removeClass("gross-icon-fill");
-                $('img', this).addClass("gross-icon-fill-img");
-                ToggleYumYuck("yuck", postId);
-            }
-            else {
-                $('img', this).removeClass("gross-icon-fill-img");
-                $('img', this).addClass("gross-icon-img");
-                ToggleYumYuck("unyuck", postId);
-            }
-        });
+        ApplyYumYuck('.yum-icon', '.gross-icon');
 
         //pile of shit here
         $('.crave-icon').click(function (e) {
@@ -644,6 +617,49 @@ var Feed = function () {
                 $('#txtCravePost').val('');
             });
         });          
+    }
+
+    var ApplyYumYuck = function (yumIcon, grossIcon) {
+
+        $(yumIcon).click(function (e) {
+            var gross = $(this).closest('div').find(grossIcon);
+            var postId = $(this).closest('div').data('postid');
+            $('img', gross).removeClass("gross-icon-fill-img");
+            $('img', gross).addClass("gross-icon-img");
+
+            var imgSrcVal = $('img', this).attr("class");
+            if (imgSrcVal === 'yum-icon-img') {
+                $('img', this).removeClass("yum-icon-fill");
+                $('img', this).addClass("yum-icon-fill-img");
+                ToggleYumYuck("yum", postId);
+
+            }
+            else {
+                $('img', this).removeClass("yum-icon-fill-img");
+                $('img', this).addClass("yum-icon-img");
+                ToggleYumYuck("unyum", postId);
+            }
+        });
+
+        $(grossIcon).click(function (e) {
+            var yum = $(this).closest('div').find(yumIcon);
+            var postId = $(this).closest('div').data('postid');
+            $('img', yum).removeClass("yum-icon-fill-img");
+            $('img', yum).addClass("yum-icon-img");
+
+            var imgSrcVal = $('img', this).attr("class");
+            if (imgSrcVal === 'gross-icon-img') {
+                $('img', this).removeClass("gross-icon-fill");
+                $('img', this).addClass("gross-icon-fill-img");
+                ToggleYumYuck("yuck", postId);
+            }
+            else {
+                $('img', this).removeClass("gross-icon-fill-img");
+                $('img', this).addClass("gross-icon-img");
+                ToggleYumYuck("unyuck", postId);
+            }
+        });
+
     }
 
     var ToggleYumYuck = function (action, postId) {
