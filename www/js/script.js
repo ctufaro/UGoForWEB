@@ -488,7 +488,7 @@ var Feed = function () {
             success: function (data) {
                 if (data.length == 0) { isAppended = false; return; }
                 var postClass = "posts" + appendId;
-                $('.posts').append("<span id='imagecontainer-" + appendId + "'><span class='" + postClass + " posts'><article id='post'>" + yumHTML + "</article></span></span>");
+                $('#imagecontainer').append("<span id='imagecontainer-" + appendId + "'><span class='" + postClass + " posts'><article id='post'>" + yumHTML + "</article></span></span>");
                 $p('.' + postClass).render(data, PureFeed(true, appendId));
 
                 $('#imagecontainer-' + appendId).imagesLoaded().always(function () {
