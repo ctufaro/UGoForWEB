@@ -342,6 +342,7 @@ var SignUp = function () {
             if (profilePicValid) { $(".picerror").css("display", "block"); } else { $(".picerror").css("display", "none"); }
             if ($('#signUsername').val().length > 0 && emailValid && $('#signPassword').val().length > 0 && !profilePicValid) {
                 try {
+                    //if $('#signUsername').val() is not unique throw error, else proceed
                     PGPlugins.Camera.ImageUpload($('#signUsername').val());
                     PGPlugins.DeviceToken.GetDeviceId();
                 }
@@ -431,6 +432,8 @@ var Feed = function () {
     }
 
     var ClearFeed = function () {
+        //remove lazy loaded appended posts
+        $("span[id^=imagecontainer-]").remove();
         $(".posts").css("display", "none");
         $(".posts").html(Constants.PostPure);
     }
