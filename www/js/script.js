@@ -447,8 +447,7 @@ var Feed = function () {
                     '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
                     '.avatar-profilename': 'post.Username',
                     '+.arrow_box': 'post.SmallComment',
-                    '.ugslider@data-slickid': function (a) { { return a.item.PostId; } },
-                    '.ugslider@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
+                    '.ugslider@data-slickid': function (a) { if (a.item.Type == 2) { return a.item.PostId; } else { return -1; } },
                     '.ugslider-slides': {
                         'pc<-post.PostComments': {
                             '.avatar2@src': 'pc.ProfileUrl',
@@ -494,6 +493,7 @@ var Feed = function () {
 
                 $('#imagecontainer-' + appendId).imagesLoaded().always(function () {
                     //after all post images have loaded
+                    ClearSlide();
                     ApplyYumYuck('.yum-icon-' + appendId, '.gross-icon-' + appendId);
                     ApplyCrave('.ugslider-' + appendId);
                 });              
@@ -503,54 +503,15 @@ var Feed = function () {
         });       
     }
 
-    var AppendYum = function (avatar, profilename, smallComment, time, mainImg, bigComment) {
-        try{
-            var rawHtml = yumHTML;
-            rawHtml = Utilities.StripHTML(rawHtml, '<!--comments start-->', '<!--end comments-->');
-            rawHtml = Utilities.StripHTML(rawHtml, '<!--crave start-->', '<!--end crave-->');
-            rawHtml = '<article id="post">' + rawHtml + '</article>';
-            rawHtml = rawHtml.replace('class="avatar" src=""', 'class="avatar" src="' + avatar + '"');
-            rawHtml = rawHtml.replace('class="avatar-profilename">', 'class="avatar-profilename">' + profilename);
-            rawHtml = rawHtml.replace('class="arrow_box">', 'class="arrow_box">' + smallComment);
-            rawHtml = rawHtml.replace('class="day pull-right">', 'class="day pull-right">' + time);
-            rawHtml = rawHtml.replace('<img src="img/burger.jpg" class="cover">', '<img src="' + Constants.BlobUrl + mainImg + '" class="cover">');
-            rawHtml = rawHtml.replace('class="comment-location">', 'class="comment-location">' + bigComment);
-            $('.posts').prepend(rawHtml);
-        }
-        catch(err){
-            Message.Error(err.toString());
-        }
-    }
-
-    var AppendCrave = function (avatar, profilename, smallComment, time, bigComment) {
-        try {
-            var rawHtml = yumHTML;
-            rawHtml = Utilities.StripHTML(rawHtml, '<!--share-comment start-->', '<!--end share-comment-->');
-            rawHtml = '<article id="post">' + rawHtml + '</article>';
-            rawHtml = rawHtml.replace('class="avatar" src=""', 'class="avatar" src="' + avatar + '"');
-            rawHtml = rawHtml.replace('class="avatar-profilename">', 'class="avatar-profilename">' + profilename);
-            rawHtml = rawHtml.replace('class="arrow_box">', 'class="arrow_box">' + smallComment);
-            rawHtml = rawHtml.replace('class="day pull-right">', 'class="day pull-right">' + time);
-            rawHtml = rawHtml.replace('<img src="img/burger.jpg" class="cover">', '<img src="img/cravesmile.jpg" class="cover ugslider-cover">');
-            rawHtml = rawHtml.replace('class="comment-location">', 'class="comment-location">' + bigComment);
-            rawHtml = rawHtml.replace('ugslider-slides', 'slick-list draggable');
-            rawHtml = rawHtml.replace('ugslider-slide', 'ugslider-slide ugslider-visibility');
-            rawHtml = rawHtml.replace('cravesmile.jpg', 'craveprofile.jpg');
-            $('.posts').prepend(rawHtml);
-        }
-        catch (err) {
-            Message.Error(err.toString());
-        }
-    }
-
     var CompleteFeed = function () {
+        ClearSlide();
         $('.ugslider').slick({ arrows: false, dots: false, useCSS: true });
         $(".posts").css("display", "block");
         Utilities.Spinner(false, "Loading Feed");
         $('.ugslider').slick('setPosition');
 
         $('.ugslider').on('swipe', function (event, slick, direction) {
-            var slickid = $(this).data('slickid');            
+            var slickid = $(this).data('slickid');
             var spanSlickCount = $("span").find("[data-slideid='" + slickid + "']");
             var spanSlickParent = $(spanSlickCount).parent();
             var total = parseInt(spanSlickParent.html().split('</span>/')[1]);
@@ -612,15 +573,55 @@ var Feed = function () {
 
                 var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
                 slideCount++;
-                var html = "<div><img class='avatar2' src='"+Profile.GetProfileImage()+"'><div class='responder-comment'><span class='responder-profilename'>"+UserSession.GetUserName()+"</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
+                var html = "<div><img class='avatar2' src='" + Profile.GetProfileImage() + "'><div class='responder-comment'><span class='responder-profilename'>" + UserSession.GetUserName() + "</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
                 Utilities.SmallSpinner(true, "", "btnCravePost");
                 slickSlider.slick('slickAdd', html);
                 slickSlider.slick('slickGoTo', slideCount - 1, true);
                 $('#txtCravePost').val('');
             });
-        });          
+        });
     }
 
+    var AppendYum = function (avatar, profilename, smallComment, time, mainImg, bigComment) {
+        try{
+            var rawHtml = yumHTML;
+            rawHtml = Utilities.StripHTML(rawHtml, '<!--comments start-->', '<!--end comments-->');
+            rawHtml = Utilities.StripHTML(rawHtml, '<!--crave start-->', '<!--end crave-->');
+            rawHtml = '<article id="post">' + rawHtml + '</article>';
+            rawHtml = rawHtml.replace('class="avatar" src=""', 'class="avatar" src="' + avatar + '"');
+            rawHtml = rawHtml.replace('class="avatar-profilename">', 'class="avatar-profilename">' + profilename);
+            rawHtml = rawHtml.replace('class="arrow_box">', 'class="arrow_box">' + smallComment);
+            rawHtml = rawHtml.replace('class="day pull-right">', 'class="day pull-right">' + time);
+            rawHtml = rawHtml.replace('<img src="img/burger.jpg" class="cover">', '<img src="' + Constants.BlobUrl + mainImg + '" class="cover">');
+            rawHtml = rawHtml.replace('class="comment-location">', 'class="comment-location">' + bigComment);
+            $('.posts').prepend(rawHtml);
+        }
+        catch(err){
+            Message.Error(err.toString());
+        }
+    }
+
+    var AppendCrave = function (avatar, profilename, smallComment, time, bigComment) {
+        try {
+            var rawHtml = yumHTML;
+            rawHtml = Utilities.StripHTML(rawHtml, '<!--share-comment start-->', '<!--end share-comment-->');
+            rawHtml = '<article id="post">' + rawHtml + '</article>';
+            rawHtml = rawHtml.replace('class="avatar" src=""', 'class="avatar" src="' + avatar + '"');
+            rawHtml = rawHtml.replace('class="avatar-profilename">', 'class="avatar-profilename">' + profilename);
+            rawHtml = rawHtml.replace('class="arrow_box">', 'class="arrow_box">' + smallComment);
+            rawHtml = rawHtml.replace('class="day pull-right">', 'class="day pull-right">' + time);
+            rawHtml = rawHtml.replace('<img src="img/burger.jpg" class="cover">', '<img src="img/cravesmile.jpg" class="cover ugslider-cover">');
+            rawHtml = rawHtml.replace('class="comment-location">', 'class="comment-location">' + bigComment);
+            rawHtml = rawHtml.replace('ugslider-slides', 'slick-list draggable');
+            rawHtml = rawHtml.replace('ugslider-slide', 'ugslider-slide ugslider-visibility');
+            rawHtml = rawHtml.replace('cravesmile.jpg', 'craveprofile.jpg');
+            $('.posts').prepend(rawHtml);
+        }
+        catch (err) {
+            Message.Error(err.toString());
+        }
+    }
+    
     var ApplyYumYuck = function (yumIcon, grossIcon) {
 
         $(yumIcon).click(function (e) {
@@ -685,6 +686,10 @@ var Feed = function () {
             },
             success: function (data) { }
         });
+    }
+
+    var ClearSlide = function(){
+        $('div[data-slickid="-1"]').remove();
     }
 
     var Events = function () {
