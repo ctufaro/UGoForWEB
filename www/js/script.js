@@ -466,6 +466,7 @@ var Feed = function () {
                     //items being appended
                     '.yum-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
                     '.gross-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
+                    '.ugslider@class+': function (a) { if (appended) { return '-' + appendId; } },
                     //items being appended
                     '.yum-icon-img@class+': function (a) { if (a.item.Yummed === 1) { return ' yum-icon-fill-img'; } },
                     '.gross-icon-img@class+': function (a) { if (a.item.Yucked === 1) { return ' gross-icon-fill-img'; } },
@@ -494,6 +495,7 @@ var Feed = function () {
                 $('#imagecontainer-' + appendId).imagesLoaded().always(function () {
                     //after all post images have loaded
                     ApplyYumYuck('.yum-icon-' + appendId, '.gross-icon-' + appendId);
+                    ApplyCrave('.ugslider-' + appendId);
                 });              
                 
                 isAppended = false;
@@ -660,6 +662,11 @@ var Feed = function () {
             }
         });
 
+    }
+
+    var ApplyCrave = function (craveClass) {
+        $(craveClass).slick({ arrows: false, dots: false, useCSS: true });
+        $(craveClass).slick('setPosition');
     }
 
     var ToggleYumYuck = function (action, postId) {
