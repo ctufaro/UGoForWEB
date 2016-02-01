@@ -465,7 +465,8 @@ var Feed = function () {
                     //items being appended
                     '.yum-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
                     '.gross-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
-                    '.ugslider@class+': function (a) { if (appended) { return '-' + appendId; } },
+                    '.crave-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
+                    '.ugslider@class+': function (a) { if (appended) { return ' ugslider-' + appendId; } },
                     //items being appended
                     '.yum-icon-img@class+': function (a) { if (a.item.Yummed === 1) { return ' yum-icon-fill-img'; } },
                     '.gross-icon-img@class+': function (a) { if (a.item.Yucked === 1) { return ' gross-icon-fill-img'; } },
@@ -490,12 +491,9 @@ var Feed = function () {
                 var postClass = "posts" + appendId;
                 $('#imagecontainer').append("<span id='imagecontainer-" + appendId + "'><span class='" + postClass + " posts'><article id='post'>" + yumHTML + "</article></span></span>");
                 $p('.' + postClass).render(data, PureFeed(true, appendId));
-
                 $('#imagecontainer-' + appendId).imagesLoaded().always(function () {
                     //after all post images have loaded
-                    ClearSlide();
-                    ApplyYumYuck('.yum-icon-' + appendId, '.gross-icon-' + appendId);
-                    ApplyCrave('.ugslider-' + appendId);
+                    CompleteAppendFeed(appendId);
                 });              
                 
                 isAppended = false;
@@ -509,77 +507,17 @@ var Feed = function () {
         $(".posts").css("display", "block");
         Utilities.Spinner(false, "Loading Feed");
         $('.ugslider').slick('setPosition');
-
-        $('.ugslider').on('swipe', function (event, slick, direction) {
-            var slickid = $(this).data('slickid');
-            var spanSlickCount = $("span").find("[data-slideid='" + slickid + "']");
-            var spanSlickParent = $(spanSlickCount).parent();
-            var total = parseInt(spanSlickParent.html().split('</span>/')[1]);
-            var count = parseInt(spanSlickCount.html());
-            if (direction === 'left') {
-                if (count + 1 > total) {
-                    count = 1;
-                }
-                else {
-                    count = count + 1;
-                }
-
-            }
-            else {
-                if (count - 1 < 1) {
-                    count = total;
-                }
-                else {
-                    count = count - 1;
-                }
-            }
-            spanSlickCount.html(count);
-        });
-
+        ApplyCraveCount('.ugslider');
         ApplyYumYuck('.yum-icon', '.gross-icon');
+        ApplyCraveComments('.crave-icon');
+    }
 
-        //pile of shit here
-        $('.crave-icon').click(function (e) {
-            var postid = $(this).data("postid");
-            $('.popup-modal').trigger('click');
-            $('.ugopost-slick').slick('slickGoTo', 4, true);
-            $('#btnCravePost').unbind().click(function (e) {
-
-                //ajax call here
-                if ($('#txtCravePost').val().length > 0) {
-
-                    $.ajax
-                    ({
-                        type: "POST", url: Constants.RESTComments,
-                        data: {
-                            "UserId": UserSession.GetUserID(),
-                            "PostID": postid, "Comment": $('#txtCravePost').val(),
-                            "Location": PGPlugins.GPS.GetGPSCoordinates().length > 0 ? PGPlugins.GPS.GetGPSCoordinates() : "WEB"
-                        },
-                        global: false,
-                        error: function (xhr, error) {
-                            Message.Error(xhr + " - " + error);
-                        },
-                        success: function (data) { }
-                    });
-                }
-
-                var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
-
-                slickSlider.on('setPosition', function (event, slick, currentSlide, nextSlide) {
-                    Utilities.SmallSpinner(false, "Post", "btnCravePost");
-                    $.magnificPopup.close();
-                });
-
-                var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
-                slideCount++;
-                var html = "<div><img class='avatar2' src='" + Profile.GetProfileImage() + "'><div class='responder-comment'><span class='responder-profilename'>" + UserSession.GetUserName() + "</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
-                Utilities.SmallSpinner(true, "", "btnCravePost");
-                slickSlider.slick('slickAdd', html);
-                slickSlider.slick('slickGoTo', slideCount - 1, true);
-                $('#txtCravePost').val('');
-            });
-        });
+    var CompleteAppendFeed = function (appendId) {
+        ClearSlide();
+        ApplyCrave('.ugslider-' + appendId);
+        ApplyCraveCount('.ugslider-' + appendId);
+        ApplyYumYuck('.yum-icon-' + appendId, '.gross-icon-' + appendId);
+        ApplyCraveComments('.crave-icon-' + appendId);
     }
 
     var AppendYum = function (avatar, profilename, smallComment, time, mainImg, bigComment) {
@@ -668,6 +606,78 @@ var Feed = function () {
     var ApplyCrave = function (craveClass) {
         $(craveClass).slick({ arrows: false, dots: false, useCSS: true });
         $(craveClass).slick('setPosition');
+    }
+
+    var ApplyCraveCount = function (craveClass) {
+        $(craveClass).on('swipe', function (event, slick, direction) {
+            var slickid = $(this).data('slickid');
+            var spanSlickCount = $("span").find("[data-slideid='" + slickid + "']");
+            var spanSlickParent = $(spanSlickCount).parent();
+            var total = parseInt(spanSlickParent.html().split('</span>/')[1]);
+            var count = parseInt(spanSlickCount.html());
+            if (direction === 'left') {
+                if (count + 1 > total) {
+                    count = 1;
+                }
+                else {
+                    count = count + 1;
+                }
+
+            }
+            else {
+                if (count - 1 < 1) {
+                    count = total;
+                }
+                else {
+                    count = count - 1;
+                }
+            }
+            spanSlickCount.html(count);
+        });
+    }
+
+    var ApplyCraveComments = function (craveIcon) {
+        $(craveIcon).click(function (e) {
+            var postid = $(this).data("postid");
+            $('.popup-modal').trigger('click');
+            $('.ugopost-slick').slick('slickGoTo', 4, true);
+            $('#btnCravePost').unbind().click(function (e) {
+
+                //ajax call here
+                if ($('#txtCravePost').val().length > 0) {
+
+                    $.ajax
+                    ({
+                        type: "POST", url: Constants.RESTComments,
+                        data: {
+                            "UserId": UserSession.GetUserID(),
+                            "PostID": postid, "Comment": $('#txtCravePost').val(),
+                            "Location": PGPlugins.GPS.GetGPSCoordinates().length > 0 ? PGPlugins.GPS.GetGPSCoordinates() : "WEB"
+                        },
+                        global: false,
+                        error: function (xhr, error) {
+                            Message.Error(xhr + " - " + error);
+                        },
+                        success: function (data) { }
+                    });
+                }
+
+                var slickSlider = $(".ugslider[data-slickid='" + postid + "']");
+
+                slickSlider.on('setPosition', function (event, slick, currentSlide, nextSlide) {
+                    Utilities.SmallSpinner(false, "Post", "btnCravePost");
+                    $.magnificPopup.close();
+                });
+
+                var slideCount = $(slickSlider[0]).find('.slick-slide').length - 2
+                slideCount++;
+                var html = "<div><img class='avatar2' src='" + Profile.GetProfileImage() + "'><div class='responder-comment'><span class='responder-profilename'>" + UserSession.GetUserName() + "</span><div class='arrow-box-responder'>" + $('#txtCravePost').val() + "</div></div></div>";
+                Utilities.SmallSpinner(true, "", "btnCravePost");
+                slickSlider.slick('slickAdd', html);
+                slickSlider.slick('slickGoTo', slideCount - 1, true);
+                $('#txtCravePost').val('');
+            });
+        });
     }
 
     var ToggleYumYuck = function (action, postId) {
