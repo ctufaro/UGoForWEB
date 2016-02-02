@@ -342,9 +342,21 @@ var SignUp = function () {
             if (profilePicValid) { $(".picerror").css("display", "block"); } else { $(".picerror").css("display", "none"); }
             if ($('#signUsername').val().length > 0 && emailValid && $('#signPassword').val().length > 0 && !profilePicValid) {
                 try {
-                    //if $('#signUsername').val() is not unique throw error, else proceed
-                    PGPlugins.Camera.ImageUpload($('#signUsername').val());
-                    PGPlugins.DeviceToken.GetDeviceId();
+                    $.ajax({
+                        type: "GET",
+                        url: Constants.RESTUsers + "/getusernameexists/" + $('#signUsername').val(),
+                        error: function (xhr, statusText) { Message.Error(statusText); },
+                        success: function (data) {
+                            if (data === false) {
+                                PGPlugins.Camera.ImageUpload($('#signUsername').val());
+                                PGPlugins.DeviceToken.GetDeviceId();
+                            }
+                            else {
+                                Message.Error("Username already exists, crazy huh?");
+                            }
+                        }
+                    });
+
                 }
                 catch (err) {
                     Message.Error(err.message);
@@ -385,11 +397,16 @@ var Login = function () {
                         Message.Error("Invalid Credentials, forget much?");
                     }
                     else {
-                        UserSession.SetUserID(userId);
-                        UserSession.SetUserName(userName);
-                        PGPlugins.DeviceToken.GetDeviceId();
-                        Feed.LoadFeed();
-                        Feed.Render();
+                        try {
+                            UserSession.SetUserID(userId);
+                            UserSession.SetUserName(userName);
+                            PGPlugins.DeviceToken.GetDeviceId();
+                            Feed.LoadFeed();
+                            Feed.Render();
+                        }
+                        catch (err) {
+                            Message.Error(err.message);
+                        }
                     }
                 }
             });
