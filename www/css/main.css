@@ -420,6 +420,11 @@ h4 {
 
 /*SIGN UP & LOGIN*/
 
+.sign-login {
+    background: #fff;
+    padding: 6px 8px;
+}
+
 .signlogin-panel {
     padding: 15px 15px 5px;
     margin-top: 60px;
@@ -443,6 +448,11 @@ h4 {
 
 .signlogin-panel .button:hover,.button:focus {
     background-color: #F79621;
+}
+
+.sign-forgot-password{
+    padding-top:10px;
+    font-size:22px;
 }
 
 [data-abide] .error small.error {
@@ -490,11 +500,6 @@ h4 {
 .strike > span:after {
     left: 100%;
     margin-left: 15px;
-}
-
-.sign-login {
-    background: #fff;
-    padding: 6px 8px;
 }
 
 .pull-right {

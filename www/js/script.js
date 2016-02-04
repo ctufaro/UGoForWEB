@@ -411,6 +411,11 @@ var Login = function () {
                 }
             });
         });
+
+        $('#btnForgotPassword').click(function () {
+            Message.Show("Reset email sent to registered address", "Forgot Password", "Ok");
+        });
+        
     }();
 
     return { Render: Render }
@@ -437,14 +442,15 @@ var Feed = function () {
         $.ajax({
             type: "GET",
             url: Constants.RESTPosts+"/"+UserSession.GetUserID(),
-            error: function (xhr, statusText) { Message.Error(statusText); },
+            error: function (xhr, statusText) { Message.Error("Timeout Error"); },
             success: function (data) {
                 $p('.posts').render(data, PureFeed(false,0));
                 $('#imagecontainer').imagesLoaded().always(function () {
                     //after all post images have loaded
                     CompleteFeed();
                 });
-            }
+            },
+            timeout: 10000
         });
     }
 
@@ -1278,7 +1284,11 @@ var Message = function () {
         navigator.notification.alert(msg, null, 'Sugar Snaps!', 'Done');
     }
 
-    return { Error: Error }
+    var Show = function (msg, title, btn) {
+        navigator.notification.alert(msg, null, title, btn);
+    }
+
+    return { Error: Error, Show: Show }
 }();
 
 /*
