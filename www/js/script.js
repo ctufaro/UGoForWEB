@@ -276,7 +276,6 @@ var PGPlugins = function () {
             try {
                 var deviceId = result;
                 var userId = UserSession.GetUserID();
-                Message.Show("Id:" + result, "Apple Device Id", "ok");
                 $.ajax
                 ({
                     type: "POST", url: Constants.RESTDevice, async: false,
