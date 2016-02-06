@@ -442,7 +442,10 @@ var Feed = function () {
         $.ajax({
             type: "GET",
             url: Constants.RESTPosts+"/"+UserSession.GetUserID(),
-            error: function (xhr, statusText) { Message.Error("Timeout Error"); },
+            error: function (xhr, statusText) {
+                Utilities.Spinner(false, "");
+                navigator.notification.confirm('choose option below', ButtonConfirm, 'Feed Timeout!', ['Retry', 'Exit']);
+            },
             success: function (data) {
                 $p('.posts').render(data, PureFeed(false,0));
                 $('#imagecontainer').imagesLoaded().always(function () {
@@ -726,6 +729,12 @@ var Feed = function () {
 
     var ClearSlide = function(){
         $('div[data-slickid="-1"]').remove();
+    }
+
+    var ButtonConfirm = function (buttonIndex) {
+        if (buttonIndex === 1) {
+            RefreshFeed();
+        }
     }
 
     var Events = function () {
