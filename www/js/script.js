@@ -146,7 +146,7 @@ var PGPlugins = function () {
                 Utilities.ClearCache();
                 UserSession.SetUserID(userId);
                 UserSession.SetUserName(userName)
-                Page.StartSession();
+                Pages.StartSession();
             }
 
             var fail = function (error) {
