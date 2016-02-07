@@ -65,10 +65,10 @@ var Pages = function () {
     }
 
     var StartSession = function () {
-        Feed.LoadFeed();
-        Feed.Render();
         Follow.LoadUsers();
         Profile.LoadProfile();
+        Feed.LoadFeed();
+        Feed.Render();
     }
 
     return { Init: Init, RenderSelect: RenderSelect, StartSession: StartSession };
