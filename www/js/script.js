@@ -9,16 +9,15 @@ var Pages = function () {
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
         //Check if user is registered and a new login
-        if (UserSession.IsRegistered()) {
-            Feed.LoadFeed();
-            Feed.Render();
+        if (UserSession.IsRegistered())
+        {
+            StartSession();
         }
-        else {
+        else
+        {
             SignOrLogin.Render();
         }
 
-        Follow.LoadUsers();
-        Profile.LoadProfile();
     }
 
     var Render = function (url) {
@@ -65,7 +64,14 @@ var Pages = function () {
         }
     }
 
-    return { Init: Init, RenderSelect: RenderSelect };
+    var StartSession = function () {
+        Feed.LoadFeed();
+        Feed.Render();
+        Follow.LoadUsers();
+        Profile.LoadProfile();
+    }
+
+    return { Init: Init, RenderSelect: RenderSelect, StartSession: StartSession };
 
 }();
 
@@ -140,9 +146,7 @@ var PGPlugins = function () {
                 Utilities.ClearCache();
                 UserSession.SetUserID(userId);
                 UserSession.SetUserName(userName)
-                //dont like this
-                Feed.LoadFeed();
-                Feed.Render();
+                Page.StartSession();
             }
 
             var fail = function (error) {
