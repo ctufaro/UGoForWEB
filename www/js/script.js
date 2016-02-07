@@ -462,6 +462,7 @@ var Feed = function () {
         $("span[id^=imagecontainer-]").remove();
         $(".posts").css("display", "none");
         $(".posts").html(Constants.PostPure);
+        lastLoadPost = 0;
     }
 
     var RefreshFeed = function () {
