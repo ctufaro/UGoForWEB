@@ -25,8 +25,10 @@
                 <div style="padding-top:10px;"></div>
                 <ul class="stack radius button-group ">
                     <li><a href="#login" id="btn_signup" class="button expand" style="background-color:#f79421;"><img src="img/loginbtn.png" /></a></li>
-                    <li><div class="strike"><span><img src="img/or.png" /></span></div></li>
+                    <li><div style="padding-top:13px;"></div></li>
                     <li><a href="#signUp" class="button success expand" style="background-color:#525e6a;"><img src="img/signupbtn.png" /></a></li>
+                    <li><div class="strike"><span><img src="img/or.png" /></span></div></li>
+                    <li><a href="#preview" style="color:#f79421;font-size:20px;">Skip Registration &amp; Browse</a></li>
                 </ul>
             </div>
         </div>
@@ -43,6 +45,10 @@
                     </li>
                 </ul>
             </nav>
+        </div>
+        <div class="extra-space"></div>
+        <div class="photoedit-div">
+            <div class="photoedit-text">select a profile image <img src="img/mini-camera.png" style="margin-bottom:3px;"/>&nbsp;, username, email, and password</div>
         </div>
         <div class="row collapse">
             <div class="small-12 columns">
@@ -96,6 +102,10 @@
                 </ul>
             </nav>
         </div>
+        <div class="extra-space"></div>
+        <div class="photoedit-div">
+            <div class="photoedit-text">provide your username and password, then click Log In</div>
+        </div>
         <div class="row collapse">
             <div class="small-12 columns">
                 <div class="signlogin-panel">
@@ -121,6 +131,80 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </span>
+
+    <!--PREVIEW PAGE-->
+    <span id="preview" style="display:none;">
+        <!--TOP NAVIGATION-->
+        <div class="fixed" style="padding-top:18px; background-color:#333333">
+            <nav class="top-bar" data-topbar role="navigation">
+                <ul class="title-area">
+                    <li class="name">
+                        <a href="#"><img id="mainLogomage" src="img/logo.png" style="height:30px;margin-top:7px;" /></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="extra-space1"></div>
+        <div class="row page scrollable">
+            <!--CONTENT START-->
+            <span id="_prefeed" style="display:none;">
+                <span id="preview-imagecontainer">
+                    <span class="preview-posts" style="display:none">
+                        <article id="post">
+                            <img class="avatar" src="" style="float: left" />
+                            <div class="avatar-profilename"></div>
+                            <div class="arrow_box">
+                                <span class="day pull-right"></span>
+                            </div>
+                            <!--comments start-->
+                            <div class="ugslider" data-slickid="">
+                                <div class="ugslider-slides">
+                                    <div class="ugslider-slide">
+                                        <img class="avatar2" src="img/cravesmile.jpg">
+                                        <div class="responder-comment">
+                                            <span class="responder-profilename">xxx</span>
+                                            <div class="arrow-box-responder">
+                                                xxx
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end comments-->
+                            <span><img src="img/burger.jpg" class="cover"></span>
+                            <!--share-comment start-->
+                            <div class="share-comment">
+                                <div class="share-comment-icons" data-postid="">
+                                    <a class="yum-icon"><img class="yum-icon-img" /></a>
+                                    <a class="gross-icon"><img class="gross-icon-img" /></a>
+                                </div>
+                            </div>
+                            <!--end share-comment-->
+                            <!--crave start-->
+                            <div class="crave-comment">
+                                <span class="crave-count"></span>
+                                <a class="crave-icon" data-postid=""><img src="img/icons/comment.png" style="height:35px;" /></a>
+                            </div>
+                            <!--end crave-->
+                            <div class="big-comment">
+                                <div class="big-comment-yellow">
+                                    <span class="comment-location"></span>
+                                </div>
+                            </div>
+                        </article>
+                    </span>
+                </span>
+            </span>
+            <!--CONTENT END-->
+            <div class="extra-space"></div>
+        </div>
+        <!--BOTTOM NAVIGATION-->
+        <div class="icon-bar-preview bottom-bar">
+            <a href="#signUp">
+                <span style="color:white;">Click Here to Register and Start Posting!</span>
+            </a>
         </div>
     </span>
 

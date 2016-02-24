@@ -99,6 +99,19 @@ h4 {
     background-color: transparent !important;
 }
 
+.icon-bar-preview {
+    display: inline-block;
+    font-size: 0;
+    width: 100%;
+    background: #333333;
+    display: block;
+    float: left;
+    font-size: 1.7rem;
+    margin: 0 auto;
+    text-align: center;
+    padding:.25rem;
+}
+
 .numberCircle {
     border-radius: 50%;
     margin-left: 13px;
@@ -427,7 +440,7 @@ h4 {
 
 .signlogin-panel {
     padding: 15px 15px 5px;
-    margin-top: 60px;
+    /*margin-top: 60px;*/
 }
 
 .signlogin-panel form input,UNUSED.signlogin-panel form span {
