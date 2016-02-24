@@ -394,7 +394,7 @@ var Preview = function () {
 
         $.ajax({
             type: "GET",
-            url: Constants.RESTPosts + "/150",
+            url: Constants.RESTPosts + "/0",
             error: function (xhr, statusText) {
                 Utilities.Spinner(false, "");
                 navigator.notification.confirm('choose option below', ButtonConfirm, 'Feed Timeout!', ['Retry', 'Exit']);
