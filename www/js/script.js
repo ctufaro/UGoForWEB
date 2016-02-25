@@ -9,12 +9,10 @@ var Pages = function () {
         $(window).on('hashchange', function () { Render(window.location.hash); });
 
         //Check if user is registered and a new login
-        if (UserSession.IsRegistered())
-        {
+        if (UserSession.IsRegistered()) {
             StartSession();
         }
-        else
-        {
+        else {
             SignOrLogin.Render();
         }
 
@@ -31,13 +29,10 @@ var Pages = function () {
             case '#signUp':
                 SignUp.Render();
                 break;
-            case '#preview':
-                Preview.Render();
-                break;
             case '#login':
                 Login.Render();
                 break;
-            case '#_settings': 
+            case '#_settings':
                 Settings.Render();
                 break;
             case '#_follow':
@@ -58,7 +53,7 @@ var Pages = function () {
         if ($(page).css('display') == "none") {
             jQuery.each(pageArray, function (index, value) {
                 if (page != value) {
-                    $(value).css('display','none');
+                    $(value).css('display', 'none');
                 }
                 else {
                     $(value).css('display', 'block');
@@ -216,13 +211,13 @@ var PGPlugins = function () {
 
         var GetPhoto = function (source, qual, edit, successMethod) {
             var picSource = (source == 1) ? pictureSource.CAMERA : pictureSource.PHOTOLIBRARY;
-            navigator.camera.getPicture(successMethod, function(message){Message.Error(message);}, {
+            navigator.camera.getPicture(successMethod, function (message) { Message.Error(message); }, {
                 quality: qual,
                 allowEdit: edit,
                 destinationType: destinationType.FILE_URI,
                 sourceType: picSource
             });
-        }        
+        }
 
         var GetPhotoResized = function (htmlelem, source, qual, edit, successMethod, failMethod, tw, th) {
             $(htmlelem).attr('src', Constants.SrcPixel);
@@ -235,7 +230,7 @@ var PGPlugins = function () {
                 correctOrientation: 1,
                 destinationType: destinationType.FILE_URI,
                 sourceType: picSource
-            });            
+            });
         }
 
         var ConfirmPhoto = function (buttonIndex) {
@@ -243,7 +238,7 @@ var PGPlugins = function () {
             if (buttonIndex == 1) {
                 GetPhoto(0, 50, true, OnPhotoDataSuccess);
             }
-            //PHOTOLIBRARY
+                //PHOTOLIBRARY
             else if (buttonIndex == 2) {
                 GetPhoto(1, 50, true, OnPhotoDataSuccess);
             }
@@ -272,31 +267,31 @@ var PGPlugins = function () {
 
             if (e.alert) {
                 Message.Error(e.alert);
-            }   
+            }
 
             if (e.badge) {
                 pushNotification.setApplicationIconBadgeNumber(SuccessHandler, e.badge);
             }
         }
 
-        var TokenHandler = function(result) {
+        var TokenHandler = function (result) {
             try {
                 var deviceId = result;
                 var userId = UserSession.GetUserID();
                 $.ajax
                 ({
                     type: "POST", url: Constants.RESTDevice, async: false,
-                    data: {"UserId": UserSession.GetUserID(),"DeviceId": deviceId },
+                    data: { "UserId": UserSession.GetUserID(), "DeviceId": deviceId },
                     global: false,
-                    error: function (xhr, error) {Message.Error(xhr + " - " + error);},
-                    success: function (data) {}
+                    error: function (xhr, error) { Message.Error(xhr + " - " + error); },
+                    success: function (data) { }
                 });
             }
             catch (e) {
             }
         }
 
-        var SuccessHandler = function(result) {
+        var SuccessHandler = function (result) {
         }
 
         var ErrorHandler = function (error) {
@@ -308,7 +303,7 @@ var PGPlugins = function () {
 
     }();
 
-    return { OnPGDeviceReady: OnPGDeviceReady, OnPGDeviceResume:OnPGDeviceResume, GPS: GPS, Camera: Camera, DeviceToken: DeviceToken };
+    return { OnPGDeviceReady: OnPGDeviceReady, OnPGDeviceResume: OnPGDeviceResume, GPS: GPS, Camera: Camera, DeviceToken: DeviceToken };
 
 }();
 
@@ -377,25 +372,6 @@ var SignUp = function () {
 
 }();
 
-var Preview = function () {
-
-    var Render = function () {
-        Pages.RenderSelect("#preview", Constants.FullPages);
-    }
-
-    var CompleteFeed = function(){
-        $('div[data-slickid="-1"]').remove();
-        //$('.ugslider').slick({ arrows: false, dots: false, useCSS: true });
-        $(".preview-posts").css("display", "block");
-        Utilities.Spinner(false, "Loading Feed");
-        //$('.ugslider').slick('setPosition');
-        Feed.ApplyCraveCount('.ugslider');
-    }
-
-    return { Render: Render }
-
-}();
-
 var Login = function () {
 
     var Render = function () {
@@ -441,7 +417,7 @@ var Login = function () {
         $('#btnForgotPassword').click(function () {
             Message.Show("Reset email sent to registered address", "Forgot Password", "Ok");
         });
-        
+
     }();
 
     return { Render: Render }
@@ -467,13 +443,13 @@ var Feed = function () {
 
         $.ajax({
             type: "GET",
-            url: Constants.RESTPosts+"/"+UserSession.GetUserID(),
+            url: Constants.RESTPosts + "/" + UserSession.GetUserID(),
             error: function (xhr, statusText) {
                 Utilities.Spinner(false, "");
                 navigator.notification.confirm('choose option below', ButtonConfirm, 'Feed Timeout!', ['Retry', 'Exit']);
             },
             success: function (data) {
-                $p('.posts').render(data, PureFeed(false,0));
+                $p('.posts').render(data, PureFeed(false, 0));
                 $('#imagecontainer').imagesLoaded().always(function () {
                     //after all post images have loaded
                     CompleteFeed();
@@ -550,11 +526,11 @@ var Feed = function () {
                 $('#imagecontainer-' + appendId).imagesLoaded().always(function () {
                     //after all post images have loaded
                     CompleteAppendFeed(appendId);
-                });              
-                
+                });
+
                 isAppended = false;
             }
-        });       
+        });
     }
 
     var CompleteFeed = function () {
@@ -577,7 +553,7 @@ var Feed = function () {
     }
 
     var AppendYum = function (avatar, profilename, smallComment, time, mainImg, bigComment) {
-        try{
+        try {
             var rawHtml = yumHTML;
             rawHtml = Utilities.StripHTML(rawHtml, '<!--comments start-->', '<!--end comments-->');
             rawHtml = Utilities.StripHTML(rawHtml, '<!--crave start-->', '<!--end crave-->');
@@ -590,7 +566,7 @@ var Feed = function () {
             rawHtml = rawHtml.replace('class="comment-location">', 'class="comment-location">' + bigComment);
             $('.posts').prepend(rawHtml);
         }
-        catch(err){
+        catch (err) {
             Message.Error(err.toString());
         }
     }
@@ -615,7 +591,7 @@ var Feed = function () {
             Message.Error(err.toString());
         }
     }
-    
+
     var ApplyYumYuck = function (yumIcon, grossIcon) {
 
         $(yumIcon).click(function (e) {
@@ -754,7 +730,7 @@ var Feed = function () {
         });
     }
 
-    var ClearSlide = function(){
+    var ClearSlide = function () {
         $('div[data-slickid="-1"]').remove();
     }
 
@@ -781,7 +757,7 @@ var Feed = function () {
     }();
 
     return {
-        Render: Render, LoadFeed: LoadFeed, RefreshFeed: RefreshFeed, AppendYum: AppendYum, AppendCrave: AppendCrave, ApplyCraveCount: ApplyCraveCount
+        Render: Render, LoadFeed: LoadFeed, RefreshFeed: RefreshFeed, AppendYum: AppendYum, AppendCrave: AppendCrave
     }
 
 }();
@@ -803,14 +779,14 @@ var UGoPost = function () {
                     //document.ontouchstart = function (e) { e.preventDefault(); }                   
                 },
                 close: function () {
-                    $('.ugopost-slick').slick('slickGoTo',1);
+                    $('.ugopost-slick').slick('slickGoTo', 1);
                     //document.ontouchstart = function (e) { return true; }
                 }
             }
         });
-        
+
         $('.ugopost-slick').slick({
-            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: false, initialSlide:1
+            dots: false, draggable: false, arrows: false, mobileFirst: true, speed: 300, infinite: false, swipe: false, initialSlide: 1
         });
 
         $('#btnShareYum').click(function () {
@@ -840,7 +816,7 @@ var UGoPost = function () {
         $('#btnUgoPostGallery').click(function () {
             PGPlugins.Camera.GetPhotoResized('#imgPhotoPost', 0, 49, false, PhotoEdit.PhotoSuccess, PhotoEdit.PhotoFail, 640, 640);
         });
-      
+
         $("#btnPost").click(function () {
 
             var coordinates = "NULL";
@@ -858,7 +834,7 @@ var UGoPost = function () {
                 async: true,
                 data: {
                     "UserId": UserSession.GetUserID(), "PostID": 1, "ProfilePicURL": "xxx", "SmallComment": $("#txtSmallComment").val(),
-                    "TimePosted": "xxx", "PostedImage": "xxx", "BigComment": $("#txtBigComment").val(), "Guid":PhotoEdit.GetGUID(),
+                    "TimePosted": "xxx", "PostedImage": "xxx", "BigComment": $("#txtBigComment").val(), "Guid": PhotoEdit.GetGUID(),
                     "Location": coordinates
                 },
                 global: false,
@@ -884,10 +860,10 @@ var UGoPost = function () {
 
 var RaveCrave = function () {
     var Events = function () {
-       
+
         $('#btnCrave').click(function () {
             if ($('#txtCrave').val().length == 0) { return; }
-            var craveShortText = $('#txtCrave').val();            
+            var craveShortText = $('#txtCrave').val();
             var craveLongText = "NULL";
             var coordinates = "NULL";
 
@@ -908,7 +884,7 @@ var RaveCrave = function () {
                     "CravingPic": "img/cravesmile.jpg",
                     "CravingTextShort": "Craving " + craveShortText,
                     "Location": coordinates,
-                    "Type": "2"                    
+                    "Type": "2"
                 },
                 global: false,
                 error: function (xhr, error) {
@@ -951,7 +927,7 @@ var Profile = function () {
                 $("#profileImagePic").attr('src', data.ProfileUrl);
                 $("#profileImageData").html(data.UserName + "<span>" + data.Email + "</span>");
             }
-        });        
+        });
     }
 
     var LoadProfileStats = function () {
@@ -1022,7 +998,7 @@ var Follow = function () {
     var LoadUsers = function () {
         $.ajax({
             type: "GET",
-            url: Constants.RESTUsers+"/"+UserSession.GetUserID(),
+            url: Constants.RESTUsers + "/" + UserSession.GetUserID(),
             error: function (xhr, statusText) { Message.Error(statusText); },
             success: function (data) {
                 var directive = {
@@ -1068,7 +1044,7 @@ var Follow = function () {
             var text = $(this).text();
             if (text === '+Follow') {
                 ToggleFollow(true, id);
-                $(this).text('Unfollow');                
+                $(this).text('Unfollow');
             }
             else {
                 ToggleFollow(false, id);
@@ -1138,7 +1114,7 @@ var PhotoEdit = function () {
         $.magnificPopup.close();
         $("#imgPhotoPost").attr('src', imageURI + "?guid=" + Utilities.Guid()).one("load", function () {
             Utilities.Spinner(false, "");
-        });        
+        });
         PhotoEdit.SetURI(imageURI);
         PhotoEdit.Render();
     }
@@ -1269,7 +1245,7 @@ var Utilities = function () {
         else {
             $(jQ).removeClass("waitSpinner");
             $(jQ).text(message);
-        }        
+        }
     }
 
     var StripHTML = function (rawHtml, startText, endText) {
@@ -1281,7 +1257,7 @@ var Utilities = function () {
 
     var ToggleHeight = function (toggle) {
         if (toggle == true) {
-            $('.scrollable').css("height","100%");            
+            $('.scrollable').css("height", "100%");
         }
         else {
             $('.scrollable').css("height", "");
@@ -1293,7 +1269,7 @@ var Utilities = function () {
         if (postComments.length > 0) {
             var firstElement = postComments[0];
             if (firstElement.Id != null) {
-                retval = "<span data-slideid='"+firstElement.PostId+"'>1</span>/" + postComments.length;
+                retval = "<span data-slideid='" + firstElement.PostId + "'>1</span>/" + postComments.length;
             }
         }
         return retval;
@@ -1316,7 +1292,7 @@ var Utilities = function () {
 */
 var Message = function () {
 
-    var Error = function (msg) {        
+    var Error = function (msg) {
         navigator.notification.alert(msg, null, 'Sugar Snaps!', 'Done');
     }
 
@@ -1344,12 +1320,12 @@ var Constants = function () {
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
     var EmailRegEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#photoedit", "#preview"];
-    var PartialPages = ["#_feed", "#_profile", "#_settings", "#_follow", "#_prefeed"];
+    var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#photoedit"];
+    var PartialPages = ["#_feed", "#_profile", "#_settings", "#_follow"];
     return {
         PostPure: PostPure,
         BlobUrl: BlobUrl,
-        RESTLogin : RESTLogin,
+        RESTLogin: RESTLogin,
         RESTPosts: RESTPosts,
         RESTComments: RESTComments,
         RESTCrave: RESTCrave,
@@ -1388,7 +1364,6 @@ var Main = (function () {
     Pages.Init();
 
 })();
-
 
 
 
