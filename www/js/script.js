@@ -23,7 +23,6 @@ var Pages = function () {
     var Render = function (url) {
 
         Utilities.ToggleHeight(false);
-        Preview.ClearFeed();
 
         switch (url.split('/')[0]) {
             case '#signOrLogin':
@@ -382,36 +381,6 @@ var Preview = function () {
 
     var Render = function () {
         Pages.RenderSelect("#preview", Constants.FullPages);
-        Pages.RenderSelect("#_prefeed", Constants.PartialPages)
-        LoadFeed();
-    }
-
-    var LoadFeed = function () {
-
-        ClearFeed();
-
-        Utilities.Spinner(true, "Loading Feed");
-
-        $.ajax({
-            type: "GET",
-            url: Constants.RESTPosts + "/0",
-            error: function (xhr, statusText) {
-                Utilities.Spinner(false, "");
-                navigator.notification.confirm('choose option below', ButtonConfirm, 'Feed Timeout!', ['Retry', 'Exit']);
-            },
-            success: function (data) {
-                $p('.preview-posts').render(data, PreviewFeed(false, 0));
-                $('#preview-imagecontainer').imagesLoaded().always(function () {
-                    CompleteFeed();
-                });
-            },
-            timeout: 10000
-        });
-    }
-
-    var ClearFeed = function () {
-        $(".preview-posts").css("display", "none");
-        $(".preview-posts").html(Constants.PostPure);
     }
 
     var CompleteFeed = function(){
@@ -423,47 +392,7 @@ var Preview = function () {
         Feed.ApplyCraveCount('.ugslider');
     }
 
-    var PreviewFeed = function (appended, appendId) {
-        var directive = {
-            'article': {
-                'post<-': { //for each entry in posts name the element 'post'
-                    '.avatar@src': 'post.ProfilePicURL', //the dot selector, means the current node (here a LI),
-                    '.avatar-profilename': 'post.Username',
-                    '+.arrow_box': 'post.SmallComment',
-                    '.ugslider@data-slickid': function (a) { if (a.item.Type == 2) { return a.item.PostId; } else { return -1; } },
-                    '.ugslider-slides': {
-                        'pc<-post.PostComments': {
-                            '.avatar2@src': 'pc.ProfileUrl',
-                            '.responder-profilename': 'pc.Username',
-                            '.ugslider-slide@class+': function (a) { if (a.item.Username === 'ugoforadmin') { return ' ugslider-visibility'; } },
-                            '.arrow-box-responder': 'pc.Comment'
-                        }
-                    },
-                    '.cover@src': 'post.PostedImage',
-                    '.cover@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-cover'; } },
-                    '.day': 'post.TimePosted',
-                    '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
-                    '+.crave-count': function (a) { return Utilities.SlideArrayTally(a.item.PostComments); },
-                    '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
-                    '.yum-icon-img@class+': function (a) { if (a.item.Yummed === 1) { return ' yum-icon-fill-img'; } },
-                    '.gross-icon-img@class+': function (a) { if (a.item.Yucked === 1) { return ' gross-icon-fill-img'; } },
-                    '.share-comment@class+': function (a) { if (a.item.Type == 2) { return ' ugslider-display'; } },
-                    '.share-comment-icons@data-postid': function (a) { { return a.item.PostId; } },
-                    '.big-comment .comment-location': 'post.BigComment',
-                    '.big-comment-yellow@data-postid': function (a) {  }
-                }
-            }
-        };
-        return directive;
-    }
-
-    var ButtonConfirm = function (buttonIndex) {
-        if (buttonIndex === 1) {
-            LoadFeed();
-        }
-    }
-
-    return { Render: Render, ClearFeed: ClearFeed }
+    return { Render: Render }
 
 }();
 
