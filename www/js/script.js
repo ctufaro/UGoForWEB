@@ -668,6 +668,22 @@ var Feed = function () {
         });
     }
 
+    var ApplyCraveCountBubbles = function (craveClass) {
+        $(craveClass).on('swipe', function (event, slick, direction) {
+            var slickid = $(this).data('slickid');
+            var spanSlickCount = $("span").find("[data-slideid='" + slickid + "']");
+            var html = spanSlickCount.html();
+            var total = Utilities.CommaCraftTotal(html) + 1;
+            var position = Utilities.CommaCraftPos(html);
+            if (direction === 'left') {
+                spanSlickCount.html(Utilities.CommaCraft(total, position + 1));
+            }
+            else { 
+                spanSlickCount.html(Utilities.CommaCraft(total, position - 1));
+            }
+        });
+    }
+
     var ApplyCraveComments = function (craveIcon) {
         $(craveIcon).click(function (e) {
             var postid = $(this).data("postid");
@@ -1270,9 +1286,56 @@ var Utilities = function () {
             var firstElement = postComments[0];
             if (firstElement.Id != null) {
                 retval = "<span data-slideid='" + firstElement.PostId + "'>1</span>/" + postComments.length;
+                //retval = "<span data-slideid='" + firstElement.PostId + "'>" + CommaCraft(postComments.length + 1, 0) + "</span>";
             }
         }
         return retval;
+    }
+
+    var CommaCraft = function (total, position) {
+        var arb = [];
+        if (position == total - 1) {
+            position = 0;
+        }
+        else if (position < 0) {
+            position = total - 2;
+        }
+
+        for (i = 0; i < total - 1; i++) {
+            if (i == position) {
+                arb[i] = "<font color='orange'> . </font>";
+            }
+            else {
+                arb[i] = " . ";
+            }
+        }
+        var newHtml = (arb.toString().replace(new RegExp(',', 'g'), ''));
+        return newHtml;
+    }
+
+    var CommaCraftPos = function (html) {
+        html = html.replace('<font color="orange"', '');
+        html = html.replace('/font>', '');
+        var charCount = 0;
+        for (var i = 0, len = html.length; i < len; i++) {
+            if (html[i] == '.') {
+                charCount = charCount + 1;
+            }
+            if (html[i] == '<') {
+                break;
+            }
+        }
+        return charCount - 1;
+    }
+
+    var CommaCraftTotal = function (html) {
+        var charCount = 0;
+        for (var i = 0, len = html.length; i < len; i++) {
+            if (html[i] == '.') {
+                charCount = charCount + 1;
+            }
+        }
+        return charCount;
     }
 
     return {
@@ -1283,7 +1346,10 @@ var Utilities = function () {
         SmallSpinner: SmallSpinner,
         StripHTML: StripHTML,
         ToggleHeight: ToggleHeight,
-        SlideArrayTally: SlideArrayTally
+        SlideArrayTally: SlideArrayTally,
+        CommaCraft: CommaCraft,
+        CommaCraftPos: CommaCraftPos,
+        CommaCraftTotal: CommaCraftTotal
     }
 }();
 
