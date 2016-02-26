@@ -381,6 +381,8 @@ h4 {
     margin:0 auto; 
     color:white;
     /*font-size:24px;*/
+    border-width:0px;
+    border-style:none;
 }
 
 .share-comment {
