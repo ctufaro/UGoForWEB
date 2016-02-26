@@ -539,7 +539,7 @@ var Feed = function () {
         $(".posts").css("display", "block");
         Utilities.Spinner(false, "Loading Feed");
         $('.ugslider').slick('setPosition');
-        ApplyCraveCount('.ugslider');
+        ApplyCraveCountBubbles('.ugslider');
         ApplyYumYuck('.yum-icon', '.gross-icon');
         ApplyCraveComments('.crave-icon');
     }
@@ -547,7 +547,7 @@ var Feed = function () {
     var CompleteAppendFeed = function (appendId) {
         ClearSlide();
         ApplyCrave('.ugslider-' + appendId);
-        ApplyCraveCount('.ugslider-' + appendId);
+        ApplyCraveCountBubbles('.ugslider-' + appendId);
         ApplyYumYuck('.yum-icon-' + appendId, '.gross-icon-' + appendId);
         ApplyCraveComments('.crave-icon-' + appendId);
     }
@@ -1212,6 +1212,7 @@ var UserSession = function () {
     Utilities Class
 */
 var Utilities = function () {
+    var bullet = '●';
 
     var ClearCache = function () {
         var success = function (status) { }
@@ -1285,8 +1286,8 @@ var Utilities = function () {
         if (postComments.length > 0) {
             var firstElement = postComments[0];
             if (firstElement.Id != null) {
-                retval = "<span data-slideid='" + firstElement.PostId + "'>1</span>/" + postComments.length;
-                //retval = "<span data-slideid='" + firstElement.PostId + "'>" + CommaCraft(postComments.length + 1, 0) + "</span>";
+                //retval = "<span data-slideid='" + firstElement.PostId + "'>1</span>/" + postComments.length;
+                retval = "<span data-slideid='" + firstElement.PostId + "'>" + CommaCraft(postComments.length + 1, 0) + "</span>";
             }
         }
         return retval;
@@ -1303,10 +1304,10 @@ var Utilities = function () {
 
         for (i = 0; i < total - 1; i++) {
             if (i == position) {
-                arb[i] = "<font color='orange'> . </font>";
+                arb[i] = "<font color='orange'> " + bullet + " </font>";
             }
             else {
-                arb[i] = " . ";
+                arb[i] = " " + bullet + " ";
             }
         }
         var newHtml = (arb.toString().replace(new RegExp(',', 'g'), ''));
@@ -1318,7 +1319,7 @@ var Utilities = function () {
         html = html.replace('/font>', '');
         var charCount = 0;
         for (var i = 0, len = html.length; i < len; i++) {
-            if (html[i] == '.') {
+            if (html[i] == bullet) {
                 charCount = charCount + 1;
             }
             if (html[i] == '<') {
@@ -1331,7 +1332,7 @@ var Utilities = function () {
     var CommaCraftTotal = function (html) {
         var charCount = 0;
         for (var i = 0, len = html.length; i < len; i++) {
-            if (html[i] == '.') {
+            if (html[i] == bullet) {
                 charCount = charCount + 1;
             }
         }

@@ -380,7 +380,7 @@ h4 {
     display:table; 
     margin:0 auto; 
     color:white;
-    font-size:24px;
+    /*font-size:24px;*/
 }
 
 .share-comment {
