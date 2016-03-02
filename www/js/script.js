@@ -769,13 +769,11 @@ var Feed = function () {
 
     var ApplyFlag = function (flagIcon) {
         $(flagIcon).click(function (e) {
-            $(this).addClass('flag-red-icon-img')
-            var postid = $(this).data('postid');
+            var scope = this;
+            var postid = $(scope).data('postid');
             navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", function(buttonIndex){
-                alert(this);
-                alert(buttonIndex === 1);
                 if (buttonIndex === 1) {
-                    $(this).addClass('flag-red-icon-img');
+                    $(scope).addClass('flag-red-icon-img');
                     FlagContent();
                 }
             }, "Inappropriate Content", ['Yes', 'No']);
