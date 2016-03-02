@@ -653,12 +653,21 @@ h4 {
 }
 
 .follow-btn{
-    font-size:14px !important;
+    font-size:13px !important;
     height:50px;
     background-image:url('../img/menu/profile-small.png');
     background-repeat:no-repeat;
-    background-position: 12px 12px; 
-    padding-left:35px !important;
+    background-position: 4px 12px; 
+    padding-left:25px !important;
+}
+
+.block-btn{
+    font-size:13px !important;
+    height:50px;
+    background-image:url('../img/menu/block-small.png');
+    background-repeat:no-repeat;
+    background-position: 4px 12px; 
+    padding-left:28px !important;
 }
 
 /*SETTINGS*/
