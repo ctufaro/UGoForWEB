@@ -529,10 +529,12 @@ var Feed = function () {
                     '.crave-comment@class+': function (a) { if (a.item.Type == 1) { return ' ugslider-display'; } },
                     '+.crave-count': function (a) { return Utilities.SlideArrayTally(a.item.PostComments); },
                     '.crave-icon@data-postid': function (a) { { return a.item.PostId; } },
+                    '.flag-icon@data-postid': function (a) { { return a.item.PostId; } },
                     //items being appended
                     '.yum-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
                     '.gross-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
                     '.crave-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
+                    '.flag-icon@class+': function (a) { if (appended) { return '-' + appendId; } },
                     '.ugslider@class+': function (a) { if (appended) { return ' ugslider-' + appendId; } },
                     //items being appended
                     '.yum-icon-img@class+': function (a) { if (a.item.Yummed === 1) { return ' yum-icon-fill-img'; } },
@@ -577,6 +579,7 @@ var Feed = function () {
         ApplyCraveCountBubbles('.ugslider');
         ApplyYumYuck('.yum-icon', '.gross-icon');
         ApplyCraveComments('.crave-icon');
+        ApplyFlag('.flag-icon');
     }
 
     var CompleteAppendFeed = function (appendId) {
@@ -585,6 +588,7 @@ var Feed = function () {
         ApplyCraveCountBubbles('.ugslider-' + appendId);
         ApplyYumYuck('.yum-icon-' + appendId, '.gross-icon-' + appendId);
         ApplyCraveComments('.crave-icon-' + appendId);
+        ApplyFlag('.flag-icon-' + appendId);
     }
 
     var AppendYum = function (avatar, profilename, smallComment, time, mainImg, bigComment) {
@@ -763,6 +767,13 @@ var Feed = function () {
         });
     }
 
+    var ApplyFlag = function (flagIcon) {
+        $(flagIcon).click(function (e) {
+            var postid = $(this).data('postid');
+            navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", ButtonFlag, "Inappropriate Content", ['Yes', 'No']);
+        });
+    }
+
     var ToggleYumYuck = function (action, postId) {
         $.ajax
         ({
@@ -786,6 +797,12 @@ var Feed = function () {
     }
 
     var ButtonConfirm = function (buttonIndex) {
+        if (buttonIndex === 1) {
+            RefreshFeed();
+        }
+    }
+
+    var ButtonFlag = function (buttonIndex) {
         if (buttonIndex === 1) {
             RefreshFeed();
         }
