@@ -450,7 +450,7 @@ var Login = function () {
         });
 
         $('#btnForgotPassword').click(function () {
-            Message.Show("Reset email sent to registered address", "Forgot Password", "Ok");
+            Message.Show("Under settings, please choose 'Contact Us' and send us an email with your UGoFor Id. We will respond back with password reset instructions.", "Forgot Password", "Ok");
         });
 
     }();
@@ -770,7 +770,7 @@ var Feed = function () {
     var ApplyFlag = function (flagIcon) {
         $(flagIcon).click(function (e) {
             var postid = $(this).data('postid');
-            navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", function (buttonIndex) { ButtonFlag(buttonIndex, this); }, "Inappropriate Content", ['Yes', 'No']);
+            navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", function onConfirm(buttonIndex) { ButtonFlag(buttonIndex, this); }, "Inappropriate Content", ['Yes', 'No']);
         });
     }
 
