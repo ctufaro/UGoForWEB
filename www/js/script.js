@@ -803,9 +803,9 @@ var Feed = function () {
     }
 
     var ButtonFlag = function (buttonIndex) {
-        if (buttonIndex === 1) {
-            RefreshFeed();
-        }
+        //if (buttonIndex === 1) {
+        //    RefreshFeed();
+        //}
     }
 
     var Events = function () {
