@@ -322,8 +322,34 @@ var SignOrLogin = function () {
 
 var SignUp = function () {
 
+    var EULAHTML;
+
     var Render = function () {
         Pages.RenderSelect("#signUp", Constants.FullPages);
+        Init();
+    }
+
+    var Init = function(){
+        //get the EULA on Init
+        $.ajax({
+            type: "GET",
+            url: Constants.RESTApplication + "/1",
+            error: function (xhr, statusText) {
+                EULAHTML = Constansts.DefaultEULA;
+            },
+            success: function (data) {
+                EULAHTML = data;
+            }
+        });
+    }
+
+    var EulaPopUp = function () {
+        $.magnificPopup.open({
+            items: {src: '#eula-popup'},
+            type: 'inline', preloader: false, closeOnBgClick: true, showCloseBtn: false, fixedBgPos:true
+        });
+
+        $('#eula-text').html(EULAHTML);
     }
 
     var Events = function () {
@@ -350,8 +376,7 @@ var SignUp = function () {
                         error: function (xhr, statusText) { Message.Error(statusText); },
                         success: function (data) {
                             if (data === false) {
-                                PGPlugins.Camera.ImageUpload($('#signUsername').val());
-                                PGPlugins.DeviceToken.GetDeviceId();
+                                EulaPopUp();
                             }
                             else {
                                 Message.Error("Username already exists, crazy huh?");
@@ -364,6 +389,16 @@ var SignUp = function () {
                     Message.Error(err.message);
                 }
             }
+        });
+
+        $('#btnEULAAccept').click(function () {
+            $.magnificPopup.close();
+            PGPlugins.Camera.ImageUpload($('#signUsername').val());
+            PGPlugins.DeviceToken.GetDeviceId();
+        });
+
+        $('#btnEULADecline').click(function () {
+            $.magnificPopup.close()
         });
 
     }();
@@ -1379,6 +1414,7 @@ var Constants = function () {
     var RESTLogin = "http://ugoforapi.azurewebsites.net/api/login";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
     var RESTCrave = "http://ugoforapi.azurewebsites.net/api/crave";
+    var RESTApplication = "http://ugoforapi.azurewebsites.net/api/application";
     var RESTComments = "http://ugoforapi.azurewebsites.net/api/comments";
     var RESTDevice = "http://ugoforapi.azurewebsites.net/api/device";
     var RESTUsers = "http://ugoforapi.azurewebsites.net/api/users";
@@ -1389,6 +1425,7 @@ var Constants = function () {
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
     var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#photoedit"];
     var PartialPages = ["#_feed", "#_profile", "#_settings", "#_follow"];
+    var DefaultEULA = "<p><span class='eula-popup-text-hdr'>UGOFOR APP END USER LICENSE AGREEMENT</span></p> <p><strong>IMPORTANT - PLEASE READ CAREFULLY</strong></p> <p>This End User License Agreement (“Agreement”) is between you and UGoFor and governs use of this app made. By installing the UGoFor App, you agree to be bound by this Agreement and understand that there is no tolerance for objectionable content. If you do not agree with the terms and conditions of this Agreement, you are not entitled to use the UGoFor App.</p>";
     return {
         PostPure: PostPure,
         BlobUrl: BlobUrl,
@@ -1396,6 +1433,7 @@ var Constants = function () {
         RESTPosts: RESTPosts,
         RESTComments: RESTComments,
         RESTCrave: RESTCrave,
+        RESTApplication: RESTApplication,
         RESTDevice: RESTDevice,
         RESTBlob: RESTBlob,
         RESTUsers: RESTUsers,
@@ -1404,7 +1442,8 @@ var Constants = function () {
         EmailRegEx: EmailRegEx,
         SrcPixel: SrcPixel,
         FullPages: FullPages,
-        PartialPages: PartialPages
+        PartialPages: PartialPages,
+        DefaultEULA: DefaultEULA
     }
 }();
 

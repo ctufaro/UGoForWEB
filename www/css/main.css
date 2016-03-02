@@ -420,6 +420,48 @@ h4 {
     right: 0;
 }
 
+/*EULA PAGE*/
+.eula-popup-text-hdr{
+    font-weight:bold;
+    font-size:18px;
+}
+
+.eula-popup-text{
+    background-color:white; 
+    border-radius:3px;
+    padding:9px;
+    overflow-y:scroll;
+}
+
+.eula-btn-group{
+    text-align:center;
+    padding-top:13px;
+}
+
+.eula-btn{
+    font-family:'Yanone Kaffeesatz' !important;
+    font-size:26px !important;
+}
+
+@media ( max-height: 1000px) {
+    .eula-height {
+        max-height: 530px;
+    }
+}
+
+@media ( max-height: 700px) {
+    .eula-height {
+        max-height:400px;
+    }
+}
+
+@media ( max-height: 480px) {
+    .eula-height {
+        max-height:300px;
+    }
+}
+
+
 /*SIGN UP & LOGIN*/
 
 .sign-login {
@@ -429,7 +471,6 @@ h4 {
 
 .signlogin-panel {
     padding: 15px 15px 5px;
-    margin-top: 60px;
 }
 
 .signlogin-panel form input,UNUSED.signlogin-panel form span {
