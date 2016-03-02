@@ -771,6 +771,9 @@ var Feed = function () {
         $(flagIcon).click(function (e) {
             var postid = $(this).data('postid');
             navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", function(buttonIndex){
+                alert('here');
+                alert(buttonIndex);
+                alert(buttonIndex === 1);
                 if (buttonIndex === 1) {
                     $(this).addClass('flag-red-icon-img');
                     FlagContent();
