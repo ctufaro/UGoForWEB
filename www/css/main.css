@@ -151,6 +151,13 @@ h4 {
     margin-top:6px;
 }
 
+.flag-red-icon-img{
+    content:url('../img/icons/flag-red.png');
+    width:25px;
+    float:left;
+    margin-top:6px;
+}
+
 .avatar {
     margin-right: 10px;
     float: left;

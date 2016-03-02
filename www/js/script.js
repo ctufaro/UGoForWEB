@@ -770,7 +770,7 @@ var Feed = function () {
     var ApplyFlag = function (flagIcon) {
         $(flagIcon).click(function (e) {
             var postid = $(this).data('postid');
-            navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", ButtonFlag, "Inappropriate Content", ['Yes', 'No']);
+            navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", function (buttonIndex) { ButtonFlag(buttonIndex, this); }, "Inappropriate Content", ['Yes', 'No']);
         });
     }
 
@@ -802,10 +802,11 @@ var Feed = function () {
         }
     }
 
-    var ButtonFlag = function (buttonIndex) {
-        //if (buttonIndex === 1) {
-        //    RefreshFeed();
-        //}
+    var ButtonFlag = function (buttonIndex, element) {
+        if (buttonIndex === 1) {
+            $(element).addClass('flag-red-icon-img');
+            //FlagContent();
+        }
     }
 
     var Events = function () {
