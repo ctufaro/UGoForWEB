@@ -771,16 +771,12 @@ var Feed = function () {
         $(flagIcon).click(function (e) {
             var postid = $(this).data('postid');
             navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", function(buttonIndex){
-                onConfirm(buttonIndex, this);
+                if (buttonIndex === 1) {
+                    $(this).addClass('flag-red-icon-img');
+                    FlagContent();
+                }
             }, "Inappropriate Content", ['Yes', 'No']);
         });
-
-        function onConfirm(buttonIndex, element) {
-            if (buttonIndex === 1) {
-                $(element).addClass('flag-red-icon-img');
-                FlagContent();
-            }
-        }
     }
 
     var ToggleYumYuck = function (action, postId) {
