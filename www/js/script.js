@@ -1460,7 +1460,7 @@ var Constants = function () {
     var SrcPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
     var FullPages = ["#signOrLogin", "#signUp", "#login", "#main", "#photoedit"];
     var PartialPages = ["#_feed", "#_profile", "#_settings", "#_follow"];
-    var DefaultEULA = "<p><span class='eula-popup-text-hdr'>UGOFOR APP END USER LICENSE AGREEMENT</span></p> <p><strong>IMPORTANT - PLEASE READ CAREFULLY</strong></p> <p>This End User License Agreement (“Agreement”) is between you and UGoFor and governs use of this app made. By installing the UGoFor App, you agree to be bound by this Agreement and understand that there is no tolerance for objectionable content. If you do not agree with the terms and conditions of this Agreement, you are not entitled to use the UGoFor App.</p>";
+    var DefaultEULA = "<p><span class='eula-popup-text-hdr'>UGOFOR APP END USER LICENSE AGREEMENT</span></p> <p><strong>IMPORTANT - PLEASE READ CAREFULLY</strong></p> <p>This End User License Agreement (“Agreement”) is between you and UGoFor and governs use of this mobile app. By installing the UGoFor App, you agree to be bound by this Agreement and understand that there is no tolerance for objectionable content. If you do not agree with the terms and conditions of this Agreement, you are not entitled to use the UGoFor App.</p>";
     return {
         PostPure: PostPure,
         BlobUrl: BlobUrl,
