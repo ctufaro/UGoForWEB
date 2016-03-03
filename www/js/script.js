@@ -1093,7 +1093,9 @@ var Follow = function () {
                             '.avatar@src': 'user.ProfileUrl',
                             '.follow-layout-profile': 'user.UserName',
                             '.follow-btn@data-profile-id': 'user.Id',
-                            '.follow-btn': function (a) { var r; (a.item.Followed === 1) ? r = 'Unfollow' : r = '+Follow'; return r; }
+                            '.follow-btn': function (a) { var r; (a.item.Followed === 1) ? r = 'Unfollow' : r = '+Follow'; return r; },
+                            '.block-btn@data-profile-id': 'user.Id',
+                            '.block-btn': function (a) { var r; (a.item.Blocked === 1) ? r = 'Unblock' : r = 'Block'; return r; }
                         }
                     }
                 };
@@ -1124,6 +1126,26 @@ var Follow = function () {
         });
     }
 
+    var ToggleBlock = function (toggle, userid) {
+        var action = (toggle == true) ? "block" : "unblock";
+
+        $.ajax
+        ({
+            type: "POST",
+            url: Constants.RESTAction,
+            data: {
+                "UserId": UserSession.GetUserID(),
+                "Action": action,
+                "Value": userid
+            },
+            global: false,
+            error: function (xhr, error) {
+                Message.Error(xhr + " - " + error);
+            },
+            success: function (data) { }
+        });
+    }
+
     var Events = function () {
         $('.follow-btn').click(function (e) {
             var id = $(this).data('profile-id');
@@ -1135,6 +1157,19 @@ var Follow = function () {
             else {
                 ToggleFollow(false, id);
                 $(this).text('+Follow');
+            }
+        });
+
+        $('.block-btn').click(function (e) {
+            var id = $(this).data('profile-id');
+            var text = $(this).text();
+            if (text === 'Block') {
+                ToggleBlock(true, id);
+                $(this).text('Unblock');
+            }
+            else {
+                ToggleBlock(false, id);
+                $(this).text('Block');
             }
         });
     };
