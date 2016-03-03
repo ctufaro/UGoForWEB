@@ -774,7 +774,7 @@ var Feed = function () {
             navigator.notification.confirm("Inappropriate content will be flagged and reviewed by administrators. Are you sure you want to flag this content as inappropriate?", function(buttonIndex){
                 if (buttonIndex === 1) {
                     $(scope).addClass('flag-red-icon-img');
-                    FlagContent();
+                    FlagContent(postid);
                 }
             }, "Inappropriate Content", ['Yes', 'No']);
         });
@@ -808,8 +808,22 @@ var Feed = function () {
         }
     }
 
-    var FlagContent = function () {
-
+    var FlagContent = function (postId) {
+        $.ajax
+        ({
+            type: "POST",
+            url: Constants.RESTAction,
+            data: {
+                "UserId": UserSession.GetUserID(),
+                "Action": 'flag',
+                "Value": postId
+            },
+            global: false,
+            error: function (xhr, error) {
+                Message.Error(xhr + " - " + error);
+            },
+            success: function (data) { }
+        });
     }
 
     var Events = function () {
