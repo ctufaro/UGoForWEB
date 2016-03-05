@@ -679,7 +679,9 @@ h4 {
     background-image:url('../img/menu/profile-small.png');
     background-repeat:no-repeat;
     background-position: 4px 12px; 
-    padding-left:25px !important;
+    padding-left: 30px !important;
+    padding-top: 17px !important;
+    padding-right: 10px !important;
 }
 
 .block-btn{
@@ -688,7 +690,9 @@ h4 {
     background-image:url('../img/menu/block-small.png');
     background-repeat:no-repeat;
     background-position: 4px 12px; 
-    padding-left:28px !important;
+    padding-left: 33px !important;
+    padding-top: 17px !important;
+    padding-right: 10px !important;
 }
 
 /*SETTINGS*/
