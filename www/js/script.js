@@ -20,7 +20,7 @@ var Pages = function () {
 
     var Render = function (url) {
 
-        Utilities.ToggleHeight(false);
+        Utilities.ToggleUI(false);
 
         switch (url.split('/')[0]) {
             case '#signOrLogin':
@@ -465,7 +465,7 @@ var Feed = function () {
     var yumHTML = $('#post').html();
 
     var Render = function () {
-        Utilities.ToggleHeight(true);
+        Utilities.ToggleUI(true);
         Pages.RenderSelect("#main", Constants.FullPages);
         Pages.RenderSelect("#_feed", Constants.PartialPages)
     }
@@ -1377,11 +1377,13 @@ var Utilities = function () {
         return rawHtml.replace(toBeRemoved, '');
     }
 
-    var ToggleHeight = function (toggle) {
+    var ToggleUI = function (toggle) {
         if (toggle == true) {
+            $('.refresh-button').show();
             $('.scrollable').css("height", "100%");
         }
         else {
+            $('.refresh-button').hide();
             $('.scrollable').css("height", "");
         }
     }
@@ -1451,7 +1453,7 @@ var Utilities = function () {
         Spinner: Spinner,
         SmallSpinner: SmallSpinner,
         StripHTML: StripHTML,
-        ToggleHeight: ToggleHeight,
+        ToggleUI: ToggleUI,
         SlideArrayTally: SlideArrayTally,
         CommaCraft: CommaCraft,
         CommaCraftPos: CommaCraftPos,
