@@ -505,6 +505,7 @@ var Feed = function () {
     var RefreshFeed = function () {
         ClearFeed();
         LoadFeed();
+        Follow.RefreshUsers();
     }
 
     var PureFeed = function (appended, appendId) {
@@ -1174,7 +1175,17 @@ var Follow = function () {
         });
     };
 
-    return { Render: Render, LoadUsers: LoadUsers }
+    var ClearUsers = function () {
+        $('#_follow').empty();
+        $('#_follow').prepend(Constants.FollowPure);
+    }
+
+    var RefreshUsers = function () {
+        ClearUsers();
+        LoadUsers();
+    }
+
+    return { Render: Render, LoadUsers: LoadUsers, RefreshUsers: RefreshUsers }
 
 }();
 
@@ -1482,6 +1493,7 @@ var Message = function () {
 */
 var Constants = function () {
     var PostPure = $('#post').parent().html();
+    var FollowPure = $('.follow-layout').parent().html();
     var BlobUrl = "https://ugoforstore.blob.core.windows.net/ugoforphoto/";
     var RESTLogin = "http://ugoforapi.azurewebsites.net/api/login";
     var RESTPosts = "http://ugoforapi.azurewebsites.net/api/posts";
@@ -1500,6 +1512,7 @@ var Constants = function () {
     var DefaultEULA = "<p><span class='eula-popup-text-hdr'>UGOFOR APP END USER LICENSE AGREEMENT</span></p> <p><strong>IMPORTANT - PLEASE READ CAREFULLY</strong></p> <p>This End User License Agreement (“Agreement”) is between you and UGoFor and governs use of this mobile app. By installing the UGoFor App, you agree to be bound by this Agreement and understand that there is no tolerance for objectionable content. If you do not agree with the terms and conditions of this Agreement, you are not entitled to use the UGoFor App.</p>";
     return {
         PostPure: PostPure,
+        FollowPure: FollowPure,
         BlobUrl: BlobUrl,
         RESTLogin: RESTLogin,
         RESTPosts: RESTPosts,
