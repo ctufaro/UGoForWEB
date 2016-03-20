@@ -214,6 +214,8 @@ var PGPlugins = function () {
             navigator.camera.getPicture(successMethod, function (message) { Message.Error(message); }, {
                 quality: qual,
                 allowEdit: edit,
+                targetWidth: 150,
+                targetHeight: 150,
                 destinationType: destinationType.FILE_URI,
                 sourceType: picSource
             });
@@ -234,13 +236,22 @@ var PGPlugins = function () {
         }
 
         var ConfirmPhoto = function (buttonIndex) {
+
             //CAMERA
             if (buttonIndex == 1) {
+                SignUp.SetQuickSign(false, '');
                 GetPhoto(0, 50, true, OnPhotoDataSuccess);
             }
-                //PHOTOLIBRARY
+            //PHOTOLIBRARY
             else if (buttonIndex == 2) {
+                SignUp.SetQuickSign(false, '');
                 GetPhoto(1, 50, true, OnPhotoDataSuccess);
+            }
+            //CHOOSE FOR ME
+            else if (buttonIndex == 3) {
+                var url = 'img/icons/' + (Math.floor(Math.random() * 7) + 1) + '.jpg';
+                $("#profileImage").attr('src', url);
+                SignUp.SetQuickSign(true, url);
             }
             else { }
         }
@@ -322,7 +333,9 @@ var SignOrLogin = function () {
 
 var SignUp = function () {
 
-    var EULAHTML;
+    var eULAHTML;
+    var quickSign;
+    var picUrl;
 
     var Render = function () {
         Pages.RenderSelect("#signUp", Constants.FullPages);
@@ -359,7 +372,7 @@ var SignUp = function () {
                 'from the following:',
                 PGPlugins.Camera.ConfirmPhoto,
                 'Select A Profile Image',
-                ['Photo Gallery', 'Take a Photo', 'Cancel']
+                ['Photo Gallery', 'Take a Photo', 'Choose For Me', 'Cancel']
             );
         });
 
@@ -393,7 +406,14 @@ var SignUp = function () {
 
         $('#btnEULAAccept').click(function () {
             $.magnificPopup.close();
-            PGPlugins.Camera.ImageUpload($('#signUsername').val());
+            if (quickSign)
+            {
+                QuickSign();
+            }
+            else
+            {
+                PGPlugins.Camera.ImageUpload($('#signUsername').val());
+            }            
             PGPlugins.DeviceToken.GetDeviceId();
         });
 
@@ -403,7 +423,41 @@ var SignUp = function () {
 
     }();
 
-    return { Render: Render }
+    var SetQuickSign = function (toggle, picurl) {
+        quickSign = toggle;
+        picUrl = picurl;
+    }
+
+    var QuickSign = function () {
+        Utilities.Spinner(true, "Registering");
+        $.ajax
+        ({
+            type: "POST",
+            url: Constants.RESTUsers,
+            data: {
+                "Email": $('#signEmail').val(),
+                "Username": $('#signUsername').val(),
+                "Password": $('#signPassword').val(),
+                "ProfilePicURL": picUrl,
+                "Location" : ""
+            },
+            global: false,
+            error: function (xhr, error) {
+                Message.Error(xhr + " - " + error);
+            },
+            success: function (data) {
+                var userId = parseInt(data);
+                Utilities.ClearCache();
+                UserSession.SetUserID(userId);
+                UserSession.SetUserName($('#signUsername').val())
+                Utilities.Spinner(false, "");
+                Pages.StartSession();
+            }
+        });
+
+    }
+
+    return { Render: Render, SetQuickSign: SetQuickSign }
 
 }();
 
@@ -1501,7 +1555,7 @@ var Constants = function () {
     var RESTApplication = "http://ugoforapi.azurewebsites.net/api/application";
     var RESTComments = "http://ugoforapi.azurewebsites.net/api/comments";
     var RESTDevice = "http://ugoforapi.azurewebsites.net/api/device";
-    var RESTUsers = "http://ugoforapi.azurewebsites.net/api/users";
+    var RESTUsers = "http://192.168.1.5:26684/api/users";
     var RESTAction = "http://ugoforapi.azurewebsites.net/api/action";
     var RESTProfile = "http://ugoforapi.azurewebsites.net/api/profile";
     var RESTBlob = "http://ugoforapi.azurewebsites.net/blobs/upload";
