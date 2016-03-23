@@ -265,7 +265,13 @@ var PGPlugins = function () {
 
         var GetDeviceId = function () {
             try {
-                pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });
+
+                //if (device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos") {
+                    //pushNotification.register(AndroidSuccessHandler, ErrorHandler, { "senderID": "634947465027", "ecb": "onNotification" });
+                //}
+                //else {
+                    pushNotification.register(TokenHandler, ErrorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });
+                //}
             }
             catch (e) {
             }
@@ -286,6 +292,23 @@ var PGPlugins = function () {
         }
 
         var TokenHandler = function (result) {
+            try {
+                var deviceId = result;
+                var userId = UserSession.GetUserID();
+                $.ajax
+                ({
+                    type: "POST", url: Constants.RESTDevice, async: false,
+                    data: { "UserId": UserSession.GetUserID(), "DeviceId": deviceId },
+                    global: false,
+                    error: function (xhr, error) { Message.Error(xhr + " - " + error); },
+                    success: function (data) { }
+                });
+            }
+            catch (e) {
+            }
+        }
+
+        var AndroidSuccessHandler = function(result) {
             try {
                 var deviceId = result;
                 var userId = UserSession.GetUserID();
